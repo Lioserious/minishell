@@ -40,4 +40,12 @@ typedef	struct	s_file_node
 	t_file_node	*next;
 }	t_file_node;
 
+//commands
+t_cmd_list *create_cmd_list(void);
+t_cmd_node	*create_cmd_node(char **cmd, int cmd_type);
+//files
+t_file_list *create_file_list(void);
+t_file_node *create_file_node(char *name, int redirection_type);
+void add_cmd_to_list(t_cmd_list *list, t_cmd_node *node);
+
 #endif

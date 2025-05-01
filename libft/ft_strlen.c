@@ -1,17 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 13:36:33 by mimalek           #+#    #+#             */
-/*   Updated: 2024/11/05 11:58:37 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-
+/**
+* @brief Berechnet die Länge eines Strings
+*
+* Diese Funktion zählt die Anzahl der Zeichen in einem String 's' bis zum 
+* ersten Null-Terminator ('\0'). Falls 's' NULL ist, wird 0 zurückgegeben.
+* Die Funktion zählt den Null-Terminator selbst nicht mit.
+*
+* @param s Der zu messende String
+* @return Die Anzahl der Zeichen im String (ohne Null-Terminator)
+*/
 size_t	ft_strlen(const char *s)
 {
 	size_t	counter;

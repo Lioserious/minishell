@@ -1,17 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 09:59:14 by mimalek           #+#    #+#             */
-/*   Updated: 2024/11/05 12:02:57 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
+/**
 
+@brief Verbindet zwei Strings zu einem neuen String
+
+*Diese Funktion erstellt einen neuen String, der aus der Verkettung von 's1'
+* und 's2' besteht.
+* Der neue String wird dynamisch alloziert. Falls sowohl 's1' als auch 's2'
+* NULL sind,
+* wird NULL zurückgegeben. Falls nur einer der beiden Strings NULL ist,
+* wird der andere
+* String kopiert. Bei einem Speicherfehler während der Allokation wird ebenfalls
+* NULL zurückgegeben.
+* Der zurückgegebene String muss vom Aufrufer mit free() freigegeben werden,
+* wenn er nicht mehr
+*benötigt wird.
+
+@param s1 Der erste zu verbindende String (oder NULL)
+@param s2 Der zweite zu verbindende String (oder NULL)
+@return Ein neu allozierter String mit der Verkettung von s1 und s2,
+* oder NULL bei Fehlern
+*/
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s;

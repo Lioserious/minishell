@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/13 16:47:29 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/15 16:18:33 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static int	length(int n)
@@ -62,10 +50,27 @@ static void	fake_ft_itoa(int n, char *ptr)
 	convert(ptr, n, l);
 }
 
+/**
+ * @brief Schreibt eine Ganzzahl in einen Dateideskriptor
+ *
+
+	* Diese Funktion konvertiert die Ganzzahl 'n' in einen String und
+	* schreibt diesen
+
+	* in den angegebenen Dateideskriptor 'fd'. Die Konvertierung erfolgt
+	* mit Hilfe der
+ * Hilfsfunktion fake_ft_itoa, die die Zahl in das übergebene Pufferarray 'nbr'
+ * schreibt. Die Funktion behandelt alle möglichen Integer-Werte, einschließlich
+ * negativer Zahlen.
+ *
+ * @param n Die zu schreibende Ganzzahl
+ * @param fd Der Dateideskriptor, in den geschrieben werden soll
+ * @return Keine Rückgabe (void)
+ */
 void	ft_putnbr_fd(int n, int fd)
 {
 	char	nbr[12];
 
 	fake_ft_itoa(n, nbr);
-	write (fd, nbr, ft_strlen(nbr));
+	write(fd, nbr, ft_strlen(nbr));
 }

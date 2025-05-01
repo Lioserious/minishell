@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 19:56:11 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/27 18:26:27 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printf.h"
 
 static int	handle_form(va_list args, char format);
@@ -17,6 +5,18 @@ static int	convert_one(va_list args, char format);
 static int	convert_two(va_list args, char format);
 static int	convert_three(va_list args, char format);
 
+/**
+ * @brief Eine vereinfachte Implementation der printf-Funktion
+ *
+ * Diese Funktion verarbeitet einen Formatstring und ersetzt
+ * Formatspezifizierer (beginnend mit %) durch die entsprechenden
+ * Werte aus der Argumentliste. Sie unterstützt verschiedene
+ * Formatierungsoptionen wie %d, %s, %c, etc.
+ *
+ * @param form Der Formatstring mit Formatspezifizierern
+ * @param ... Variablen Argumente, die in den String eingefügt werden
+ * @return Die Anzahl der gedruckten Zeichen oder -1 bei einem Fehler
+ */
 int	ft_printf(const char *form, ...)
 {
 	int		i;
@@ -59,7 +59,7 @@ static int	handle_form(va_list args, char format)
 
 static int	convert_one(va_list args, char format)
 {
-	int		printed;
+	int	printed;
 
 	printed = 0;
 	if (format == 'c')
@@ -87,7 +87,7 @@ static int	convert_one(va_list args, char format)
 
 static int	convert_two(va_list args, char format)
 {
-	int		printed;
+	int	printed;
 
 	printed = 0;
 	if (format == 'u')

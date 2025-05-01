@@ -1,17 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 08:07:20 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/10 08:18:31 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/**
+ * @brief Allokiert und initialisiert Speicher
+ *
+ * Diese Funktion allokiert Speicher für 'num' Elemente der Größe 'size'
+ * und initialisiert den allozierten Speicher mit Nullen. Sie ist eine
+ * Reimplementierung der Standard-C-Bibliotheksfunktion calloc.
+ *
+ * @param num Anzahl der zu allozierenden Elemente
+ * @param size Größe jedes Elements in Bytes
+ * @return Zeiger auf den allozierten Speicher oder NULL bei Fehler
+ */
 void	*ft_calloc(size_t num, size_t size)
 {
 	unsigned char	*ptr;

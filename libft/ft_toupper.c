@@ -1,17 +1,15 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 14:14:53 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/08 14:18:46 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-
+/**
+* @brief Konvertiert einen Kleinbuchstaben in einen Großbuchstaben
+*
+* Diese Funktion konvertiert einen Kleinbuchstaben (a-z) in den entsprechenden
+* Großbuchstaben (A-Z). Falls der übergebene Wert kein Kleinbuchstabe ist,
+* wird er unverändert zurückgegeben.
+*
+* @param c Der zu konvertierende Zeichen-Code
+* @return Der konvertierte Zeichen-Code (Großbuchstabe) oder der
+*			unveränderte Wert, falls 'c' kein Kleinbuchstabe ist
+*/
 int	ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')

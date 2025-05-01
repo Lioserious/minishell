@@ -13,7 +13,7 @@ void garbage_collector_add(void *ptr)
 
 	neu = ft_lstnew(ptr);
 	if(!neu)
-		error_handler("MEMORY ALLOCATION FAILED: GARBAGE COLLECTOR");
+		error_handler("MEMORY ALLOCATION FAILED: GARBAGE COLLECTOR", 2);
 	ft_lstadd_front(garbage_holder(), neu);
 
 }

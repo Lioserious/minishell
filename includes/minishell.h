@@ -6,5 +6,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft.h"
+# include "garbage_collector.h"
 
 #endif

@@ -8,6 +8,7 @@
 # include "libft.h"
 # include "garbage_collector.h"
 # include "error.h"
+
 // Shortcuts //
 typedef struct s_cmd_node t_cmd_node;
 typedef	struct	s_file_list	t_file_list;

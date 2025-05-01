@@ -7,5 +7,6 @@
 # include <unistd.h>
 # include "libft.h"
 # include "garbage_collector.h"
+# include "error.h"
 
 #endif

@@ -27,6 +27,18 @@ static void	convert(char *ptr, int n, int l)
 	}
 }
 
+/**
+ * @brief Konvertiert einen Integer in einen String
+ *
+ * Diese Funktion konvertiert einen Integer-Wert in einen neu allozierten
+ * String. Sie behandelt positive und negative Zahlen, inklusive Sonderfälle
+
+	* wie INT_MIN und 0. Der zurückgegebene String muss vom Aufrufer freigegeben
+	* werden.
+ *
+ * @param n Der zu konvertierende Integer-Wert
+ * @return Ein neu allozierter String mit der Zahl oder NULL bei Fehlern
+ */
 char	*ft_itoa(int n)
 {
 	char	*ptr;

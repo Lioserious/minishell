@@ -1,10 +1,22 @@
 #include "libft.h"
 
+/**
+ * @brief Konvertiert einen String in einen Integer-Wert
+ *
+ * Diese Funktion konvertiert einen numerischen String in einen Integer-Wert.
+ * Sie überspringt führende Leerzeichen und Whitespace-Zeichen, berücksichtigt
+ * ein optionales Vorzeichen (+ oder -) und konvertiert dann alle folgenden
+ * Ziffern. Bei einem Integer-Überlauf gibt sie den maximalen oder minimalen
+ * Integer-Wert zurück (je nach Vorzeichen).
+ *
+ * @param str Der zu konvertierende String
+ * @return Der konvertierte Integer-Wert oder INT_MAX/INT_MIN bei Überlauf
+ */
 int	ft_atoi(const char *str)
 {
-	int		i;
-	int		num;
-	int		minus;
+	int	i;
+	int	num;
+	int	minus;
 
 	i = 0;
 	minus = 1;

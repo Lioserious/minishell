@@ -1,5 +1,19 @@
 #include "libft.h"
-
+/**
+* @brief Wendet eine Funktion auf jeden Zeichen eines Strings an
+*
+* Diese Funktion durchläuft jeden Zeichen des Strings 's' und wendet die 
+* übergebene Funktion 'f' auf jeden Zeichen an. Der Funktion 'f' werden dabei 
+* der Index des aktuellen Zeichens und ein Zeiger auf das aktuelle Zeichen 
+* übergeben. Falls 's' oder 'f' NULL ist, wird keine Operation durchgeführt.
+* Die Funktion verändert den Original-String direkt, da 'f' Zugriff auf 
+* die Zeiger der einzelnen Zeichen erhält.
+*
+* @param s Der zu bearbeitende String
+* @param f Die Funktion, die auf jedes Zeichen angewendet wird. 
+*          Sie erhält den Index und einen Zeiger auf das aktuelle Zeichen.
+* @return Nichts (void)
+*/
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	unsigned int	i;

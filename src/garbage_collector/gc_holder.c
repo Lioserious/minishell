@@ -31,3 +31,18 @@ void garbage_collector_empty(void)
 		ft_lstdelone(temp, free);
 	}
 }
+
+void	garbage_collector_print(void)
+{
+	t_list	*temp;
+	size_t	i;
+
+	temp = *garbage_holder();
+	i = 0;
+	while (temp != NULL)
+	{
+		printf("Pointer %zu: %p, %s\n", i, temp->content, (char *)temp->content);
+		temp = temp->next;
+		i++;
+	}
+}

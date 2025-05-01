@@ -3,9 +3,10 @@
 
 # include "libft.h"
 
-t_list    **garbage_holder(void);
-void garbage_collector_add(void *ptr);
-void garbage_collector_empty(void);
+t_list	**garbage_holder(void);
+void	garbage_collector_add(void *ptr);
+void	garbage_collector_empty(void);
+void	garbage_collector_print(void);
 
 #endif
 

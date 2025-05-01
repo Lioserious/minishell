@@ -8,7 +8,7 @@
 # include "libft.h"
 # include "garbage_collector.h"
 # include "error.h"
-# include "struct.h"
+# include "structs.h"
 
 
 #endif

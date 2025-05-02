@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage_collector_empty.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 12:29:58 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/02 12:36:55 by lihrig           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /**
@@ -10,15 +22,16 @@
  *
  * @return void
  */
-void garbage_collector_empty(void)
+void	garbage_collector_empty(void)
 {
-    t_list **holder;
-    t_list *temp;
-    holder = garbage_holder();
-    while(*holder != NULL);
-     {
-        temp = *holder;
-        holder = (*holder)->next;
-        ft_lstdelone(temp, free);
-     }
+	t_list	**holder;
+	t_list	*temp;
+
+	holder = garbage_holder();
+	while (*holder != NULL)
+	{
+		temp = *holder;
+		holder = (*holder)->next;
+		ft_lstdelone(temp, free);
+	}
 }

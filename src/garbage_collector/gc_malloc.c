@@ -1,16 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gc_malloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 12:30:54 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/02 12:39:06 by lihrig           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
 /**
-* @brief Alloziert Speicher und registriert ihn beim Garbage Collector
-*
-* Diese Funktion alloziert Speicher mit der angegebenen Größe mittels malloc()
-* und registriert den allozierten Speicherbereich automatisch beim Garbage Collector.
-* Falls die Speicherallokation fehlschlägt, wird eine Fehlermeldung ausgegeben und
-* das Programm mit dem Fehlercode 1 beendet. Der zurückgegebene Speicher wird 
-* automatisch vom Garbage Collector verwaltet und muss nicht manuell freigegeben werden.
-*
-* @param size Die Größe des zu allozierenden Speichers in Bytes
-* @return Ein Zeiger auf den allozierten Speicherbereich
-*/
+ * @brief Alloziert Speicher und registriert ihn beim Garbage Collector
+ *
+ * Diese Funktion alloziert Speicher mit der angegebenen Größe mittels malloc()
+
+	* und registriert den allozierten Speicherbereich automatisch beim 
+	* Garbage Collector.
+ * Falls die Speicherallokation fehlschlägt,
+	wird eine Fehlermeldung ausgegeben und
+ * das Programm mit dem Fehlercode 1 beendet. Der zurückgegebene Speicher wird
+
+	* automatisch vom Garbage Collector verwaltet und muss nicht manuell
+	* freigegeben werden.
+ *
+ * @param size Die Größe des zu allozierenden Speichers in Bytes
+ * @return Ein Zeiger auf den allozierten Speicherbereich
+ */
 void	*gc_malloc(size_t size)
 {
 	void	*ptr;

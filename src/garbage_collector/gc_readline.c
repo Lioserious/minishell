@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   gc_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 16:19:53 by lihrig           ###   ########.fr       */
+/*   Created: 2025/05/02 13:38:41 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/02 13:46:42 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *message, int status)
+// eigene readline implementierung, die den input Pointer direkt in den GC
+// anhaengt.
+char	*gc_readline(const char *prompt)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-	exit(status);
+	char *input;
+
+	input = readline(prompt);
+	if (input)
+		garbage_collector_add(input);
+	return (input);
 }

@@ -65,7 +65,7 @@ $(OBJ_DIR):
 # Compile libft
 libft:
 	@echo "\033[0;34mCompiling libft...\033[0m"
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) bonus
 	@echo "\033[0;32mLibft compiled successfully\033[0m"
 # Rule to compile .c files into .o files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:58 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:36:55 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:34:51 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	garbage_collector_empty(void)
 	while (*holder != NULL)
 	{
 		temp = *holder;
-		holder = (*holder)->next;
+		*holder = temp->next;
 		ft_lstdelone(temp, free);
 	}
 }

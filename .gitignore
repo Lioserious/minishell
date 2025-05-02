@@ -1,0 +1,6 @@
+*.a
+*.o
+.vscode
+README.txt
+subject.pdf
+.DS_Store

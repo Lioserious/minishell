@@ -1,17 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 08:19:21 by mimalek           #+#    #+#             */
-/*   Updated: 2024/11/05 12:00:33 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-
+/**
+* @brief Erstellt eine Kopie eines Strings
+*
+* Diese Funktion erstellt eine Kopie des Strings 's' und alloziert dafür
+* dynamisch Speicher. Die Kopie ist ein neuer String, der an einer anderen
+* Speicheradresse liegt, aber den gleichen Inhalt wie das Original hat.
+* Falls 's' NULL ist, wird NULL zurückgegeben. Bei einem Speicherfehler während
+* der Allokation wird ebenfalls NULL zurückgegeben. Der zurückgegebene String
+* muss vom Aufrufer mit free() freigegeben werden, wenn er nicht mehr
+* benötigt wird.
+*
+* @param s Der zu duplizierende String
+* @return Ein neu allozierter String mit dem gleichen Inhalt oder NULL
+* bei Fehlern
+*/
 char	*ft_strdup(const char *s)
 {
 	char	*ptr;

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/13 16:51:29 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/13 21:29:38 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static int	length(int n)
@@ -39,6 +27,18 @@ static void	convert(char *ptr, int n, int l)
 	}
 }
 
+/**
+ * @brief Konvertiert einen Integer in einen String
+ *
+ * Diese Funktion konvertiert einen Integer-Wert in einen neu allozierten
+ * String. Sie behandelt positive und negative Zahlen, inklusive Sonderfälle
+
+	* wie INT_MIN und 0. Der zurückgegebene String muss vom Aufrufer freigegeben
+	* werden.
+ *
+ * @param n Der zu konvertierende Integer-Wert
+ * @return Ein neu allozierter String mit der Zahl oder NULL bei Fehlern
+ */
 char	*ft_itoa(int n)
 {
 	char	*ptr;

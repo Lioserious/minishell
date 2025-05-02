@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 09:37:28 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/15 16:15:51 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static int	count_sub(char const *s, char c)
@@ -60,6 +48,24 @@ static int	fill_substrings(char **result, const char *s, char c)
 }
 
 // Main split function
+/**
+ * @brief Teilt einen String an einem bestimmten Trennzeichen in Teilstrings
+ *
+ * Diese Funktion teilt den String 's' in Teilstrings, wobei das Zeichen 'c'
+ * als Trennzeichen dient. Die Funktion gibt ein Array von Strings zurück,
+ * wobei jeder String einem Teilstring entspricht. Das Array endet mit einem
+
+	* NULL-Zeiger. Aufeinanderfolgende Trennzeichen werden als ein einziges
+	* Trennzeichen
+ * behandelt. Falls 's' NULL ist,
+	wird NULL zurückgegeben. Bei einem Speicherfehler
+ * während der Verarbeitung wird ebenfalls NULL zurückgegeben und der bereits
+ * allozierte Speicher freigegeben.
+ *
+ * @param s Der zu teilende String
+ * @param c Das Trennzeichen
+ * @return Ein Array von Strings (Teilstrings) oder NULL bei Fehlern
+ */
 char	**ft_split(const char *s, char c)
 {
 	size_t	count;

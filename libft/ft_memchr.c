@@ -1,17 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 11:11:12 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/10 08:23:06 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/**
+ * @brief Sucht nach einem Byte in einem Speicherbereich
+ *
+ * Diese Funktion durchsucht die ersten 'n' Bytes des Speicherbereichs, auf den
+ * 's' zeigt, nach dem ersten Vorkommen des Bytes 'c'. Der Wert von 'c' wird als
+ * unsigned char interpretiert. Die Suche erfolgt byteweise und behandelt den
+ * Speicherbereich als Folge von unsigned char-Werten.
+ *
+ * @param s Zeiger auf den zu durchsuchenden Speicherbereich
+ * @param c Der zu suchende Wert (wird als unsigned char interpretiert)
+ * @param n Die Anzahl der zu untersuchenden Bytes
+ * @return Zeiger auf das erste Vorkommen des Bytes oder NULL,
+	wenn es nicht gefunden wurde
+ */
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	unsigned char	*src;

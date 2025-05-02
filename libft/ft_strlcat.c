@@ -1,17 +1,23 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 15:41:50 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/13 17:45:40 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-
+/**
+* @brief Verkettung von Strings mit Begrenzung der Puffergröße
+*
+* Diese Funktion hängt den String 'src' an das Ende des Strings 'dst' an, 
+* wobei sichergestellt wird, dass die Gesamtlänge des resultierenden Strings
+* kleiner als 'size' ist. Im Gegensatz zu strcat() ist diese Funktion
+* größensicher.
+* Sie garantiert, dass der resultierende String null-terminiert ist, solange 
+* 'size' größer als 0 ist und 'dst' bereits einen null-terminierten
+* String enthält.
+*
+* @param dst Der Zielstring, an den angehängt werden soll
+* @param src Der Quellstring, der angehängt werden soll
+* @param size Die Größe des Zielpuffers
+* @return Die Gesamtlänge des Strings, den die Funktion zu erstellen versucht hat
+*         (also die Länge von 'dst' + die Länge von 'src'). Wenn 'size' kleiner
+*         als die Länge von 'dst' ist, wird 'size' + Länge von 'src'
+*         zurückgegeben.
+*/
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	dest_length;

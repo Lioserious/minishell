@@ -1,17 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/13 16:38:06 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/13 16:41:06 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
+/**
+ * @brief Schreibt einen String in einen Dateideskriptor
+ *
+
+	* Diese Funktion schreibt den String 's' in den angegebenen
+	* Dateideskriptor 'fd'.
+ * Die Länge des zu schreibenden Strings wird mit ft_strlen ermittelt. Falls 's'
+ * NULL ist, kehrt die Funktion sofort zurück, ohne etwas zu schreiben.
+ * Es erfolgt keine Fehlerbehandlung für den Fall,
+	dass der Schreibvorgang fehlschlägt.
+ *
+ * @param s Der zu schreibende String
+ * @param fd Der Dateideskriptor, in den geschrieben werden soll
+ * @return Keine Rückgabe (void)
+ */
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (s == NULL)

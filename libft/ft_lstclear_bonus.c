@@ -1,18 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 19:53:31 by mimalek           #+#    #+#             */
-/*   Updated: 2024/10/14 20:02:50 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+/**
+ * @brief Löscht und befreit eine gesamte verkettete Liste
+ *
+ * Diese Funktion durchläuft alle Elemente der verketteten Liste 'lst',
+ * löscht den Inhalt jedes Elements mit der übergebenen Funktion 'del'
+ * und gibt dann den Speicher für jedes Listenelement frei. Am Ende wird
+ * der Listenanfang auf NULL gesetzt, um eine leere Liste zu kennzeichnen.
+ * Falls 'lst', '*lst' oder 'del' NULL sind,
+	wird die Funktion ohne Aktionen beendet.
+ *
+ * @param lst Doppelzeiger auf den Anfang der zu löschenden verketteten Liste
+ * @param del Funktionszeiger auf die Funktion,
+	die den Inhalt jedes Elements löscht
+ * @return Keine Rückgabe (void)
+ */
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*current;
 	t_list	*next;
@@ -22,8 +25,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	current = *lst;
 	while (current != NULL)
 	{
-		next = current -> next;
-		del(current -> content);
+		next = current->next;
+		del(current->content);
 		free(current);
 		current = next;
 	}

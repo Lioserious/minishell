@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 15:55:07 by mimalek           #+#    #+#             */
-/*   Updated: 2024/11/05 12:09:19 by mimalek          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static char	*init_line(char **remainder)
@@ -85,6 +73,20 @@ static char	*cut_newline(char **line, char **remainder)
 	*line = NULL;
 	return (final);
 }
+/**
+* @brief Liest eine Zeile aus einem File Descriptor
+*
+* Diese Funktion liest Daten aus dem übergebenen File Descriptor 'fd' und gibt
+* die nächste Zeile zurück, die durch einen Zeilenumbruch oder das Dateiende
+* begrenzt wird. Die Funktion verwendet einen statischen Puffer ('remainder'),
+* um überschüssige gelesene Daten zwischen aufeinanderfolgenden Aufrufen zu
+* speichern. Dadurch kann sie effizient mehrere Zeilen aus derselben Datei lesen.
+*
+* @param fd Der File Descriptor, aus dem gelesen werden soll
+* @return Ein neu allozierter String, der die gelesene Zeile enthält
+*			(mit Zeilenumbruch, falls vorhanden),oder NULL bei einem Fehler,
+*			ungültigem File Descriptor, leerem Ergebnis oder Dateiende
+*/
 
 char	*get_next_line(int fd)
 {

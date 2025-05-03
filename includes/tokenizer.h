@@ -1,6 +1,8 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
+
+
 typedef enum e_token_type
 {
     TOKEN_WORD,         // Normale Wörter

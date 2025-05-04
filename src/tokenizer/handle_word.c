@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   handle_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:53:43 by lihrig           ###   ########.fr       */
+/*   Created: 2025/05/04 15:48:59 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/04 17:23:29 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "cmd_types.h"
-# include "tokenizer.h"
-# include "error.h"
-# include "garbage_collector.h"
-# include "libft.h"
-# include "structs.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	handle_word(char *input, int *i, t_token_list *token_list)
+{
+	t_token	*new_token;
+	char	*word;
 
-//readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#define PROMPT "miniarsch> "
-
-#endif
+	if (!input[*i] || is_whitespace(input[*i]) || is_special_char(input[*i]))
+		return (0);
+	word = extract_word(input, i);
+	if (!word)
+		return (0);
+	new_token = create_token(TOKEN_WORD, word);
+	add_token_to_list(token_list, new_token);
+	return (1);
+}

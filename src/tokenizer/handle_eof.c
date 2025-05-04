@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   handle_eof.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:53:43 by lihrig           ###   ########.fr       */
+/*   Created: 2025/05/04 17:14:19 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/04 17:23:25 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "cmd_types.h"
-# include "tokenizer.h"
-# include "error.h"
-# include "garbage_collector.h"
-# include "libft.h"
-# include "structs.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+void	add_eof_token(t_token_list *token_list)
+{
+	t_token	*eof_token;
 
-//readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#define PROMPT "miniarsch> "
-
-#endif
+	eof_token = create_token(TOKEN_EOF, "EOF");
+	if (eof_token)
+		add_token_to_list(token_list, eof_token);
+}

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:01:43 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 13:43:00 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 12:48:38 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void	garbage_collector_empty(void);
 void	garbage_collector_print(void);
 void	*gc_malloc(size_t size);
 char	*gc_readline(const char *prompt);
+char	*gc_strdup(const char *s);
 
 #endif

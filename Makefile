@@ -22,7 +22,9 @@ SRC_FILES = main.c
 # Parser source files (in src/parser/)
 SRC_PARSER = cmd_list.c file_to_list.c
 # Executor source files (in src/executor/)
-SRC_EXECUTOR =
+SRC_EXECUTOR = exec.c
+# Builtins source files (in src/builtins)
+SRC_BUILTINS = execute_builtins.c pwd.c
 # Error handler source files (in src/error/)
 SRC_ERROR = error_handler.c
 # Garbage collector source files (in src/garbage_collector/)
@@ -31,9 +33,10 @@ SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_pri
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \
-      $(addprefix executor/, $(SRC_EXECUTOR)) \
       $(addprefix error/, $(SRC_ERROR)) \
-      $(addprefix garbage_collector/, $(SRC_GC))
+      $(addprefix garbage_collector/, $(SRC_GC)) \
+	  $(addprefix executor/, $(SRC_EXECUTOR)) \
+	  $(addprefix builtins/, $(SRC_BUILTINS))
 ################################################################################
 #################### OBJECT FILES ############################################
 ################################################################################
@@ -59,9 +62,10 @@ all: $(NAME)
 # Create object directory and subdirectories
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/parser
-	@mkdir -p $(OBJ_DIR)/executor
+	@mkdir -p $(OBJ_DIR)/executer
 	@mkdir -p $(OBJ_DIR)/error
 	@mkdir -p $(OBJ_DIR)/garbage_collector
+	@mkdir -p $(OBJ_DIR)/builtins
 # Compile libft
 libft:
 	@echo "\033[0;34mCompiling libft...\033[0m"

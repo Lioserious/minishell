@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:42:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 16:24:13 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 16:30:10 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int	handle_env_var(char *input, int *i, t_token_list *token_list)
 	}
 	value = gc_substr(input, start, len);
 	new_token = create_token(TOKEN_ENV_VAR, value);
-	return (1);
+	return (add_token_to_list(token_list, new_token), 1);
 }

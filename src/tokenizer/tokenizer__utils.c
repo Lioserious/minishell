@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:08:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 14:04:42 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:37:02 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,17 @@ int	is_whitespace(char c)
 int	is_special_char(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"');
+
 }
 // Prüft ob ein Quote-Zeichen vorliegt
 int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
+}
+// checkt nach $
+int	is_env_var(char c)
+{
+	return (c == '$');
 }
 // Extrahiert ein normales Wort
 char	*extract_word(char *input, int *i)

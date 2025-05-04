@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 16:10:14 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 19:15:27 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 # include "garbage_collector.h"
 # include "libft.h"
 # include "structs.h"
+# include "execution.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 //readline
 #include <readline/readline.h>
 #include <readline/history.h>

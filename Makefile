@@ -27,10 +27,10 @@ SRC_EXECUTOR =
 SRC_ERROR = error_handler.c
 # Garbage collector source files (in src/garbage_collector/)
 SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_print.c \
-         gc_holder.c gc_malloc.c gc_readline.c
+         gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c
 # Tokenizer source files (in src/tokenizer)
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
-         handle_word.c tokenizer__utils.c tokenizer_utils.c
+         handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \

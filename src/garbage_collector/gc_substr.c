@@ -6,14 +6,14 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:21:34 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:21:56 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 13:25:08 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 /**
-* @brief Erstellt einen Teilstring aus einem gegebenen String
-*
+* @brief Erstellt einen Teilstring aus einem gegebenen String, und gibt Pointer
+*			an garbage collector
 * Diese Funktion erstellt einen neuen String, der einen Teilstring
 * des übergebenen
 * Strings 's' darstellt, beginnend am Index 'start' und maximal 'len'
@@ -44,7 +44,7 @@ char	*gc_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len + start > ft_strlen(s))
 		len = ft_strlen(s) - start;
-	sub_s = malloc(len + 1);
+	sub_s = gc_malloc(len + 1);
 	if (sub_s == NULL)
 		return (NULL);
 	i = 0;

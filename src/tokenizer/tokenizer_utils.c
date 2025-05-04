@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:26:41 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 12:50:10 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 12:57:07 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,21 @@ t_token *create_token(t_token_type type, char *value)
 		error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN", 1);
 	new_token->next = NULL;
 	return(new_token);
+}
+//adds token to list
+void add_token_to_list (t_token_list *list, t_token *token)
+{
+	if(!list || !token)
+		return ;
+	if(list->size == 0)
+	{
+		list->head = token;
+		list->tail = token;
+	}
+	else
+	{
+		list->tail->next = token;
+		list->tail = token;
+	}
+	list->size++;
 }

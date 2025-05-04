@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:52:00 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 14:39:02 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 17:23:28 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 // TOKEN_WORD,           // Commands, arguments, filenames
 // TOKEN_PIPE,           // |
-// TOKEN_REDIR_IN,       // 
+// TOKEN_REDIR_IN,       //
 // TOKEN_REDIR_OUT,      // >
 // TOKEN_REDIR_APPEND,   // >>
-// TOKEN_REDIR_HEREDOC,  // 
+// TOKEN_REDIR_HEREDOC,  //
 // TOKEN_ENV_VAR,        // $VAR, $?
 // TOKEN_EOF            // End of input
 

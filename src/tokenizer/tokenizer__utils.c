@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:08:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 15:21:07 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 15:47:32 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	is_whitespace(char c)
 // Prüft ob Zeichen ein Special Character ist
 int	is_special_char(char c)
 {
-    return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"' || c == '$');
+	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"'
+		|| c == '$');
 }
 
 // Prüft ob ein Quote-Zeichen vorliegt

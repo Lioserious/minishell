@@ -6,11 +6,12 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:52:00 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:55:53 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:04:38 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 // TOKEN_WORD,              // Normale Wörter
 // 	TOKEN_PIPE,          // |
 // 	TOKEN_REDIR_IN,      //
@@ -19,7 +20,8 @@
 // 	TOKEN_REDIR_HEREDOC, //
 // 	TOKEN_EOF            // Ende des Inputs
 
-int handle_special_char(char *input, int *i, t_token_list *token_list)
+// Behandelt Pipe |
+int	handle_pipe(char *input, int *i, t_token_list *token_list)
 {
 	t_token	*new_token;
 
@@ -30,37 +32,67 @@ int handle_special_char(char *input, int *i, t_token_list *token_list)
 		(*i)++;
 		return (1);
 	}
-	else if (input[*i] == '<')
+	return (0);
+}
+
+// Behandelt Input Redirection < und
+int	handle_input_redirection(char *input, int *i, t_token_list *token_list)
+{
+	t_token	*new_token;
+
+	if (input[*i] == '<')
 	{
 		if (input[*i + 1] == '<')
 		{
 			new_token = create_token(TOKEN_REDIR_HEREDOC, "<<");
+			add_token_to_list(token_list, new_token);
 			(*i) += 2;
 		}
 		else
 		{
 			new_token = create_token(TOKEN_REDIR_IN, "<");
+			add_token_to_list(token_list, new_token);
 			(*i)++;
 		}
-		add_token_to_list(token_list, new_token);
 		return (1);
 	}
-	else if (input[*i] == '>')
-    {
-        if (input[*i + 1] == '>')
-        {
-            new_token = create_token(TOKEN_REDIR_APPEND, ">>");
-            (*i) += 2;
-        }
-        else
-        {
-            new_token = create_token(TOKEN_REDIR_OUT, ">");
-            (*i)++;
-        }
-        add_token_to_list(token_list, new_token);
-        return (1);
-    }
-    else if (input[*i] == '\'' || input[*i] == '"')
-		return(0);
-    return (0); 
+	return (0);
+}
+
+// Behandelt Output Redirection > und >>
+int	handle_output_redirection(char *input, int *i, t_token_list *token_list)
+{
+	t_token	*new_token;
+
+	if (input[*i] == '>')
+	{
+		if (input[*i + 1] == '>')
+		{
+			new_token = create_token(TOKEN_REDIR_APPEND, ">>");
+			add_token_to_list(token_list, new_token);
+			(*i) += 2;
+		}
+		else
+		{
+			new_token = create_token(TOKEN_REDIR_OUT, ">");
+			add_token_to_list(token_list, new_token);
+			(*i)++;
+		}
+		return (1);
+	}
+	return (0);
+}
+
+// Hauptfunktion für Special Characters
+int	handle_special_char(char *input, int *i, t_token_list *token_list)
+{
+	if (handle_pipe(input, i, token_list))
+		return (1);
+	if (handle_input_redirection(input, i, token_list))
+		return (1);
+	if (handle_output_redirection(input, i, token_list))
+		return (1);
+	if (is_quote(input[*i]))
+		return (0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:08:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 15:47:32 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 16:25:04 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
 }
+
 // checkt nach $
 int	is_env_var(char c)
 {
 	return (c == '$');
 }
+
 // Extrahiert ein normales Wort
 char	*extract_word(char *input, int *i)
 {

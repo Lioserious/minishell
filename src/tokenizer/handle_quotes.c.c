@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:11 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 16:22:39 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 16:24:47 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	save_remaining_text(char *input, int start, int end,
 		add_token_to_list(token_list, new_token);
 	}
 }
+
 // Verarbeitet den Inhalt innerhalb der doppelten Anführungszeichen
 static void	process_double_quote_content(char *input, int *i,
 		t_token_list *token_list)

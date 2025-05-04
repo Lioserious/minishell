@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:42:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 15:41:52 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 16:24:13 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 // Sie dürfen Buchstaben (a-z, A-Z) enthalten
 // Sie dürfen Ziffern (0-9) enthalten
 // Sie dürfen Underscores (_) enthalten
-// Sie müssen mit einem Buchstaben oder Underscore beginnen (nicht mit einer Ziffer)
+// Sie müssen mit einem Buchstaben oder Underscore beginnen
+//(nicht mit einer Ziffer)
 
 int	handle_env_var(char *input, int *i, t_token_list *token_list)
 {

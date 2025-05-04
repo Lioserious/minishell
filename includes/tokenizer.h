@@ -40,5 +40,8 @@ char *extract_word(char *input, int *i);
 int	handle_special_char(char *input, int *i, t_token_list *token_list);
 int	handle_env_var(char *input, int *i, t_token_list *token_list);
 
+int	handle_double_quote(char *input, int *i, t_token_list *token_list);
+int	handle_single_quote(char *input, int *i, t_token_list *token_list);
 
+t_token_list	*tokenizer(char *input);
 #endif

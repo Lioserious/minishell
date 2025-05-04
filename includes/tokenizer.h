@@ -9,6 +9,7 @@ typedef enum e_token_type
     TOKEN_REDIR_OUT,    // >
     TOKEN_REDIR_APPEND, // >>
     TOKEN_REDIR_HEREDOC,// 
+	TOKEN_ENV_VAR,		// $ENV
     TOKEN_EOF           // Ende des Inputs
 } t_token_type;
 
@@ -29,10 +30,15 @@ typedef struct s_token
 t_token_list *create_token_list(void);
 t_token *create_token(t_token_type type, char *value);
 void add_token_to_list (t_token_list *list, t_token *token);
+
 int is_whitespace(char c);
 int is_special_char(char c);
-void handle_special_char(char *input, int *i, t_token_list *token_list);
+int	is_quote(char c);
+int	is_env_var(char c);
+
 char *extract_word(char *input, int *i);
+int	handle_special_char(char *input, int *i, t_token_list *token_list);
+int	handle_env_var(char *input, int *i, t_token_list *token_list);
 
 
 #endif

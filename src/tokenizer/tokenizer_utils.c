@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:26:41 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:05:15 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:33:57 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token *create_token(t_token_type type, char *value)
 {
 	t_token *new_token;
 
-	new_token = (t_token_type *)gc_malloc(sizeof(t_token));
+	new_token = (t_token *)gc_malloc(sizeof(t_token));
 	if(!new_token)
 		error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN", 1);
 	new_token->type = type;

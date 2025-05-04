@@ -6,19 +6,20 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:52:00 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 14:04:38 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 14:39:02 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TOKEN_WORD,              // Normale Wörter
-// 	TOKEN_PIPE,          // |
-// 	TOKEN_REDIR_IN,      //
-// 	TOKEN_REDIR_OUT,     // >
-// 	TOKEN_REDIR_APPEND,  // >>
-// 	TOKEN_REDIR_HEREDOC, //
-// 	TOKEN_EOF            // Ende des Inputs
+// TOKEN_WORD,           // Commands, arguments, filenames
+// TOKEN_PIPE,           // |
+// TOKEN_REDIR_IN,       // 
+// TOKEN_REDIR_OUT,      // >
+// TOKEN_REDIR_APPEND,   // >>
+// TOKEN_REDIR_HEREDOC,  // 
+// TOKEN_ENV_VAR,        // $VAR, $?
+// TOKEN_EOF            // End of input
 
 // Behandelt Pipe |
 int	handle_pipe(char *input, int *i, t_token_list *token_list)
@@ -92,6 +93,8 @@ int	handle_special_char(char *input, int *i, t_token_list *token_list)
 		return (1);
 	if (handle_output_redirection(input, i, token_list))
 		return (1);
+	if (is_env_var(input[*i]))
+		return (0);
 	if (is_quote(input[*i]))
 		return (0);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:42:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 16:30:10 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 17:23:23 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	handle_env_var(char *input, int *i, t_token_list *token_list)
 
 	if (input[*i] != '$')
 		return (0);
-	start = *i;
+	start = (*i)++;
 	if (input[*i] == '?')
 	{
 		(*i)++;

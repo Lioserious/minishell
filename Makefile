@@ -24,7 +24,7 @@ SRC_PARSER = cmd_list.c file_to_list.c
 # Executor source files (in src/executor/)
 SRC_EXECUTOR = exec.c
 # Builtins source files (in src/builtins)
-SRC_BUILTINS = execute_builtins.c pwd.c echo.c
+SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c
 # Error handler source files (in src/error/)
 SRC_ERROR = error_handler.c
 # Garbage collector source files (in src/garbage_collector/)

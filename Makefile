@@ -98,8 +98,8 @@ fclean: clean
 re: fclean all
 # Debug with Valgrind
 debug: CFLAGS += -g
-debug: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+debug: re readline.supp
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./$(NAME)
 # Address Sanitizer build
 san: CFLAGS += -fsanitize=address -g
 san: LDFLAGS += -fsanitize=address

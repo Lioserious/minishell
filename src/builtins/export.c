@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:12:54 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 12:11:51 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/06 15:29:36 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int	print_export_list(t_env_list	*env_list)
 	t_env_node	*current;
 
 	current = env_list->head;
-
 	while (current)
 	{
 		if (current->is_export)
 		{
 			ft_putstr_fd("declare -x ", 1);
 			ft_putstr_fd(current->name, 1);
-			if (ft_strlen(current->value) && ft_strncmp(current->value, " ", 2) != 0)
+			if (ft_strlen(current->value)
+				&& ft_strncmp(current->value, " ", 2) != 0)
 				ft_putchar_fd('=', 1);
 			ft_putendl_fd(current->value, 1);
 		}
@@ -35,7 +35,7 @@ int	print_export_list(t_env_list	*env_list)
 
 int	ft_export(t_env_list *env_list, t_cmd_node *node)
 {
-	int	i;
+	int		i;
 	char	*equal;
 	char	*name;
 	char	*value;

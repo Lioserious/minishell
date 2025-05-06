@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:16:33 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/05 11:45:27 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:51:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_echo(t_cmd_node *node)
 		newline = 0;
 		i++;
 	}
-	while(node->cmd[i])
+	while (node->cmd[i])
 	{
 		ft_putstr_fd(node->cmd[i], 1);
 		if (node->cmd[i + 1])

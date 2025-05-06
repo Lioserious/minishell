@@ -24,12 +24,12 @@ SRC_PARSER = cmd_list.c file_to_list.c
 # Executor source files (in src/executor/)
 SRC_EXECUTOR = exec.c
 # Builtins source files (in src/builtins)
-SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c
+SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c export.c
 # Error handler source files (in src/error/)
 SRC_ERROR = error_handler.c
 # Garbage collector source files (in src/garbage_collector/)
 SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_print.c \
-         gc_holder.c gc_malloc.c gc_readline.c
+         gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \

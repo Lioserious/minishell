@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/05 16:42:39 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/06 12:01:16 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_env_list	*init_env_list(void)
 	return (env_list);
 }
 
-void	ft_add_env_var(t_env_list *env_list, char *name, char *value)
+void	ft_add_env_var(t_env_list *env_list, char *name, char *value, int is_export)
 {
 	t_env_node	*new_node;
 	t_env_node	*current;
 
 	if (!env_list || !name)
 		return;
-	new_node = (t_env_node *)malloc(sizeof(t_env_node));
+	new_node = (t_env_node *)gc_malloc(sizeof(t_env_node));
 	if (!new_node)
 		return;
 	new_node->name = gc_strdup(name);
@@ -37,6 +37,7 @@ void	ft_add_env_var(t_env_list *env_list, char *name, char *value)
 		new_node->value = gc_strdup(value);
 	else
 		new_node->value = gc_strdup("");
+	new_node->is_export = is_export;
 	new_node->next = NULL;
 	if (!env_list->head)
 		env_list->head = new_node;
@@ -66,7 +67,7 @@ void	init_env(t_env_list *env_list)
 		{
 			name = gc_substr(*env, 0, equal - *env);
 			value = gc_strdup(equal + 1);
-			ft_add_env_var(env_list, name, value);
+			ft_add_env_var(env_list, name, value, 1);
 		}
 		env++;
 	}

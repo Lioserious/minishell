@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 12:01:16 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:53:51 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ t_env_list	*init_env_list(void)
 	return (env_list);
 }
 
-void	ft_add_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+void	ft_add_env_var(t_env_list *env_list, char *name,
+	char *value, int is_export)
 {
 	t_env_node	*new_node;
 	t_env_node	*current;
 
 	if (!env_list || !name)
-		return;
+		return ;
 	new_node = (t_env_node *)gc_malloc(sizeof(t_env_node));
 	if (!new_node)
-		return;
+		return ;
 	new_node->name = gc_strdup(name);
 	if (value)
 		new_node->value = gc_strdup(value);
@@ -53,11 +54,11 @@ void	ft_add_env_var(t_env_list *env_list, char *name, char *value, int is_export
 
 void	init_env(t_env_list *env_list)
 {
-	extern char **environ;
-	char **env;
-	char	*equal;
-	char	*name;
-	char	*value;
+	extern char	**environ;
+	char		**env;
+	char		*equal;
+	char		*name;
+	char		*value;
 
 	env = environ;
 	while (*env)
@@ -75,7 +76,7 @@ void	init_env(t_env_list *env_list)
 
 int	ft_env(t_env_list *env_list)
 {
-	t_env_node *current;
+	t_env_node	*current;
 
 	if (!env_list)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:43:20 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 11:16:16 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/06 12:41:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,6 @@ void	execute_builtin(t_cmd_node *node, t_env_list *env_list)
 		ft_env(env_list);
 	else if (ft_strncmp(node->cmd[0], "export", 7) == 0)
 		ft_export(env_list, node);
+	else if (ft_strncmp(node->cmd[0], "unset", 6) == 0)
+		ft_unset(env_list, node);
 }

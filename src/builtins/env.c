@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/07 15:31:33 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:01:40 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,16 @@ void	set_env_var(t_env_list *env_list, char *name, char *value)
 		current = current->next;
 	}
 	return ;
+}
+
+char	*get_env_value(t_env_list *env_list, char *name)
+{
+	t_env_node	*current;
+
+	current = env_list->head;
+	while (ft_strncmp(current->name, name, ft_strlen(name + 1)) != 0)
+		current = current->next;
+	return (current->value);
 }
 
 int	ft_env(t_env_list *env_list)

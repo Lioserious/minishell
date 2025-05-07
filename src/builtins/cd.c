@@ -6,15 +6,15 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:16:09 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/07 16:34:35 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:48:50 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		cd_to_home(t_env_list *env_list);
-int		cd_to_oldpath(t_env_list *env_list);
-int		cd_to_path(char *path, t_env_list	*env_list);
+static int	cd_to_home(t_env_list *env_list);
+static int	cd_to_oldpath(t_env_list *env_list);
+static int	cd_to_path(char *path, t_env_list	*env_list);
 
 int	ft_cd(t_cmd_node *node, t_env_list *env_list)
 {
@@ -29,7 +29,7 @@ int	ft_cd(t_cmd_node *node, t_env_list *env_list)
 	return (cd_to_path(node->cmd[1], env_list));
 }
 
-int	cd_to_home(t_env_list *env_list)
+static int	cd_to_home(t_env_list *env_list)
 {
 	char	*home;
 	char	homepwd[PATH_MAX];
@@ -49,7 +49,7 @@ int	cd_to_home(t_env_list *env_list)
 	return (0);
 }
 
-int	cd_to_oldpath(t_env_list *env_list)
+static int	cd_to_oldpath(t_env_list *env_list)
 {
 	char	*oldpwd;
 	char	currentpwd[PATH_MAX];
@@ -71,7 +71,7 @@ int	cd_to_oldpath(t_env_list *env_list)
 	return (0);
 }
 
-int	cd_to_path(char *path, t_env_list	*env_list)
+static int	cd_to_path(char *path, t_env_list	*env_list)
 {
 	char	oldpwd[PATH_MAX];
 	char	cwd[PATH_MAX];

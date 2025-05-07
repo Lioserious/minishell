@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:16:09 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/07 15:00:51 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/07 15:47:27 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	ft_move_to_oldpwd(t_env_list *env_list);
 int	ft_cd(t_cmd_node *node, t_env_list *env_list)
 {
 	char	*home;
+	char	current_dir[PATH_MAX];
+	char	cwd[PATH_MAX];
 
-	(void)env_list;
+	if (getcwd(current_dir, sizeof(current_dir)) != NULL)
+		set_env_var(env_list, "OLDPWD", gc_strdup(current_dir));
 	if (!node->cmd[1] || node->cmd[1][0] == '~')
 	{
 		home = getenv("HOME");
@@ -27,6 +30,7 @@ int	ft_cd(t_cmd_node *node, t_env_list *env_list)
 			perror("cd");
 			return (1);
 		}
+		set_env_var(env_list, "PWD", gc_strdup(home));
 		return (0);
 	}
 	if (node->cmd[1][0] == '-')
@@ -42,6 +46,8 @@ int	ft_cd(t_cmd_node *node, t_env_list *env_list)
 		perror("");
 		return (1);
 	}
+	if (getcwd(cwd, sizeof(cwd)))
+		set_env_var(env_list, "PWD", gc_strdup(cwd));
 	return (0);
 }
 
@@ -61,5 +67,6 @@ void	ft_move_to_oldpwd(t_env_list *env_list)
 	}
 	ft_putstr_fd(oldpwd , 1);
 	ft_putendl_fd("", 1);
+	set_env_var(env_list, "PWD", gc_strdup(oldpwd));
 	return ;
 }

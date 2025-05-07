@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:50:45 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 13:03:22 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/07 14:38:59 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	test_execute(t_cmd_node *node, t_env_list *env_list);
 void	execute_builtin(t_cmd_node *node, t_env_list *env_list);
 int		ft_pwd(void);
 int		ft_echo(t_cmd_node *node);
-int		ft_cd(t_cmd_node *node);
+int		ft_cd(t_cmd_node *node, t_env_list *env_list);
 #endif

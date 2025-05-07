@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:43:20 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 13:05:34 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/07 14:39:22 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_builtin(t_cmd_node *node, t_env_list *env_list)
 	else if (ft_strncmp(node->cmd[0], "echo", 5) == 0)
 		ft_echo(node);
 	else if (ft_strncmp(node->cmd[0], "cd", 3) == 0)
-		ft_cd(node);
+		ft_cd(node, env_list);
 	else if (ft_strncmp(node->cmd[0], "env", 4) == 0)
 		ft_env(env_list);
 	else if (ft_strncmp(node->cmd[0], "export", 7) == 0)

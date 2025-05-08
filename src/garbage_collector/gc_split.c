@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:15:30 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 16:16:09 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:19:26 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	fill_substrings(char **result, const char *s, char c)
  * @param c Das Trennzeichen
  * @return Ein Array von Strings (Teilstrings) oder NULL bei Fehlern
  */
-char	**ft_split(const char *s, char c)
+char	**gc_split(const char *s, char c)
 {
 	size_t	count;
 	char	**result;

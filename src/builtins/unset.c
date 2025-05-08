@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:18:21 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 15:52:03 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 17:41:37 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	remove_env_var(t_env_list *env_list, char *name)
 
 int	ft_unset(t_env_list *env_list, t_cmd_node *node)
 {
-	t_env_node	*current;
-	t_env_node	*previous;
 	int			i;
 
 	i = 1;

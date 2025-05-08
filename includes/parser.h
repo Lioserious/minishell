@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/08 12:59:17 by lihrig           ###   ########.fr       */
+/*   Created: 2025/05/08 12:58:35 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/08 12:59:04 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSER_H
+# define PARSER_H
 
-# include "cmd_types.h"
-# include "tokenizer.h"
-# include "error.h"
-# include "garbage_collector.h"
-# include "libft.h"
-# include "structs.h"
-# include "parser.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 
-//readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#define PROMPT "miniarsch> "
 
 #endif

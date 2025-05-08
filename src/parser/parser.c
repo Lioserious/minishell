@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/08 12:59:17 by lihrig           ###   ########.fr       */
+/*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/08 12:42:07 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "cmd_types.h"
-# include "tokenizer.h"
-# include "error.h"
-# include "garbage_collector.h"
-# include "libft.h"
-# include "structs.h"
-# include "parser.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-//readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#define PROMPT "miniarsch> "
-
-#endif
+t_cmd_list *parser(t_token_list *token_list)
+{
+	t_cmd_list *cmd_list = create_cmd_list();
+	t_token *current;
+	
+	t_token *current = token_list->head;
+	while (current && current->type != TOKEN_EOF)
+	{
+		
+	}
+	return (cmd_list);
+}

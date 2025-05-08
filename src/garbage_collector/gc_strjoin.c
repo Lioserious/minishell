@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:50:51 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 15:51:21 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 15:52:37 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		len2 = ft_strlen(s2);
 	else
 		len2 = 0;
-	s = malloc(len1 + len2 + 1);
+	s = gc_malloc(len1 + len2 + 1);
 	if (!s)
 		return (NULL);
 	save = s;

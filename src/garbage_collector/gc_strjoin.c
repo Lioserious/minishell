@@ -6,13 +6,13 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:50:51 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 15:52:37 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:22:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*gc_strjoin(char const *s1, char const *s2)
 {
 	char	*s;
 	char	*save;

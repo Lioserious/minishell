@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "cmd_types.h"
+# include "tokenizer.h"
 # include "error.h"
 # include "garbage_collector.h"
 # include "libft.h"

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:39:56 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/04 12:58:44 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_cmd_node	*create_cmd_node(char **cmd, int cmd_type)
 }
 
 // auffedel funktion verbindet liste mit neuem node,
-//kann auch mit files verwendet werden
 void	add_cmd_to_list(t_cmd_list *list, t_cmd_node *node)
 {
 	if (!list || !node)

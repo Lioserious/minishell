@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage_collector.h                                :+:      :+:    :+:   */
+/*   handle_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:01:43 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:22:04 by lihrig           ###   ########.fr       */
+/*   Created: 2025/05/04 15:48:59 by lihrig            #+#    #+#             */
+/*   Updated: 2025/05/04 17:23:29 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GARBAGE_COLLECTOR_H
-# define GARBAGE_COLLECTOR_H
+#include "minishell.h"
 
-# include "libft.h"
+int	handle_word(char *input, int *i, t_token_list *token_list)
+{
+	t_token	*new_token;
+	char	*word;
 
-t_list	**garbage_holder(void);
-void	garbage_collector_add(void *ptr);
-void	garbage_collector_empty(void);
-void	garbage_collector_print(void);
-void	*gc_malloc(size_t size);
-char	*gc_readline(const char *prompt);
-char	*gc_strdup(const char *s);
-char	*gc_substr(char const *s, unsigned int start, size_t len);
-
-#endif
+	if (!input[*i] || is_whitespace(input[*i]) || is_special_char(input[*i]))
+		return (0);
+	word = extract_word(input, i);
+	if (!word)
+		return (0);
+	new_token = create_token(TOKEN_WORD, word);
+	add_token_to_list(token_list, new_token);
+	return (1);
+}

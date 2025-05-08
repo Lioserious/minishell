@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/07 17:03:59 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/04 18:50:45 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/07 17:10:37 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-# include "cmd_types.h"
-# include "tokenizer.h"
-# include "error.h"
-# include "garbage_collector.h"
-# include "libft.h"
-# include "structs.h"
-# include "execution.h"
-# include "builtins.h"
-# include "env.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+# include "minishell.h"
+# include <stdbool.h>
 
-//readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#define PROMPT "miniarsch> "
+void	test_execute(t_cmd_node *node, t_env_list *env_list);
+void	execute_builtin(t_cmd_node *node, t_env_list *env_list);
 
 #endif

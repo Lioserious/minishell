@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/07 17:08:50 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:00:03 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ char		*get_env_value(t_env_list *env_list, char *name);
 void		ft_add_env_var(t_env_list *env_list, char *name,
 				char *value, int is_export);
 void		set_env_var(t_env_list *env_list, char *name, char *value);
+char		**convert_env_struct_array(t_env_list *env_list);
 #endif

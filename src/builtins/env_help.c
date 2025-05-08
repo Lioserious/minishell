@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:50:46 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/07 16:53:35 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 15:59:00 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,31 @@ void	set_env_var(t_env_list *env_list, char *name, char *value)
 		current = current->next;
 	}
 	return ;
+}
+
+char	**convert_env_struct_array(t_env_list *env_list)
+{
+	t_env_node	*current;
+	char		**env_array;
+	char		*name_array;
+	int			i;
+
+	current = env_list->head;
+	i = 0;
+	while (current)
+	{
+		i++;
+		current = current->next;
+	}
+	env_array = (char **)gc_malloc(sizeof(char *) * (i + 1));
+	current = env_list->head;
+	i = 0;
+	while (current)
+	{
+		name_array = gc_strjoin(current->name, "=");
+		env_array[i++] = gc_strjoin(name_array, current->value);
+		current = current->next;
+	}
+	env_array[i] = NULL;
+	return (env_array);
 }

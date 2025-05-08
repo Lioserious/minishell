@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 16:00:03 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/08 17:40:53 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ENV_H
 
 # include "minishell.h"
+# include <stdbool.h>
 // ========== ENV - STRUCTS ==========
 typedef struct s_env_node
 {

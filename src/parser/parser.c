@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 14:38:01 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:57:17 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
 
 	cmd_array = NULL;
 	arg_count = 0;
-	while (token && token->type == TOKEN_WORD
+	// Hier die Bedingung anpassen, um TOKEN_ENV_VAR zu akzeptieren
+	while (token && (token->type == TOKEN_WORD || token->type == TOKEN_ENV_VAR)
 		&& !is_redirection_token(token->type) && token->type != TOKEN_PIPE
 		&& token->type != TOKEN_EOF)
 	{
@@ -91,4 +92,3 @@ t_cmd_list	*parser(t_token_list *token_list)
 		return (error_handler("PARSER: NO VALID COMMAND", 0), cmd_list);
 	return (cmd_list);
 }
-

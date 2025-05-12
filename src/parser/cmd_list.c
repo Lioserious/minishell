@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 12:58:44 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 12:33:12 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,35 @@ void	add_cmd_to_list(t_cmd_list *list, t_cmd_node *node)
 		list->tail = node;
 	}
 	list->size++;
+}
+// MUSS NOCH RAUS
+void	print_parsed_cmd_list(t_cmd_list *cmd_list)
+{
+    t_cmd_node	*current;
+    int			i;
+
+    if (!cmd_list)
+    {
+        printf("Empty command list\n");
+        return;
+    }
+    printf("Command list with %zd command(s):\n", cmd_list->size);
+        current = cmd_list->head;
+    while (current)
+    {
+        printf("Command Type: %d\n", current->cmd_type);
+        if (current->cmd)
+        {
+            i = 0;
+            printf("  Args: ");
+            while (current->cmd[i])
+            {
+                printf("[%s] ", current->cmd[i]);
+                i++;
+            }
+            printf("\n");
+        }
+        current = current->next;
+        printf("-----------------\n");
+    }
 }

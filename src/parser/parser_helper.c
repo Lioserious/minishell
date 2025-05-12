@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:09 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 12:24:02 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:13:42 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	is_redirection_token(t_token_type type)
 	return (type == TOKEN_REDIR_OUT || type == TOKEN_REDIR_IN
 		|| type == TOKEN_REDIR_APPEND || type == TOKEN_REDIR_HEREDOC);
 }
+
 // Argument-Array zu vergrößern.
 char	**realloc_cmd_args(char **args, int new_size)
 {
-	char **new_args;
-	int i;
+	char	**new_args;
+	int		i;
 
 	i = 0;
 	new_args = (char **)gc_malloc(sizeof(char *) * (new_size + 1));
@@ -35,4 +36,3 @@ char	**realloc_cmd_args(char **args, int new_size)
 	new_args[new_size] = NULL;
 	return (new_args);
 }
-

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:38:41 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 13:46:42 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:01:12 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // anhaengt.
 char	*gc_readline(const char *prompt)
 {
-	char *input;
+	char	*input;
 
 	input = readline(prompt);
 	if (input)

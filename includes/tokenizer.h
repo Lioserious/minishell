@@ -3,25 +3,25 @@
 
 # include <stddef.h> // für size_t
 /*
-	TOKEN_WORD,          // Normale Wörter
-	TOKEN_PIPE,          // |
-	TOKEN_REDIR_IN,      //
-	TOKEN_REDIR_OUT,     // >
-	TOKEN_REDIR_APPEND,  // >>
-	TOKEN_REDIR_HEREDOC, //
-	TOKEN_ENV_VAR,       // $ENV
-	TOKEN_EOF            // Ende des Inputs
+	TOKEN_WORD,          Normale Wörter
+	TOKEN_PIPE,          |
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,      >
+	TOKEN_REDIR_APPEND,   >>
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_ENV_VAR,       $ENV
+	TOKEN_EOF            Ende des Inputs
 */
 typedef enum e_token_type
 {
-	TOKEN_WORD,          // Normale Wörter
-	TOKEN_PIPE,          // |
-	TOKEN_REDIR_IN,      //
-	TOKEN_REDIR_OUT,     // >
-	TOKEN_REDIR_APPEND,  // >>
-	TOKEN_REDIR_HEREDOC, //
-	TOKEN_ENV_VAR,       // $ENV
-	TOKEN_EOF            // Ende des Inputs
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_ENV_VAR,
+	TOKEN_EOF
 }					t_token_type;
 
 typedef struct s_token

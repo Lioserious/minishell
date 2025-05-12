@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 15:32:25 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:12:19 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,54 +58,4 @@ void	add_cmd_to_list(t_cmd_list *list, t_cmd_node *node)
 		list->tail = node;
 	}
 	list->size++;
-}
-// MUSS NOCH RAUS
-void print_parsed_cmd_list(t_cmd_list *cmd_list)
-{
-    t_cmd_node *current;
-    t_file_node *file;
-    int i;
-
-    if (!cmd_list)
-    {
-        printf("Empty command list\n");
-        return;
-    }
-    
-    printf("Command list with %zd command(s):\n", cmd_list->size);
-    current = cmd_list->head;
-    
-    while (current)
-    {
-        printf("Command Type: %d\n", current->cmd_type);
-        
-        // Befehl und Argumente anzeigen
-        if (current->cmd)
-        {
-            i = 0;
-            printf("  Args: ");
-            while (current->cmd[i])
-            {
-                printf("[%s] ", current->cmd[i]);
-                i++;
-            }
-            printf("\n");
-        }
-        
-        // Redirections anzeigen
-        if (current->file && current->file->size > 0)
-        {
-            printf("  Redirections (%zd):\n", current->file->size);
-            file = current->file->head;
-            while (file)
-            {
-                printf("    Type: %d, File: [%s]\n", 
-                       file->redirection_type, file->name);
-                file = file->next;
-            }
-        }
-        
-        current = current->next;
-        printf("-----------------\n");
-    }
 }

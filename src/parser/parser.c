@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 14:57:17 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:14:15 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_token	*parse_redirections(t_token *token, t_cmd_node *cmd)
 	}
 	return (token);
 }
+
 // Diese Funktion wird später implementiert
 // Hier nur ein Platzhalter, um Kompilierungsfehler zu vermeiden
 t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
@@ -47,7 +48,6 @@ t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
 
 	cmd_array = NULL;
 	arg_count = 0;
-	// Hier die Bedingung anpassen, um TOKEN_ENV_VAR zu akzeptieren
 	while (token && (token->type == TOKEN_WORD || token->type == TOKEN_ENV_VAR)
 		&& !is_redirection_token(token->type) && token->type != TOKEN_PIPE
 		&& token->type != TOKEN_EOF)

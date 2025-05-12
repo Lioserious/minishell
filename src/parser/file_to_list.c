@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:08 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 12:58:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:12:56 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_file_node	*create_file_node(char *name, int redirection_type)
 	return (new_node);
 }
 
-void add_files_list(t_file_list *list, t_file_node *node)
+void	add_files_list(t_file_list *list, t_file_node *node)
 {
 	if (!list || !node)
 		return ;

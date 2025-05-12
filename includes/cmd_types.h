@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:00:59 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 15:50:09 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:06:35 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define CMD_TYPES_H
 
 /*
-	CMD_SIMPLE = 1,  /* Ein einfacher Befehl (ls -la)
-	CMD_PIPE = 2,    /* Teil einer Pipeline (cmd | cmd)
-	CMD_BUILTIN = 3, /* Eingebauter Befehl (cd, echo, etc.)
+	CMD_SIMPLE = 1,   Ein einfacher Befehl (ls -la)
+	CMD_PIPE = 2,    Teil einer Pipeline (cmd | cmd)
+	CMD_BUILTIN = 3,  Eingebauter Befehl (cd, echo, etc.)
 */
 typedef enum e_cmd_type
 {

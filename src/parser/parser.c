@@ -6,35 +6,36 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 14:18:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:38:01 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *parse_redirections(t_token *token, t_cmd_node *cmd)
+t_token	*parse_redirections(t_token *token, t_cmd_node *cmd)
 {
-    t_file_node *file;
-    int redir_type;
+	t_file_node	*file;
+	int			redir_type;
 
-    while (token && is_redirection_token(token->type))
-    {
-        if (token->type == TOKEN_REDIR_IN)
-            redir_type = REDIR_IN;
-        else if (token->type == TOKEN_REDIR_OUT)
-            redir_type = REDIR_OUT;
-        else if (token->type == TOKEN_REDIR_APPEND)
-            redir_type = REDIR_APPEND;
-        else if (token->type == TOKEN_REDIR_HEREDOC)
-            redir_type = REDIR_HEREDOC;
-        token = token->next;
-        if (!token || token->type != TOKEN_WORD)
-            return (error_handler("PARSER: Expected filename after redirection", 1), NULL);
-        file = create_file_node(token->value, redir_type);
-        add_files_list(cmd->file, file);
-        token = token->next;
-    }
-    return token;
+	while (token && is_redirection_token(token->type))
+	{
+		if (token->type == TOKEN_REDIR_IN)
+			redir_type = REDIR_IN;
+		else if (token->type == TOKEN_REDIR_OUT)
+			redir_type = REDIR_OUT;
+		else if (token->type == TOKEN_REDIR_APPEND)
+			redir_type = REDIR_APPEND;
+		else if (token->type == TOKEN_REDIR_HEREDOC)
+			redir_type = REDIR_HEREDOC;
+		token = token->next;
+		if (!token || token->type != TOKEN_WORD)
+			return (error_handler("PARSER: Expected filename after redirection",
+					1), NULL);
+		file = create_file_node(token->value, redir_type);
+		add_files_list(cmd->file, file);
+		token = token->next;
+	}
+	return (token);
 }
 // Diese Funktion wird später implementiert
 // Hier nur ein Platzhalter, um Kompilierungsfehler zu vermeiden
@@ -72,7 +73,6 @@ t_cmd_list	*parser(t_token_list *token_list)
 	if (!token_list || !token_list->head)
 		return (NULL);
 	cmd_list = create_cmd_list();
-	return (NULL);
 	current_token = token_list->head;
 	while (current_token && current_token->type != TOKEN_EOF)
 	{
@@ -91,3 +91,4 @@ t_cmd_list	*parser(t_token_list *token_list)
 		return (error_handler("PARSER: NO VALID COMMAND", 0), cmd_list);
 	return (cmd_list);
 }
+

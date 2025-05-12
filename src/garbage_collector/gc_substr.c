@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:21:34 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 13:25:08 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/08 15:50:20 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 * Strings 's' darstellt, beginnend am Index 'start' und maximal 'len'
 * Zeichen lang.
 * Der neue String wird dynamisch alloziert. Falls 's' NULL ist, wird
-* NULL zurückgegeben. Falls 'start' größer oder gleich der Länge von 
+* NULL zurückgegeben. Falls 'start' größer oder gleich der Länge von
 * 's' ist, wird ein leerer String zurückgegeben.
 * Falls 'len' plus 'start' größer als die Länge von 's' ist,
 * wird der Teilstring bis zum Ende
@@ -41,7 +41,7 @@ char	*gc_substr(char const *s, unsigned int start, size_t len)
 	if (s == NULL)
 		return (NULL);
 	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
+		return (gc_strdup(""));
 	if (len + start > ft_strlen(s))
 		len = ft_strlen(s) - start;
 	sub_s = gc_malloc(len + 1);

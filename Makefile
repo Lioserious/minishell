@@ -22,25 +22,25 @@ SRC_FILES = main.c
 # Parser source files (in src/parser/)
 SRC_PARSER = cmd_list.c file_to_list.c
 # Executor source files (in src/executor/)
-SRC_EXECUTOR = exec.c
+SRC_EXECUTOR = exec.c external_exec.c
 # Builtins source files (in src/builtins)
-SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c export.c unset.c exit.c
+SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c
 # Error handler source files (in src/error/)
 SRC_ERROR = error_handler.c
 # Garbage collector source files (in src/garbage_collector/)
 SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_print.c \
-         gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c
+         gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c gc_split.c gc_strjoin.c
 # Tokenizer source files (in src/tokenizer)
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
          handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c
-         
+
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \
       $(addprefix error/, $(SRC_ERROR)) \
       $(addprefix garbage_collector/, $(SRC_GC)) \
       $(addprefix executor/, $(SRC_EXECUTOR)) \
-      $(addprefix builtins/, $(SRC_BUILTINS))
+      $(addprefix builtins/, $(SRC_BUILTINS)) \
       $(addprefix tokenizer/, $(SRC_TOK))
 ################################################################################
 #################### OBJECT FILES ############################################

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:18:36 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:18:36 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:45:54 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t num, size_t size);
 void	ft_bzero(void *s, size_t len);
 void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr_fd(const char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 size_t	ft_strlen(const char *s);

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:16:33 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:16:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:45:27 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * @param fd Der Dateideskriptor, in den geschrieben werden soll
  * @return Keine Rückgabe (void)
  */
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(const char *s, int fd)
 {
 	if (s == NULL)
 		return ;

@@ -6,19 +6,30 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/07 17:03:59 by mimalek          ###   ########.fr       */
+
+/*   Updated: 2025/05/12 16:10:28 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "cmd_types.h"
-# include "tokenizer.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+// readline
+# include <readline/history.h>
+# include <readline/readline.h>
+
+// Standard-Bibliotheken
 # include "error.h"
 # include "garbage_collector.h"
 # include "libft.h"
+
+// Dann Strukturdefinitionen und Enums
+# include "cmd_types.h"
 # include "structs.h"
+
 # include "execution.h"
 # include "builtins.h"
 # include "env.h"
@@ -26,9 +37,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-//readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#define PROMPT "miniarsch> "
+# include "tokenizer.h"
+# include "parser.h"
 
+# define PROMPT "miniarsch> "
 #endif

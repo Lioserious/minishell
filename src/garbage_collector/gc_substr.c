@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:21:34 by lihrig            #+#    #+#             */
+
 /*   Updated: 2025/05/12 16:01:46 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -34,6 +35,7 @@
  * @param len Die maximale Länge des zu erstellenden Teilstrings
  * @return Ein neu allozierter Teilstring oder NULL bei Fehlern
  */
+
 char	*gc_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub_s;
@@ -42,7 +44,7 @@ char	*gc_substr(char const *s, unsigned int start, size_t len)
 	if (s == NULL)
 		return (NULL);
 	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
+		return (gc_strdup(""));
 	if (len + start > ft_strlen(s))
 		len = ft_strlen(s) - start;
 	sub_s = gc_malloc(len + 1);

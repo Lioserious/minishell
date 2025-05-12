@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:01:55 by lihrig            #+#    #+#             */
+
 /*   Updated: 2025/05/12 16:10:28 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -29,7 +30,13 @@
 # include "cmd_types.h"
 # include "structs.h"
 
-// Dann Module, die auf diesen Strukturen aufbauen
+# include "execution.h"
+# include "builtins.h"
+# include "env.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+
 # include "tokenizer.h"
 # include "parser.h"
 

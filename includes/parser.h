@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:35 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 14:51:30 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:50:19 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "minishell.h"
 // helper
-int		is_redirection_token(t_token_type type);
-char	**realloc_cmd_args(char **args, int new_size);
-void	print_parsed_cmd_list(t_cmd_list *cmd_list);
-void add_files_list(t_file_list *list, t_file_node *node);
-t_token	*parse_redirections(t_token *token, t_cmd_node *cmd);
+int			is_redirection_token(t_token_type type);
+char		**realloc_cmd_args(char **args, int new_size);
+void		print_parsed_cmd_list(t_cmd_list *cmd_list);
+void		add_files_list(t_file_list *list, t_file_node *node);
+t_token		*parse_redirections(t_token *token, t_cmd_node *cmd);
 t_cmd_list	*parser(t_token_list *token_list);
 
 #endif

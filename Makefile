@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 # Main source files
 SRC_FILES = main.c
 # Parser source files (in src/parser/)
-SRC_PARSER = cmd_list.c file_to_list.c
+SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c
 # Executor source files (in src/executor/)
 SRC_EXECUTOR =
 # Error handler source files (in src/error/)

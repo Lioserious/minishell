@@ -22,7 +22,7 @@ SRC_FILES = main.c
 # Parser source files (in src/parser/)
 SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parser_test.c
 # Executor source files (in src/executor/)
-SRC_EXECUTOR = exec.c external_exec.c
+SRC_EXECUTOR = exec.c external_exec.c redirections.c
 # Builtins source files (in src/builtins)
 SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c
 # Error handler source files (in src/error/)

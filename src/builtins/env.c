@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/07 16:52:01 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/13 17:40:35 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,12 @@ t_env_list	*init_env_list(void)
 	return (env_list);
 }
 
-void	init_env(t_env_list *env_list)
+void	init_env(t_env_list *env_list, char **env)
 {
-	extern char	**environ;
-	char		**env;
 	char		*equal;
 	char		*name;
 	char		*value;
 
-	env = environ;
 	while (*env)
 	{
 		equal = ft_strchr(*env, '=');

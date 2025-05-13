@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 17:40:53 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/13 17:40:09 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_env_list
 
 // ========== Functions ==========
 t_env_list	*init_env_list(void);
-void		init_env(t_env_list *env_list);
+void		init_env(t_env_list *env_list, char **env);
 // ========== Helper Functions ==========
 char		*get_env_value(t_env_list *env_list, char *name);
 void		ft_add_env_var(t_env_list *env_list, char *name,

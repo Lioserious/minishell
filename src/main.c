@@ -6,21 +6,23 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/13 14:04:40 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/13 17:39:51 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	char			*input;
 	t_token_list	*tokens;
 	t_cmd_list		*cmd_list;
 	t_env_list		*env_list;
 
+	(void)argc;
+	(void)argv;
 	env_list = init_env_list();
-	init_env(env_list);
+	init_env(env_list, env);
 	// Begrüßung anzeigen
 	ft_putendl_fd("Welcome to Minishell Test!", STDOUT_FILENO);
 	// ft_putendl_fd("First, running automatic test cases...", STDOUT_FILENO);

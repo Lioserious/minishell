@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:02:54 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/13 13:25:56 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	main(void)
 	char			*input;
 	t_token_list	*tokens;
 	t_cmd_list		*cmd_list;
+	t_env_list		*env_list;
 
+	env_list = init_env_list();
+	init_env(env_list);
 	// Begrüßung anzeigen
 	ft_putendl_fd("Welcome to Minishell Test!", STDOUT_FILENO);
 	ft_putendl_fd("First, running automatic test cases...", STDOUT_FILENO);
@@ -61,6 +64,7 @@ int	main(void)
 		}
 		ft_putendl_fd("\n--- PARSING RESULTS ---", STDOUT_FILENO);
 		print_parsed_cmd_list(cmd_list);
+		execute(env_list, cmd_list->head);
 	}
 	rl_clear_history();
 	garbage_collector_empty();

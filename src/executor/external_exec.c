@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   external_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/15 10:55:11 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:31:14 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_cmd_path(t_env_list *env_list, char *cmd);
+// static char	*get_cmd_path(t_env_list *env_list, char *cmd);
 static void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva);
 
@@ -34,6 +34,25 @@ void	execute_external(t_cmd_node *node, t_env_list *env_list)
 		perror("fork");
 }
 
+static char	*get_cmd_path(t_env_list *env_list, char *cmd)
+{
+	char	**path;
+	char	*part_path;
+	char	*full_path;
+	int		i;
+
+	path = gc_split(get_env_value(env_list, "PATH"), ':');
+	i = 0;
+	while (path[i])
+	{
+		part_path = gc_strjoin(path[i], "/");
+		full_path = gc_strjoin(part_path, cmd);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		i++;
+	}
+	return (NULL);
+}
 static void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva)
 {
@@ -57,22 +76,3 @@ static void	handle_child_process(t_cmd_node *node,
 	}
 }
 
-static char	*get_cmd_path(t_env_list *env_list, char *cmd)
-{
-	char	**path;
-	char	*part_path;
-	char	*full_path;
-	int		i;
-
-	path = gc_split(get_env_value(env_list, "PATH"), ':');
-	i = 0;
-	while (path[i])
-	{
-		part_path = gc_strjoin(path[i], "/");
-		full_path = gc_strjoin(part_path, cmd);
-		if (access(full_path, X_OK) == 0)
-			return (full_path);
-		i++;
-	}
-	return (NULL);
-}

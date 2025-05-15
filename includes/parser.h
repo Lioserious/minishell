@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:35 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:03:58 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/15 21:29:08 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void		add_files_list(t_file_list *list, t_file_node *node);
 t_token		*parse_redirections(t_token *token, t_cmd_node *cmd);
 t_cmd_list	*parser(t_token_list *token_list);
 
-//test
-void run_env_var_tests(void);
-void	run_parser_tests(void);
+// test
+void		run_env_var_tests(void);
+void		run_parser_tests(void);
 
 #endif

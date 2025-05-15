@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/13 17:40:09 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:43:17 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
-# include "minishell.h"
 # include <stdbool.h>
 // ========== ENV - STRUCTS ==========
 typedef struct s_env_node

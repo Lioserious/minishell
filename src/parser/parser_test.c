@@ -6,11 +6,12 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:02:30 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:12:24 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/15 20:28:15 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 
 // MUSS NOCH RAUS
 void print_parsed_cmd_list(t_cmd_list *cmd_list)
@@ -72,6 +73,12 @@ void	run_parser_tests(void)
 	t_token_list	*tokens;
 	t_cmd_list		*cmd_list;
 	char			*input_copy;
+    t_env_list      *env_list;
+    extern char     **environ;
+
+    // Erstelle Umgebungsvariablen-Liste für die Tests
+    env_list = init_env_list();
+    init_env(env_list, environ);
 
 	i = 0;
 	ft_putendl_fd("\n--- PARSER TEST CASES ---", STDOUT_FILENO);
@@ -92,8 +99,8 @@ void	run_parser_tests(void)
 			continue;
 		}
 		
-		// Tokenize input
-		tokens = tokenizer(input_copy);
+		// Tokenize input mit Umgebungsvariablen
+		tokens = tokenizer(input_copy, env_list);
 		if (!tokens)
 		{
 			ft_putendl_fd("Tokenization failed!", STDOUT_FILENO);
@@ -142,6 +149,12 @@ void run_env_var_tests(void)
     t_token_list *tokens;
     t_cmd_list *cmd_list;
     char *input_copy;
+    t_env_list *env_list;
+    extern char **environ;
+    
+    // Erstelle Umgebungsvariablen-Liste für die Tests
+    env_list = init_env_list();
+    init_env(env_list, environ);
     
     ft_putendl_fd("\n--- ENVIRONMENT VARIABLE TEST CASES ---", STDOUT_FILENO);
     
@@ -162,8 +175,8 @@ void run_env_var_tests(void)
             continue;
         }
         
-        // Tokenize input
-        tokens = tokenizer(input_copy);
+        // Tokenize input mit Umgebungsvariablen
+        tokens = tokenizer(input_copy, env_list);
         if (!tokens)
         {
             ft_putendl_fd("Tokenization failed!", STDOUT_FILENO);

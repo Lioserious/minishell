@@ -6,99 +6,137 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:11 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 17:23:27 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/15 21:19:48 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_single_quote(char *input, int *i, t_token_list *token_list)
+/**
+ * @brief Extracts content between single quotes
+ * @param input Input string
+ * @param i Current position pointer
+ * @return Extracted content or NULL
+ */
+char	*process_single_quote(char *input, int *i)
 {
-	t_token	*new_token;
 	int		start;
-	int		len;
-	char	*value;
+	char	*result;
 
 	if (input[*i] != '\'')
-		return (0);
-	start = ++(*i);
+		return (NULL);
+	(*i)++;
+	start = *i;
 	while (input[*i] && input[*i] != '\'')
 		(*i)++;
 	if (!input[*i])
-		error_handler("Unclosed single quote", 1);
-	len = *i - start;
-	value = gc_substr(input, start, len);
-	new_token = create_token(TOKEN_WORD, value);
-	add_token_to_list(token_list, new_token);
+		error_handler("UNCLOSED SINGLE QUOTE", 1);
+	result = gc_substr(input, start, *i - start);
 	(*i)++;
-	return (1);
+	return (result);
 }
 
-// Speichert Text vor einer Umgebungsvariable
-static void	save_text_before_var(char *input, int start, int end,
-		t_token_list *token_list)
+/**
+ * @brief Appends string to result
+ * @param result Result string pointer
+ * @param str String to append
+ */
+static void	append_to_result(char **result, char *str)
 {
-	int		len;
-	char	*value;
-	t_token	*new_token;
+	char	*temp;
 
-	if (end > start)
+	if (*result == NULL)
+		*result = str;
+	else
 	{
-		len = end - start;
-		value = gc_substr(input, start, len);
-		new_token = create_token(TOKEN_WORD, value);
-		add_token_to_list(token_list, new_token);
+		temp = gc_strjoin(*result, str);
+		*result = temp;
 	}
 }
 
-// Speichert verbleibenden Text nach der letzten Variable
-static void	save_remaining_text(char *input, int start, int end,
-		t_token_list *token_list)
+/**
+ * @brief Processes text segment with variable in double quotes
+ * @param parser Struktur mit allen benötigten Parametern
+ */
+static void	process_double_quote_part(t_quote_parser *parser)
 {
-	int		len;
-	char	*value;
-	t_token	*new_token;
+	char	*before;
+	char	*var_value;
 
-	if (end > start)
+	if (*parser->i_ptr > *parser->start_ptr)
 	{
-		len = end - start;
-		value = gc_substr(input, start, len);
-		new_token = create_token(TOKEN_WORD, value);
-		add_token_to_list(token_list, new_token);
+		before = gc_substr(parser->input, *parser->start_ptr, *parser->i_ptr
+				- *parser->start_ptr);
+		append_to_result(parser->result, before);
+	}
+	var_value = process_env_var(parser->input, parser->i_ptr, parser->env_list);
+	if (var_value != NULL)
+	{
+		append_to_result(parser->result, var_value);
+	}
+	*parser->start_ptr = *parser->i_ptr;
+}
+
+/**
+ * @brief Processes remaining text after last variable
+ * @param input Input string
+ * @param i Current position pointer
+ * @param start Segment start position
+ * @param result Result string pointer
+ */
+static void	process_remaining_text(char *input, int *i, int start,
+		char **result)
+{
+	char	*after;
+	char	*temp;
+
+	if (*i > start)
+	{
+		after = gc_substr(input, start, *i - start);
+		if (*result == NULL)
+		{
+			*result = after;
+		}
+		else
+		{
+			temp = gc_strjoin(*result, after);
+			*result = temp;
+		}
 	}
 }
 
-// Verarbeitet den Inhalt innerhalb der doppelten Anführungszeichen
-static void	process_double_quote_content(char *input, int *i,
-		t_token_list *token_list)
+/**
+ * @brief Extracts content between double quotes with variable expansion
+ * @param input Input string
+ * @param i Current position pointer
+ * @param env_list Environment variable list
+ * @return Processed content or NULL
+ */
+char	*process_double_quote(char *input, int *i, t_env_list *env_list)
 {
-	int	start;
+	int				start;
+	char			*result;
+	t_quote_parser	parser;
 
+	result = NULL;
+	if (input[*i] != '"')
+		return (NULL);
+	(*i)++;
 	start = *i;
+	init_quote_parser_base(&parser, input, i, &result);
+	complete_quote_parser(&parser, &start, env_list);
 	while (input[*i] && input[*i] != '"')
 	{
 		if (input[*i] == '$')
-		{
-			save_text_before_var(input, start, *i, token_list);
-			handle_env_var(input, i, token_list);
-			start = *i;
-		}
+			process_double_quote_part(&parser);
 		else
 			(*i)++;
 	}
+	process_remaining_text(input, i, start, &result);
 	if (!input[*i])
 		error_handler("UNCLOSED DOUBLE QUOTE", 1);
-	save_remaining_text(input, start, *i, token_list);
-	return ;
-}
-
-// Hauptfunktion für doppelte Anführungszeichen
-int	handle_double_quote(char *input, int *i, t_token_list *token_list)
-{
-	if (input[*i] != '"')
-		return (0);
 	(*i)++;
-	process_double_quote_content(input, i, token_list);
-	(*i)++;
-	return (1);
+	if (result == NULL)
+		result = gc_strdup("");
+	return (result);
 }

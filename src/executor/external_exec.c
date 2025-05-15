@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/15 10:38:50 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 10:55:11 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static void	handle_child_process(t_cmd_node *node,
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(node->cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		clean_exit();
+		clean_exit(1);
 	}
 	else
 	{
 		if (execve(cmd_path, node->cmd, enva) == -1)
 		{
 			perror("execve");
-			clean_exit();
+			clean_exit(1);
 		}
 	}
 }

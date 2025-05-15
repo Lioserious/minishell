@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/13 11:32:39 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 10:40:18 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ static void	redirect_fd(char *filename, int flags, int std)
 	if (fd == -1)
 	{
 		perror(filename);
-		exit(EXIT_FAILURE);
+		clean_exit();
 	}
 	if (dup2(fd, std) == -1)
 	{
 		perror("dup2");
 		close(fd);
-		exit(EXIT_FAILURE);
+		clean_exit();
 	}
 	close(fd);
 }
@@ -61,7 +61,7 @@ static void	setup_heredoc(char *delimiter)
 	if (pipe(heredoc_pipe) == -1)
 	{
 		perror("pipe");
-		exit(EXIT_FAILURE);
+		clean_exit();
 	}
 	while (1)
 	{

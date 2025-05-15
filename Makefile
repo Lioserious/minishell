@@ -26,7 +26,7 @@ SRC_EXECUTOR = exec.c external_exec.c redirections.c
 # Builtins source files (in src/builtins)
 SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c
 # Error handler source files (in src/error/)
-SRC_ERROR = error_handler.c
+SRC_ERROR = error_handler.c clean_exit.c
 # Garbage collector source files (in src/garbage_collector/)
 SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_print.c \
          gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c gc_split.c gc_strjoin.c

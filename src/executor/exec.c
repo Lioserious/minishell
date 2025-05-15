@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/13 16:48:53 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 10:38:28 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 	{
 		if (current->next && pipe(fd) == -1)
 		{
+			clean_exit();
 			perror("pipe");
 			exit(EXIT_FAILURE);
 		}
 		pid = fork();
 		if (pid == -1)
 		{
+			clean_exit();
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
@@ -63,7 +65,7 @@ static	void	child_process(t_cmd_node *node, int prev_fd, int *fd, t_env_list *en
 		execute_builtin(node, env_list);
 	else
 		execute_external(node, env_list);
-	exit(0);
+	clean_exit();
 }
 
 static void	parent_process(pid_t pid, int *prev_fd, int *fd, int next)

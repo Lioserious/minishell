@@ -6,26 +6,40 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 16:26:15 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 17:24:54 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/15 21:21:03 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * tokenizer - Zerlegt Eingabestring in Token-Liste
- * @input: Zu zerlegender String (z.B. "echo 'hello' | cat")
- *
- * Verarbeitet den String Zeichen für Zeichen:
- * - Überspringt Whitespace
- * - Behandelt Quotes (' und ")
- * - Erkennt ENV Variablen ($ENV)
- * - Identifiziert Sonderzeichen (|, <, >, <<, >>)
- * - Erfasst normale Wörter/Befehle
- *
- * Return: Verkettete Liste von Tokens oder NULL bei Fehler
+ * @brief Creates a word token and adds it to token list
+ * @param token_list Token list to update
+ * @param word Word string to tokenize
  */
-t_token_list	*tokenizer(char *input)
+void	add_word_token(t_token_list *token_list, char *word)
+{
+	t_token	*new_token;
+
+	if (word == NULL)
+		return ;
+	new_token = create_token(TOKEN_WORD, word);
+	add_token_to_list(token_list, new_token);
+}
+
+/**
+ * @brief Tokenizes input string into a list of tokens
+ * @param input String to tokenize
+ * @param env_list Environment variable list
+ * @return Token list or NULL on error
+ *
+ * Processes string character by character:
+ * - Skips whitespace
+ * - Handles quotes and environment variables
+ * - Identifies special operators
+ * - Captures normal words/commands
+ */
+t_token_list	*tokenizer(char *input, t_env_list *env_list)
 {
 	t_token_list	*token_list;
 	int				i;
@@ -38,18 +52,11 @@ t_token_list	*tokenizer(char *input)
 	{
 		if (is_whitespace(input[i]))
 			i++;
-		else if (handle_single_quote(input, &i, token_list))
-			continue ;
-		else if (handle_double_quote(input, &i, token_list))
-			continue ;
-		else if (handle_env_var(input, &i, token_list))
-			continue ;
-		else if (handle_special_char(input, &i, token_list))
-			continue ;
-		else if (handle_word(input, &i, token_list))
-			continue ;
+		else if (is_special_operator(input[i]))
+			handle_special_char(input, &i, token_list);
 		else
-			i++;
+			process_word(input, &i, token_list, env_list);
 	}
-	return (add_eof_token(token_list), token_list);
+	add_eof_token(token_list);
+	return (token_list);
 }

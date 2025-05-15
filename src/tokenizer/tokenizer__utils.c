@@ -6,47 +6,68 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:08:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 17:23:31 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/15 21:20:56 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Prüft ob Zeichen Whitespace ist
+/**
+ * @brief Checks if character is a special operator
+ * @param c Character to check
+ * @return 1 if character is pipe or redirection, 0 otherwise
+ */
+int	is_special_operator(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}
+
+/**
+ * @brief Appends a part to a word string
+ * @param word Pointer to word string
+ * @param part String to append
+ */
+void	add_to_word(char **word, char *part)
+{
+	char	*temp;
+
+	if (*word == NULL)
+	{
+		*word = gc_strdup(part);
+	}
+	else
+	{
+		temp = gc_strjoin(*word, part);
+		*word = temp;
+	}
+}
+
+/**
+ * @brief Checks if character is whitespace
+ * @param c Character to check
+ * @return 1 if character is space, tab or newline, 0 otherwise
+ */
 int	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
 }
 
-// Prüft ob Zeichen ein Special Character ist
-int	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"'
-		|| c == '$');
-}
-
-// Prüft ob ein Quote-Zeichen vorliegt
+/**
+ * @brief Checks if character is a quote
+ * @param c Character to check
+ * @return 1 if character is single or double quote, 0 otherwise
+ */
 int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
 }
 
-// checkt nach $
+/**
+ * @brief Checks if character marks start of environment variable
+ * @param c Character to check
+ * @return 1 if character is dollar sign, 0 otherwise
+ */
 int	is_env_var(char c)
 {
 	return (c == '$');
-}
-
-// Extrahiert ein normales Wort
-char	*extract_word(char *input, int *i)
-{
-	int	start;
-	int	len;
-
-	start = *i;
-	while (input[*i] && !is_whitespace(input[*i])
-		&& !is_special_char(input[*i]))
-		(*i)++;
-	len = *i - start;
-	return (gc_substr(input, start, len));
 }

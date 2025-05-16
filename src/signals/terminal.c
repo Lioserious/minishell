@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_exit.c                                       :+:      :+:    :+:   */
+/*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 10:35:26 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/16 15:21:25 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/16 15:11:53 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/16 15:23:59 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_exit(int status)
+struct termios	terminal;
+
+void	terminal_setup()
 {
-	garbage_collector_empty();
-	rl_clear_history();
-	terminal_restore();
-	exit(status);
+	tcgetattr(STDIN_FILENO, &terminal);
+	terminal.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
+}
+
+void	terminal_restore()
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
 }

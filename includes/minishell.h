@@ -39,6 +39,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <termios.h>
 
 # include "tokenizer.h"
 # include "parser.h"

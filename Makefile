@@ -34,7 +34,7 @@ SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_pri
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
          handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c
 # Signals source files (in src/signals)
-SRC_SIGNALS = signals.c
+SRC_SIGNALS = signals.c terminal.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \
@@ -106,8 +106,8 @@ fclean: clean
 re: fclean all
 # Debug with Valgrind
 debug: CFLAGS += -g
-debug: re readline.supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./$(NAME)
+debug: re sub.sub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=sub.sub ./$(NAME)
 # Address Sanitizer build
 san: CFLAGS += -fsanitize=address -g
 san: LDFLAGS += -fsanitize=address

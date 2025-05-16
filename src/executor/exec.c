@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 11:59:47 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:08:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
 static void		child_process(t_cmd_node *node, int prev_fd,
 					int *fd, t_env_list *env_list);
 static void		parent_process(int *prev_fd, int *fd, int next);
-static pid_t	fork_command(t_cmd_node *node, int *fd);
+static pid_t	safe_fork_command(t_cmd_node *node, int *fd);
 
 void	execute(t_env_list *env_list, t_cmd_node *node)
 {
@@ -53,7 +53,7 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	prev_fd = -1;
 	while (current)
 	{
-		pid = fork_command(current, fd);
+		pid = safe_fork_command(current, fd);
 		if (pid == 0)
 			child_process(current, prev_fd, fd, env_list);
 		else
@@ -68,14 +68,22 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	return (i);
 }
 
-static pid_t	fork_command(t_cmd_node *node, int *fd)
+static pid_t	safe_fork_command(t_cmd_node *node, int *fd)
 {
 	pid_t	pid;
 
-	if (node->next && pipe(fd) == -1)
+	if (node->next)
 	{
-		perror("pipe");
-		clean_exit(1);
+		if (pipe(fd) == -1)
+		{
+			perror("pipe");
+			clean_exit(1);
+		}
+	}
+	else
+	{
+		fd[0] = -1;
+		fd[1] = -1;
 	}
 	pid = fork();
 	if (pid == -1)
@@ -94,7 +102,7 @@ static	void	child_process(t_cmd_node *node, int prev_fd,
 		dup2(prev_fd, STDIN_FILENO);
 		close(prev_fd);
 	}
-	if (node->next)
+	if (fd[1] != -1)
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
@@ -113,14 +121,9 @@ static void	parent_process(int *prev_fd, int *fd, int next)
 {
 	if (*prev_fd != -1)
 		close(*prev_fd);
-	if (next)
+	if (next && fd[0] != -1 && fd[1] != -1)
 	{
 		close(fd[1]);
 		*prev_fd = fd[0];
-	}
-	else
-	{
-		close(fd[0]);
-		close(fd[1]);
 	}
 }

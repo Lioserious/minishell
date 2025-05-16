@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:59 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 20:57:25 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 17:59:33 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,27 @@ static int	process_special_part(char *input, int *i, char **current_word,
 		t_env_list *env_list)
 {
 	char	*part;
-
 	part = NULL;
+		// First try tilde expansion
+	if (input[*i] == '~')
+	{
+		part = process_tilde(input, i, env_list);
+		if (part != NULL)
+		{
+			add_to_word(current_word, part);
+			return (1);
+		}
+	}
 	if (input[*i] == '\'')
-	{
 		part = process_single_quote(input, i);
-	}
 	else if (input[*i] == '"')
-	{
 		part = process_double_quote(input, i, env_list);
-	}
 	else if (input[*i] == '$')
-	{
 		part = process_env_var(input, i, env_list);
-	}
 	else
-	{
 		part = process_word_part(input, i);
-	}
 	if (part != NULL)
-	{
-		add_to_word(current_word, part);
-		return (1);
-	}
+		return (add_to_word(current_word, part), 1);
 	return (0);
 }
 

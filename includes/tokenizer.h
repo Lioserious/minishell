@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 21:26:18 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 17:56:31 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_token_list
 	t_token			*tail;
 	size_t			size;
 }					t_token_list;
-//Workaround fuer Norm
+// Workaround fuer Norm
 typedef struct s_quote_parser
 {
 	char			*input;
@@ -76,6 +76,7 @@ int					is_env_var(char c);
 int					is_whitespace(char c);
 int					handle_special_char(char *input, int *i,
 						t_token_list *token_list);
+char				*process_tilde(char *input, int *i, t_env_list *env_list);
 // Neue Hilfsfunktionen für den Tokenizer
 int					is_special_operator(char c);
 void				add_to_word(char **word, char *part);
@@ -94,7 +95,7 @@ char				*process_double_quote(char *input, int *i,
 char				*process_word_part(char *input, int *i);
 void				process_word(char *input, int *i, t_token_list *token_list,
 						t_env_list *env_list);
-//Funktionen zur initalisierung des parsers
+// Funktionen zur initalisierung des parsers
 void				init_quote_parser_base(t_quote_parser *parser, char *input,
 						int *i_ptr, char **result);
 void				complete_quote_parser(t_quote_parser *parser,

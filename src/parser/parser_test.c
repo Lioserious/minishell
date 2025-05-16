@@ -6,11 +6,33 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:02:30 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:12:24 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:20:43 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
+
+// MUSS NOCH RAUS
+/**
+ * @brief Gibt den Befehlstyp als String aus
+ * @param cmd_type Der Befehlstyp (CMD_SIMPLE, CMD_PIPE, CMD_BUILTIN)
+ * @return String-Repräsentation des Befehlstyps
+ */
+const char *get_cmd_type_str(int cmd_type)
+{
+    switch(cmd_type)
+    {
+        case CMD_SIMPLE:
+            return "CMD_SIMPLE";
+        case CMD_PIPE:
+            return "CMD_PIPE";
+        case CMD_BUILTIN:
+            return "CMD_BUILTIN";
+        default:
+            return "UNKNOWN_CMD";
+    }
+}
 
 // MUSS NOCH RAUS
 void print_parsed_cmd_list(t_cmd_list *cmd_list)
@@ -30,17 +52,28 @@ void print_parsed_cmd_list(t_cmd_list *cmd_list)
     
     while (current)
     {
-        printf("Command Type: %d\n", current->cmd_type);
+        printf("Command Type: %d (%s)\n", current->cmd_type, get_cmd_type_str(current->cmd_type));
         
         // Befehl und Argumente anzeigen
         if (current->cmd)
         {
             i = 0;
+            printf("  Command: [%s] (%s)\n", current->cmd[0], 
+                   is_builtin_command(current->cmd[0]) == CMD_BUILTIN ? "builtin" : "external");
+            
             printf("  Args: ");
-            while (current->cmd[i])
+            if (current->cmd[1]) // Wenn Argumente vorhanden sind
             {
-                printf("[%s] ", current->cmd[i]);
-                i++;
+                i = 1; // Beginne mit dem ersten Argument (Index 1)
+                while (current->cmd[i])
+                {
+                    printf("[%s] ", current->cmd[i]);
+                    i++;
+                }
+            }
+            else
+            {
+                printf("(none)");
             }
             printf("\n");
         }
@@ -72,6 +105,12 @@ void	run_parser_tests(void)
 	t_token_list	*tokens;
 	t_cmd_list		*cmd_list;
 	char			*input_copy;
+    t_env_list      *env_list;
+    extern char     **environ;
+
+    // Erstelle Umgebungsvariablen-Liste für die Tests
+    env_list = init_env_list();
+    init_env(env_list, environ);
 
 	i = 0;
 	ft_putendl_fd("\n--- PARSER TEST CASES ---", STDOUT_FILENO);
@@ -92,8 +131,8 @@ void	run_parser_tests(void)
 			continue;
 		}
 		
-		// Tokenize input
-		tokens = tokenizer(input_copy);
+		// Tokenize input mit Umgebungsvariablen
+		tokens = tokenizer(input_copy, env_list);
 		if (!tokens)
 		{
 			ft_putendl_fd("Tokenization failed!", STDOUT_FILENO);
@@ -142,6 +181,12 @@ void run_env_var_tests(void)
     t_token_list *tokens;
     t_cmd_list *cmd_list;
     char *input_copy;
+    t_env_list *env_list;
+    extern char **environ;
+    
+    // Erstelle Umgebungsvariablen-Liste für die Tests
+    env_list = init_env_list();
+    init_env(env_list, environ);
     
     ft_putendl_fd("\n--- ENVIRONMENT VARIABLE TEST CASES ---", STDOUT_FILENO);
     
@@ -162,8 +207,8 @@ void run_env_var_tests(void)
             continue;
         }
         
-        // Tokenize input
-        tokens = tokenizer(input_copy);
+        // Tokenize input mit Umgebungsvariablen
+        tokens = tokenizer(input_copy, env_list);
         if (!tokens)
         {
             ft_putendl_fd("Tokenization failed!", STDOUT_FILENO);

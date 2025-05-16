@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_help.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:50:46 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 15:59:00 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:35:22 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,21 @@ void	ft_add_env_var(t_env_list *env_list, char *name,
 	env_list->count++;
 }
 
-char	*get_env_value(t_env_list *env_list, char *name)
+char *get_env_value(t_env_list *env_list, char *name)
 {
-	t_env_node	*current;
-
-	current = env_list->head;
-	while (ft_strncmp(current->name, name, ft_strlen(name + 1)) != 0)
-		current = current->next;
-	return (current->value);
+    t_env_node *current;
+    
+    if (!env_list || !name)
+        return (gc_strdup(""));
+    
+    current = env_list->head;
+    while (current)
+    {
+        if (ft_strcmp(current->name, name) == 0)
+            return (gc_strdup(current->value));
+        current = current->next;
+    }
+    return (gc_strdup(""));
 }
 
 void	set_env_var(t_env_list *env_list, char *name, char *value)

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 16:08:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:26:48 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,18 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	prev_fd = -1;
 	while (current)
 	{
-		pid = safe_fork_command(current, fd);
-		if (pid == 0)
-			child_process(current, prev_fd, fd, env_list);
+		if (is_builtin(current))
+			execute_builtin(current, env_list);
 		else
 		{
-			pids[i++] = pid;
-			parent_process(&prev_fd, fd, current->next != NULL);
+			pid = safe_fork_command(current, fd);
+			if (pid == 0)
+				child_process(current, prev_fd, fd, env_list);
+			else
+			{
+				pids[i++] = pid;
+				parent_process(&prev_fd, fd, current->next != NULL);
+			}
 		}
 		current = current->next;
 	}
@@ -110,11 +115,8 @@ static	void	child_process(t_cmd_node *node, int prev_fd,
 	}
 	if (node->file)
 		execute_redirections(node->file);
-	if (node->cmd_type == CMD_BUILTIN)
-		execute_builtin(node, env_list);
-	else
-		execute_external(node, env_list);
-	exit(1);
+	execute_external(node, env_list);
+	exit(0);
 }
 
 static void	parent_process(int *prev_fd, int *fd, int next)

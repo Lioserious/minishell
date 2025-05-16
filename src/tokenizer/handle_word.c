@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:59 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 17:59:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 18:02:59 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	process_special_part(char *input, int *i, char **current_word,
 {
 	char	*part;
 	part = NULL;
-		// First try tilde expansion
 	if (input[*i] == '~')
 	{
 		part = process_tilde(input, i, env_list);

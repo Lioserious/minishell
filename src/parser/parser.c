@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:14:15 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:18:33 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
 	t_cmd_node	*cmd;
 	char		**cmd_array;
 	int			arg_count;
+	int			cmd_type;
 
 	cmd_array = NULL;
 	arg_count = 0;
@@ -59,7 +60,8 @@ t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
 	}
 	if (arg_count > 0)
 	{
-		cmd = create_cmd_node(cmd_array, CMD_SIMPLE);
+		cmd_type = is_builtin_command(cmd_array[0]);
+		cmd = create_cmd_node(cmd_array, cmd_type);
 		token = parse_redirections(token, cmd);
 		add_cmd_to_list(cmd_list, cmd);
 	}

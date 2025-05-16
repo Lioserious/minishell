@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:09 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:13:42 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:11:30 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,21 @@ char	**realloc_cmd_args(char **args, int new_size)
 	}
 	new_args[new_size] = NULL;
 	return (new_args);
+}
+
+int is_builtin_command(char *cmd)
+{
+    if (!cmd)
+        return (CMD_SIMPLE);
+    
+    if (ft_strcmp(cmd, "cd") == 0 ||
+        ft_strcmp(cmd, "echo") == 0 ||
+        ft_strcmp(cmd, "env") == 0 ||
+        ft_strcmp(cmd, "export") == 0 ||
+        ft_strcmp(cmd, "unset") == 0 ||
+        ft_strcmp(cmd, "exit") == 0 ||
+        ft_strcmp(cmd, "pwd") == 0)
+        return (CMD_BUILTIN);
+    
+    return (CMD_SIMPLE);
 }

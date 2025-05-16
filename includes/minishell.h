@@ -36,7 +36,22 @@
 # include "libft.h"
 
 // Dann Strukturdefinitionen und Enums
+
+# include "cmd_types.h"
+# include "structs.h"
+
+# include "signals.h"
+# include "execution.h"
 # include "builtins.h"
+# include "env.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <termios.h>
+
+# include "tokenizer.h"
 # include "parser.h"
 # include "execution.h"
 

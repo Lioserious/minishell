@@ -32,8 +32,9 @@ SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_pri
          gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c gc_split.c gc_strjoin.c
 # Tokenizer source files (in src/tokenizer)
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
-         handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c \
-
+         handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c
+# Signals source files (in src/signals)
+SRC_SIGNALS = signals.c terminal.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \
@@ -41,7 +42,8 @@ SRC = $(SRC_FILES) \
       $(addprefix garbage_collector/, $(SRC_GC)) \
       $(addprefix executor/, $(SRC_EXECUTOR)) \
       $(addprefix builtins/, $(SRC_BUILTINS)) \
-      $(addprefix tokenizer/, $(SRC_TOK))
+      $(addprefix tokenizer/, $(SRC_TOK)) \
+	  $(addprefix signals/, $(SRC_SIGNALS))
 ################################################################################
 #################### OBJECT FILES ############################################
 ################################################################################
@@ -104,8 +106,8 @@ fclean: clean
 re: fclean all
 # Debug with Valgrind
 debug: CFLAGS += -g
-debug: re readline.supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./$(NAME)
+debug: re sub.sub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=sub.sub ./$(NAME)
 # Address Sanitizer build
 san: CFLAGS += -fsanitize=address -g
 san: LDFLAGS += -fsanitize=address

@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_exit.c                                       :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 10:35:26 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/16 15:21:25 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/15 12:23:02 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/16 15:21:08 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef	SIGNALS_H
+# define SIGNALS_H
 
-void	clean_exit(int status)
-{
-	garbage_collector_empty();
-	rl_clear_history();
-	terminal_restore();
-	exit(status);
-}
+void	signal_setup();
+void	terminal_setup();
+void	terminal_restore();
+
+#endif

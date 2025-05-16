@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 21:21:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:39:55 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main(int argc, char **argv, char **env)
 	ft_putendl_fd("Enter commands to see tokenization and parsing results.",
 		STDOUT_FILENO);
 	// Interaktiver Modus
+	terminal_setup();
+	signal_setup();
 	while (1)
 	{
 		input = gc_readline(PROMPT);
@@ -70,7 +72,6 @@ int	main(int argc, char **argv, char **env)
 		// Hier könnte später die Ausführung hinzugefügt werden
 		// execute(env_list, cmd_list->head);
 	}
-	rl_clear_history();
-	garbage_collector_empty();
+	clean_exit(1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/13 17:39:51 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:25:08 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char **env)
 	// ft_putendl_fd("Enter commands to see tokenization and parsing results.",
 	// 	STDOUT_FILENO);
 	// Interaktiver Modus
+	signal_setup();
 	while (1)
 	{
 		input = gc_readline(PROMPT);

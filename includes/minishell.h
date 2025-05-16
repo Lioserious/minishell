@@ -30,6 +30,7 @@
 # include "cmd_types.h"
 # include "structs.h"
 
+# include "signals.h"
 # include "execution.h"
 # include "builtins.h"
 # include "env.h"

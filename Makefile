@@ -33,7 +33,8 @@ SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_pri
 # Tokenizer source files (in src/tokenizer)
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
          handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c
-
+# Signals source files (in src/signals)
+SRC_SIGNALS = signals.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \
@@ -41,7 +42,8 @@ SRC = $(SRC_FILES) \
       $(addprefix garbage_collector/, $(SRC_GC)) \
       $(addprefix executor/, $(SRC_EXECUTOR)) \
       $(addprefix builtins/, $(SRC_BUILTINS)) \
-      $(addprefix tokenizer/, $(SRC_TOK))
+      $(addprefix tokenizer/, $(SRC_TOK)) \
+	  $(addprefix signals/, $(SRC_SIGNALS))
 ################################################################################
 #################### OBJECT FILES ############################################
 ################################################################################

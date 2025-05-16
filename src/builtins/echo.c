@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 10:53:57 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/05 11:16:33 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/06 14:51:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *message, int status)
+int	ft_echo(t_cmd_node *node)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-	clean_exit(status);
+	int	i;
+	int	newline;
+
+	i = 1;
+	newline = 1;
+	if (node->cmd[i] && ft_strncmp(node->cmd[i], "-n", 3) == 0)
+	{
+		newline = 0;
+		i++;
+	}
+	while (node->cmd[i])
+	{
+		ft_putstr_fd(node->cmd[i], 1);
+		if (node->cmd[i + 1])
+			write(1, " ", 1);
+		i++;
+	}
+	if (newline)
+		write(1, "\n", 1);
+	return (0);
 }

@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   exec_help.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 10:53:57 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/15 11:44:02 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/15 11:44:22 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *message, int status)
+int	count_cmds(t_cmd_node *node)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-	clean_exit(status);
+	t_cmd_node	*current;
+	int			count;
+
+	count = 0;
+	current = node;
+	while (current)
+	{
+		count++;
+		current = current -> next;
+	}
+	return (count);
 }

@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 10:53:57 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/15 12:11:42 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/15 12:25:53 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *message, int status)
+void	sig_handler(int sig);
+
+void	signal_setup()
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-	clean_exit(status);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	sig_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		write(STDOUT_FILENO, "\n", 1);
+		rl_redisplay();
+	}
 }

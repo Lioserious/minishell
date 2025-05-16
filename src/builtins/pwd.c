@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 10:53:57 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/04 17:37:57 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/04 19:52:43 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *message, int status)
+int	ft_pwd(void)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-	clean_exit(status);
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, PATH_MAX) != NULL)
+	{
+		ft_putendl_fd(cwd, 1);
+		return (0);
+	}
+	perror("pwd");
+	return (1);
 }

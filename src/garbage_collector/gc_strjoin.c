@@ -1,20 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   gc_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 10:53:57 by mimalek          ###   ########.fr       */
+/*   Created: 2025/05/08 15:50:51 by mimalek           #+#    #+#             */
+/*   Updated: 2025/05/08 16:22:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *message, int status)
+char	*gc_strjoin(char const *s1, char const *s2)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-	clean_exit(status);
+	char	*s;
+	char	*save;
+	size_t	len1;
+	size_t	len2;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (s1)
+		len1 = ft_strlen(s1);
+	else
+		len1 = 0;
+	if (s2)
+		len2 = ft_strlen(s2);
+	else
+		len2 = 0;
+	s = gc_malloc(len1 + len2 + 1);
+	if (!s)
+		return (NULL);
+	save = s;
+	while (s1 && *s1)
+		*s++ = *s1++;
+	while (s2 && *s2)
+		*s++ = *s2++;
+	*s = '\0';
+	return (save);
 }

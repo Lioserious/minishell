@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:01:43 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:02:24 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:48:04 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,10 @@ void	garbage_collector_add(void *ptr);
 void	garbage_collector_empty(void);
 void	garbage_collector_print(void);
 void	*gc_malloc(size_t size);
+char	*gc_readline(const char *prompt);
+char	*gc_strdup(const char *s);
+char	*gc_substr(char const *s, unsigned int start, size_t len);
+char	*gc_strjoin(char const *s1, char const *s2);
+char	**gc_split(const char *s, char c);
 
 #endif

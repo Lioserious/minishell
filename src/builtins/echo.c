@@ -3,15 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:16:33 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/06 14:51:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/19 16:02:23 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Prüft, ob ein Argument ein gültiges -n Flag ist
+ * @param arg Das zu prüfende Argument
+ * @return 1 wenn es ein gültiges -n Flag ist, sonst 0
+ */
+static int	is_n_flag(char *arg)
+{
+	int	j;
+
+	j = 1;
+	if (!arg || arg[0] != '-')
+		return (0);
+	if (arg[1] != 'n')
+		return (0);
+	while (arg[j] == 'n')
+		j++;
+	return (arg[j] == '\0');
+}
+
+/**
+ * @brief Echo Builtin-Implementierung
+ * @param node Command-Node mit Argumenten
+ * @return Immer 0 für erfolgreiche Ausführung
+ */
 int	ft_echo(t_cmd_node *node)
 {
 	int	i;
@@ -19,7 +43,7 @@ int	ft_echo(t_cmd_node *node)
 
 	i = 1;
 	newline = 1;
-	if (node->cmd[i] && ft_strncmp(node->cmd[i], "-n", 3) == 0)
+	while (node->cmd[i] && is_n_flag(node->cmd[i]))
 	{
 		newline = 0;
 		i++;

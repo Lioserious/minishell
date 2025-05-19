@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 18:26:48 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:12:28 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,26 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	int			prev_fd;
 	pid_t		pid;
 	int			i;
+	int			stdin;
+	int			stdout;
 
+	stdin = dup(STDIN_FILENO);
+	stdout = dup(STDOUT_FILENO);
 	current = node;
 	i = 0;
 	prev_fd = -1;
 	while (current)
 	{
 		if (is_builtin(current))
+		{
+			if (current->file)
+				execute_redirections(node->file);
 			execute_builtin(current, env_list);
+			dup2(stdin, STDIN_FILENO);
+			dup2(stdout, STDOUT_FILENO);
+			close(stdin);
+			close(stdout);
+		}
 		else
 		{
 			pid = safe_fork_command(current, fd);

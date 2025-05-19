@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:08 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:12:56 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:24:46 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_file_list	*create_file_list(void)
 
 	new_list = (t_file_list *)gc_malloc(sizeof(t_file_list));
 	if (!new_list)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_FILE_LIST", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_FILE_LIST", 0));
 	new_list->head = NULL;
 	new_list->tail = NULL;
 	new_list->size = 0;
@@ -33,7 +33,7 @@ t_file_node	*create_file_node(char *name, int redirection_type)
 
 	new_node = (t_file_node *)gc_malloc(sizeof(t_file_node));
 	if (!new_node)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_FILE_NODE", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_FILE_NODE", 0));
 	new_node->name = name;
 	new_node->redirection_type = redirection_type;
 	new_node->next = NULL;

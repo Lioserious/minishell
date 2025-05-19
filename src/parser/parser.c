@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 15:18:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:22:04 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*parse_redirections(t_token *token, t_cmd_node *cmd)
 		token = token->next;
 		if (!token || token->type != TOKEN_WORD)
 			return (error_handler("PARSER: Expected filename after redirection",
-					1), NULL);
+					0));
 		file = create_file_node(token->value, redir_type);
 		add_files_list(cmd->file, file);
 		token = token->next;

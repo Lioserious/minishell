@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:09 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 15:11:30 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:25:32 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**realloc_cmd_args(char **args, int new_size)
 	i = 0;
 	new_args = (char **)gc_malloc(sizeof(char *) * (new_size + 1));
 	if (!new_args)
-		error_handler("MEMORY ALLOCATION FAILED: REALLOC_CMD_ARGS", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: REALLOC_CMD_ARGS", 0));
 	while (i < new_size - 1 && args && args[i])
 	{
 		new_args[i] = args[i];

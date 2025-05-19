@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:26:41 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 21:21:21 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:19:21 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token_list	*create_token_list(void)
 
 	new_list = (t_token_list *)gc_malloc(sizeof(t_token_list));
 	if (!new_list)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN_LIST", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN_LIST", 0));
 	new_list->head = NULL;
 	new_list->tail = NULL;
 	new_list->size = 0;
@@ -41,11 +41,11 @@ t_token	*create_token(t_token_type type, char *value)
 
 	new_token = (t_token *)gc_malloc(sizeof(t_token));
 	if (!new_token)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN", 1);
+		return	(error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN", 0));
 	new_token->type = type;
 	new_token->value = gc_strdup(value);
 	if (!new_token->value)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN", 1);
+		return	(error_handler("MEMORY ALLOCATION FAILED: CREATE_TOKEN", 0));
 	new_token->next = NULL;
 	return (new_token);
 }

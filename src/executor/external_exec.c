@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/15 20:31:14 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 16:09:28 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	}
 	return (NULL);
 }
+
 static void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva)
 {
@@ -75,4 +76,3 @@ static void	handle_child_process(t_cmd_node *node,
 		}
 	}
 }
-

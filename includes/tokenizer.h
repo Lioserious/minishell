@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 17:56:31 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:01:52 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_token_list		*tokenizer(char *input, t_env_list *env_list);
 
 void				run_tokenizer_tests(void);
 void				print_tokenizer_results(t_token_list *tokens);
-
+int					is_heredoc_delimiter_quoted(char *delimiter);
 int					is_quote(char c);
 int					is_env_var(char c);
 int					is_whitespace(char c);

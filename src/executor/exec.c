@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 14:34:24 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:13:01 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	int			stdin;
 	int			stdout;
 	t_file_node	*file;
+
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
-
 	current = node;
 	while (current)
 	{

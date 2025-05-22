@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/22 14:36:50 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:10:10 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void	execute_redirections(t_file_list *file_list)
 		if (current_file->redirection_type == REDIR_IN)
 			redirect_fd(current_file->name, O_RDONLY, STDIN_FILENO);
 		else if (current_file->redirection_type == REDIR_OUT)
-			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_TRUNC, STDOUT_FILENO);
+			redirect_fd(current_file->name, O_WRONLY | O_CREAT
+				| O_TRUNC, STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_APPEND)
-			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_APPEND, STDOUT_FILENO);
+			redirect_fd(current_file->name, O_WRONLY | O_CREAT
+				| O_APPEND, STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_HEREDOC)
 		{
 			if (dup2(current_file->heredoc_fd, STDIN_FILENO) == -1)
@@ -75,7 +77,7 @@ void	setup_heredoc(t_file_node *file)
 		if (!line || ft_strcmp(line, file->name) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		write(heredoc_pipe[1], line, ft_strlen(line));
 		write(heredoc_pipe[1], "\n", 1);

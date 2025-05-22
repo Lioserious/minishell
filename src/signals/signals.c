@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:11:42 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/21 15:50:15 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:10:39 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	main_sigint_handler(int sig);
 
-void	signal_setup()
+void	signal_setup(void)
 {
 	struct sigaction	sa;
 

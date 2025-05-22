@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:11:53 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/19 15:46:03 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:10:47 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	terminal_setup(t_term *term)
 	if (tcgetattr(STDIN_FILENO, &term->original) == -1)
 	{
 		perror("tcgetattr");
-		return;
+		return ;
 	}
 	current = term->original;
 	current.c_lflag &= ~ECHOCTL;

@@ -6,14 +6,13 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/16 19:12:50 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 14:36:50 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	redirect_fd(char *filename, int flags, int std);
-static void	setup_heredoc(char *delimiter);
 
 void	execute_redirections(t_file_list *file_list)
 {
@@ -29,7 +28,14 @@ void	execute_redirections(t_file_list *file_list)
 		else if (current_file->redirection_type == REDIR_APPEND)
 			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_APPEND, STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_HEREDOC)
-			setup_heredoc(current_file->name);
+		{
+			if (dup2(current_file->heredoc_fd, STDIN_FILENO) == -1)
+			{
+				perror("heredoc dup2");
+				clean_exit(1);
+			}
+			close(current_file->heredoc_fd);
+		}
 		current_file = current_file->next;
 	}
 }
@@ -53,7 +59,7 @@ static void	redirect_fd(char *filename, int flags, int std)
 	close(fd);
 }
 
-static void	setup_heredoc(char *delimiter)
+void	setup_heredoc(t_file_node *file)
 {
 	char	*line;
 	int		heredoc_pipe[2];
@@ -66,7 +72,7 @@ static void	setup_heredoc(char *delimiter)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strncmp(line, delimiter, ft_strlen(line) + 1) == 0)
+		if (!line || ft_strcmp(line, file->name) == 0)
 		{
 			free(line);
 			break;
@@ -76,6 +82,5 @@ static void	setup_heredoc(char *delimiter)
 		free(line);
 	}
 	close(heredoc_pipe[1]);
-	dup2(heredoc_pipe[0], STDIN_FILENO);
-	close(heredoc_pipe[0]);
+	file->heredoc_fd = heredoc_pipe[0];
 }

@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:27:21 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 21:34:52 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/21 15:25:49 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <signal.h>
+# include <termios.h>
 # include <sys/types.h>
 # include "structs.h"
 # include "cmd_types.h"
@@ -54,6 +56,8 @@
 # include "tokenizer.h"
 # include "parser.h"
 # include "execution.h"
+
+extern int	g_heredoc;
 
 # define PROMPT "miniarsch> "
 #endif

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 17:15:00 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 13:27:14 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	main(int argc, char **argv, char **env)
 	t_token_list	*tokens;
 	t_cmd_list		*cmd_list;
 	t_env_list		*env_list;
+	t_term			*terminal;
+
+
 
 	(void)argc;
 	(void)argv;
@@ -36,7 +39,8 @@ int	main(int argc, char **argv, char **env)
 	// ft_putendl_fd("Enter commands to see tokenization and parsing results.",
 	// 	STDOUT_FILENO);
 	// Interaktiver Modus
-	terminal_setup();
+	terminal = gc_malloc(sizeof(t_term));
+	terminal_setup(terminal);
 	signal_setup();
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:09 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 15:11:30 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 16:28:03 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**realloc_cmd_args(char **args, int new_size)
 	i = 0;
 	new_args = (char **)gc_malloc(sizeof(char *) * (new_size + 1));
 	if (!new_args)
-		error_handler("MEMORY ALLOCATION FAILED: REALLOC_CMD_ARGS", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: REALLOC_CMD_ARGS", 0));
 	while (i < new_size - 1 && args && args[i])
 	{
 		new_args[i] = args[i];
@@ -37,19 +37,14 @@ char	**realloc_cmd_args(char **args, int new_size)
 	return (new_args);
 }
 
-int is_builtin_command(char *cmd)
+int	is_builtin_command(char *cmd)
 {
-    if (!cmd)
-        return (CMD_SIMPLE);
-    
-    if (ft_strcmp(cmd, "cd") == 0 ||
-        ft_strcmp(cmd, "echo") == 0 ||
-        ft_strcmp(cmd, "env") == 0 ||
-        ft_strcmp(cmd, "export") == 0 ||
-        ft_strcmp(cmd, "unset") == 0 ||
-        ft_strcmp(cmd, "exit") == 0 ||
-        ft_strcmp(cmd, "pwd") == 0)
-        return (CMD_BUILTIN);
-    
-    return (CMD_SIMPLE);
+	if (!cmd)
+		return (CMD_SIMPLE);
+	if (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0
+		|| ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0
+		|| ft_strcmp(cmd, "pwd") == 0)
+		return (CMD_BUILTIN);
+	return (CMD_SIMPLE);
 }

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:53 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:31:43 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:27:37 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	garbage_collector_add(void *ptr)
 
 	neu = ft_lstnew(ptr);
 	if (!neu)
-		error_handler("MEMORY ALLOCATION FAILED: GARBAGE COLLECTOR", 2);
+		error_handler("MEMORY ALLOCATION FAILED: GARBAGE COLLECTOR", 0);
 	ft_lstadd_front(garbage_holder(), neu);
 }

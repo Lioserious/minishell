@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
 /*   Updated: 2025/05/23 15:15:38 by mimalek          ###   ########.fr       */
@@ -24,11 +24,11 @@ void	execute_redirections(t_file_list *file_list)
 		if (current_file->redirection_type == REDIR_IN)
 			redirect_fd(current_file->name, O_RDONLY, STDIN_FILENO);
 		else if (current_file->redirection_type == REDIR_OUT)
-			redirect_fd(current_file->name, O_WRONLY | O_CREAT
-				| O_TRUNC, STDOUT_FILENO);
+			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_TRUNC,
+				STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_APPEND)
-			redirect_fd(current_file->name, O_WRONLY | O_CREAT
-				| O_APPEND, STDOUT_FILENO);
+			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_APPEND,
+				STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_HEREDOC)
 		{
 			if (current_file->heredoc_fd == -1)
@@ -63,7 +63,12 @@ static void	redirect_fd(char *filename, int flags, int std)
 	close(fd);
 }
 
-void	setup_heredoc(t_file_node *file)
+/**
+ * @brief Hauptfunktion für Heredoc Setup
+ * @param file File-Node mit Delimiter und Einstellungen
+ * @param env_list Environment Variable Liste
+ */
+void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 {
 	char	*line;
 	int		heredoc_pipe[2];
@@ -113,6 +118,9 @@ void	setup_heredoc(t_file_node *file)
 	close(stdin_backup);
 	sigaction(SIGINT, &sa_old, NULL);
 	signal(SIGQUIT, SIG_DFL);
+  init_heredoc_pipe(heredoc_pipe);
+	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
+	finalize_heredoc_pipe(file, heredoc_pipe);
 }
 
 int	heredoc_interupt(t_cmd_node *node)
@@ -136,4 +144,5 @@ int	heredoc_interupt(t_cmd_node *node)
 		cmd = cmd->next;
 	}
 	return (0);
+
 }

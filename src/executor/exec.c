@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
 /*   Updated: 2025/05/22 16:49:55 by mimalek          ###   ########.fr       */
@@ -67,7 +67,7 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 			while (file)
 			{
 				if (file->redirection_type == REDIR_HEREDOC)
-					setup_heredoc(file);
+					setup_heredoc(file, env_list);
 				file = file->next;
 			}
 			current = current->next;

@@ -6,12 +6,37 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:42:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/15 20:37:30 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:35:57 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
+
+/**
+ * @brief Prüft, ob ein Heredoc-Delimiter in Anführungszeichen steht
+ * @param delimiter Der zu prüfende Delimiter String
+ * @return 1 wenn quoted (keine Expansion), 0 wenn unquoted (Expansion)
+ *
+ * Beispiele:
+ * - "EOF" oder 'EOF' → return 1 (quoted, keine Expansion)
+ * - EOF → return 0 (unquoted, Expansion aktiviert)
+ */
+int	is_heredoc_delimiter_quoted(char *delimiter)
+{
+	int	len;
+
+	if (!delimiter)
+		return (0);
+	len = ft_strlen(delimiter);
+	if (len < 3)
+		return (0);
+	if (delimiter[0] == '"' && delimiter[len - 1] == '"')
+		return (1);
+	if (delimiter[0] == '\'' && delimiter[len - 1] == '\'')
+		return (1);
+	return (0);
+}
 
 /**
  * @brief Returns the last exit status as a string
@@ -33,30 +58,31 @@ char	*get_exit_status_as_string(void)
  * @param env_list Environment variable list
  * @return Variable value or "$" if not found
  */
-char	*try_shorter_var_names(char *input, int *i, int name_start,
-		t_env_list *env_list)
-{
-	char	*tested_var;
-	char	*env_value;
-	int		current_length;
 
-	current_length = *i - name_start;
-	while (current_length > 0)
-	{
-		current_length--;
-		tested_var = gc_substr(input, name_start, current_length);
-		if (!tested_var)
-			return (gc_strdup("$"));
-		env_value = get_env_value(env_list, tested_var);
-		if (env_value && env_value[0] != '\0')
-		{
-			*i = name_start + current_length;
-			return (env_value);
-		}
-	}
-	*i = name_start;
-	return (gc_strdup("$"));
-}
+// char	*try_shorter_var_names(char *input, int *i, int name_start,
+// 		t_env_list *env_list)
+// {
+// 	char	*tested_var;
+// 	char	*env_value;
+// 	int		current_length;
+
+// 	current_length = *i - name_start;
+// 	while (current_length > 0)
+// 	{
+// 		current_length--;
+// 		tested_var = gc_substr(input, name_start, current_length);
+// 		if (!tested_var)
+// 			return (gc_strdup("$"));
+// 		env_value = get_env_value(env_list, tested_var);
+// 		if (env_value && env_value[0] != '\0')
+// 		{
+// 			*i = name_start + current_length;
+// 			return (env_value);
+// 		}
+// 	}
+// 	*i = name_start;
+// 	return (gc_strdup("$"));
+// }
 
 /**
  * @brief Processes environment variables in the input
@@ -92,7 +118,5 @@ char	*process_env_var(char *input, int *i, t_env_list *env_list)
 	if (!var_name)
 		return (gc_strdup("$"));
 	env_value = get_env_value(env_list, var_name);
-	if (!env_value || env_value[0] == '\0')
-		return (try_shorter_var_names(input, i, name_start, env_list));
 	return (env_value);
 }

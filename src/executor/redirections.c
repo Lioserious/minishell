@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/22 16:10:10 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 18:41:53 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	execute_redirections(t_file_list *file_list)
 		if (current_file->redirection_type == REDIR_IN)
 			redirect_fd(current_file->name, O_RDONLY, STDIN_FILENO);
 		else if (current_file->redirection_type == REDIR_OUT)
-			redirect_fd(current_file->name, O_WRONLY | O_CREAT
-				| O_TRUNC, STDOUT_FILENO);
+			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_TRUNC,
+				STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_APPEND)
-			redirect_fd(current_file->name, O_WRONLY | O_CREAT
-				| O_APPEND, STDOUT_FILENO);
+			redirect_fd(current_file->name, O_WRONLY | O_CREAT | O_APPEND,
+				STDOUT_FILENO);
 		else if (current_file->redirection_type == REDIR_HEREDOC)
 		{
 			if (dup2(current_file->heredoc_fd, STDIN_FILENO) == -1)
@@ -61,28 +61,16 @@ static void	redirect_fd(char *filename, int flags, int std)
 	close(fd);
 }
 
-void	setup_heredoc(t_file_node *file)
+/**
+ * @brief Hauptfunktion für Heredoc Setup
+ * @param file File-Node mit Delimiter und Einstellungen
+ * @param env_list Environment Variable Liste
+ */
+void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 {
-	char	*line;
-	int		heredoc_pipe[2];
+	int	heredoc_pipe[2];
 
-	if (pipe(heredoc_pipe) == -1)
-	{
-		perror("pipe");
-		clean_exit(1);
-	}
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, file->name) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(heredoc_pipe[1], line, ft_strlen(line));
-		write(heredoc_pipe[1], "\n", 1);
-		free(line);
-	}
-	close(heredoc_pipe[1]);
-	file->heredoc_fd = heredoc_pipe[0];
+	init_heredoc_pipe(heredoc_pipe);
+	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
+	finalize_heredoc_pipe(file, heredoc_pipe);
 }

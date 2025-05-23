@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:52:00 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/04 17:23:28 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:27:26 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,28 @@ int	handle_pipe(char *input, int *i, t_token_list *token_list)
 }
 
 // Behandelt Input Redirection < und
-int	handle_input_redirection(char *input, int *i, t_token_list *token_list)
-{
-	t_token	*new_token;
+// int	handle_input_redirection(char *input, int *i, t_token_list *token_list)
+// {
+// 	t_token	*new_token;
 
-	if (input[*i] == '<')
-	{
-		if (input[*i + 1] == '<')
-		{
-			new_token = create_token(TOKEN_REDIR_HEREDOC, "<<");
-			add_token_to_list(token_list, new_token);
-			(*i) += 2;
-		}
-		else
-		{
-			new_token = create_token(TOKEN_REDIR_IN, "<");
-			add_token_to_list(token_list, new_token);
-			(*i)++;
-		}
-		return (1);
-	}
-	return (0);
-}
+// 	if (input[*i] == '<')
+// 	{
+// 		if (input[*i + 1] == '<')
+// 		{
+// 			new_token = create_token(TOKEN_REDIR_HEREDOC, "<<");
+// 			add_token_to_list(token_list, new_token);
+// 			(*i) += 2;
+// 		}
+// 		else
+// 		{
+// 			new_token = create_token(TOKEN_REDIR_IN, "<");
+// 			add_token_to_list(token_list, new_token);
+// 			(*i)++;
+// 		}
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 // Behandelt Output Redirection > und >>
 int	handle_output_redirection(char *input, int *i, t_token_list *token_list)

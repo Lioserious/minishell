@@ -22,7 +22,7 @@ SRC_FILES = main.c
 # Parser source files (in src/parser/)
 SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parser_test.c parse_redirections.c \
 # Executor source files (in src/executor/)
-SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c
+SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c expand_env_heredoc.c heredoc_helper.c \
 # Builtins source files (in src/builtins)
 SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c
 # Error handler source files (in src/error/)
@@ -33,7 +33,7 @@ SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_pri
 # Tokenizer source files (in src/tokenizer)
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
          handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c \
-		 nudel.c
+		 nudel.c handle_input_redirections.c
 # Signals source files (in src/signals)
 SRC_SIGNALS = signals.c terminal.c
 # All source files

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:08 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/19 13:24:46 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:50:46 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_file_node	*create_file_node(char *name, int redirection_type)
 		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_FILE_NODE", 0));
 	new_node->name = name;
 	new_node->redirection_type = redirection_type;
+	new_node->heredoc_fd = -1;
+	new_node->expand_vars = 1;
 	new_node->next = NULL;
 	return (new_node);
 }

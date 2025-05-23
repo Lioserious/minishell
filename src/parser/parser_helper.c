@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:09 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/19 13:25:32 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 16:28:03 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,14 @@ char	**realloc_cmd_args(char **args, int new_size)
 	return (new_args);
 }
 
-int is_builtin_command(char *cmd)
+int	is_builtin_command(char *cmd)
 {
-    if (!cmd)
-        return (CMD_SIMPLE);
-    
-    if (ft_strcmp(cmd, "cd") == 0 ||
-        ft_strcmp(cmd, "echo") == 0 ||
-        ft_strcmp(cmd, "env") == 0 ||
-        ft_strcmp(cmd, "export") == 0 ||
-        ft_strcmp(cmd, "unset") == 0 ||
-        ft_strcmp(cmd, "exit") == 0 ||
-        ft_strcmp(cmd, "pwd") == 0)
-        return (CMD_BUILTIN);
-    
-    return (CMD_SIMPLE);
+	if (!cmd)
+		return (CMD_SIMPLE);
+	if (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0
+		|| ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0
+		|| ft_strcmp(cmd, "pwd") == 0)
+		return (CMD_BUILTIN);
+	return (CMD_SIMPLE);
 }

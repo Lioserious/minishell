@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:11 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/19 13:28:14 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:36:04 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*process_double_quote(char *input, int *i, t_env_list *env_list)
 	}
 	process_remaining_text(input, i, start, &result);
 	if (!input[*i])
-		return(error_handler("UNCLOSED DOUBLE QUOTE", 0));
+		return (error_handler("UNCLOSED DOUBLE QUOTE", 0));
 	(*i)++;
 	if (result == NULL)
 		result = gc_strdup("");

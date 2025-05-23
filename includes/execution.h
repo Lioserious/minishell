@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:50:45 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/22 14:34:53 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:45:43 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	execute_redirections(t_file_list *file_list);
 int		count_cmds(t_cmd_node *node);
 int		is_builtin(t_cmd_node *node);
 void	setup_heredoc(t_file_node *file);
+int		heredoc_interupt(t_cmd_node *node);
 #endif

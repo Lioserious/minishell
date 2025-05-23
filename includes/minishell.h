@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:27:21 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/21 15:25:49 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:35:19 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 # include "parser.h"
 # include "execution.h"
 
-extern int	g_heredoc;
+extern volatile sig_atomic_t	g_heredoc;
 
 # define PROMPT "miniarsch> "
 #endif

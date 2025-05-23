@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 18:42:39 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 16:49:55 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 	cmd_count = count_cmds(node);
 	pids = gc_malloc(sizeof(pid_t) * cmd_count);
 	child_count = pipeline(env_list, node, pids);
+	if (child_count == 0)
+	{
+		g_heredoc = 0;
+		return ;
+	}
 	if (prev_fd != -1)
 		close(prev_fd);
 	i = 0;
@@ -68,6 +73,8 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 			current = current->next;
 		}
 	}
+	if (heredoc_interupt(node))
+		return (0);
 	current = node;
 	i = 0;
 	prev_fd = -1;

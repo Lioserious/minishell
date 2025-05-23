@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 13:27:14 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:54:29 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv, char **env)
 	// Interaktiver Modus
 	terminal = gc_malloc(sizeof(t_term));
 	terminal_setup(terminal);
+	rl_catch_signals = 0;
 	signal_setup();
 	while (1)
 	{

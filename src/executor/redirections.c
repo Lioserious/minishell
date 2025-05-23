@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/23 15:15:38 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:53:30 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,11 @@ static void	redirect_fd(char *filename, int flags, int std)
  */
 void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 {
-	char	*line;
 	int		heredoc_pipe[2];
 	struct sigaction	sa_old;
 	struct sigaction	sa_new;
 	int					stdin_backup;
-
+	
 	stdin_backup = dup(STDIN_FILENO);
 	g_heredoc = 0;
 	sa_new.sa_handler = heredoc_signal_handler;
@@ -83,26 +82,9 @@ void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 	sa_new.sa_flags = 0;
 	sigaction(SIGINT, &sa_new, &sa_old);
 	signal(SIGQUIT, SIG_IGN);
-	if (pipe(heredoc_pipe) == -1)
-	{
-		perror("pipe");
-		clean_exit(1);
-	}
-	while (1)
-	{
-		if (g_heredoc)
-			break ;
-		line = readline("> ");
-		if (g_heredoc || !line || ft_strcmp(line, file->name) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(heredoc_pipe[1], line, ft_strlen(line));
-		write(heredoc_pipe[1], "\n", 1);
-		free(line);
-	}
-	close(heredoc_pipe[1]);
+	init_heredoc_pipe(heredoc_pipe);
+	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
+	finalize_heredoc_pipe(file, heredoc_pipe);
 	if (g_heredoc)
 	{
 		close(heredoc_pipe[0]);
@@ -118,9 +100,6 @@ void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 	close(stdin_backup);
 	sigaction(SIGINT, &sa_old, NULL);
 	signal(SIGQUIT, SIG_DFL);
-  init_heredoc_pipe(heredoc_pipe);
-	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
-	finalize_heredoc_pipe(file, heredoc_pipe);
 }
 
 int	heredoc_interupt(t_cmd_node *node)

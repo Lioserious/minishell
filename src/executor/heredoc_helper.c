@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:34:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/23 15:20:23 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:03:00 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ void	finalize_heredoc_pipe(t_file_node *file, int *heredoc_pipe)
 	close(heredoc_pipe[1]);
 	file->heredoc_fd = heredoc_pipe[0];
 }
-

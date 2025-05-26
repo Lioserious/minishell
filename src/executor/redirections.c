@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/23 16:53:30 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/26 07:57:32 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 	struct sigaction	sa_old;
 	struct sigaction	sa_new;
 	int					stdin_backup;
-	
+
 	stdin_backup = dup(STDIN_FILENO);
 	g_heredoc = 0;
 	sa_new.sa_handler = heredoc_signal_handler;
@@ -123,5 +123,5 @@ int	heredoc_interupt(t_cmd_node *node)
 		cmd = cmd->next;
 	}
 	return (0);
-
 }
+

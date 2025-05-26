@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 07:57:32 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 08:14:17 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,45 +61,6 @@ static void	redirect_fd(char *filename, int flags, int std)
 		clean_exit(1);
 	}
 	close(fd);
-}
-
-/**
- * @brief Hauptfunktion für Heredoc Setup
- * @param file File-Node mit Delimiter und Einstellungen
- * @param env_list Environment Variable Liste
- */
-void	setup_heredoc(t_file_node *file, t_env_list *env_list)
-{
-	int		heredoc_pipe[2];
-	struct sigaction	sa_old;
-	struct sigaction	sa_new;
-	int					stdin_backup;
-
-	stdin_backup = dup(STDIN_FILENO);
-	g_heredoc = 0;
-	sa_new.sa_handler = heredoc_signal_handler;
-	sigemptyset(&sa_new.sa_mask);
-	sa_new.sa_flags = 0;
-	sigaction(SIGINT, &sa_new, &sa_old);
-	signal(SIGQUIT, SIG_IGN);
-	init_heredoc_pipe(heredoc_pipe);
-	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
-	finalize_heredoc_pipe(file, heredoc_pipe);
-	if (g_heredoc)
-	{
-		close(heredoc_pipe[0]);
-		file->heredoc_fd = -1;
-		if (dup2(stdin_backup, STDIN_FILENO) == -1)
-		{
-			perror("dup2 stdin restore");
-			clean_exit(1);
-		}
-	}
-	else
-		file->heredoc_fd = heredoc_pipe[0];
-	close(stdin_backup);
-	sigaction(SIGINT, &sa_old, NULL);
-	signal(SIGQUIT, SIG_DFL);
 }
 
 int	heredoc_interupt(t_cmd_node *node)

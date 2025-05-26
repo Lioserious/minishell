@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/22 16:09:28 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 08:24:26 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,35 @@ static void	handle_child_process(t_cmd_node *node,
 {
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(env_list, node->cmd[0]);
-	if (!cmd_path)
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+
+	if (ft_strcmp(node->cmd[0], "./minishell") == 0 ||
+		ft_strcmp(node->cmd[0], "minishell") == 0)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(node->cmd[0], 2);
-		ft_putendl_fd(": command not found", 2);
-		clean_exit(1);
-	}
-	else
-	{
-		if (execve(cmd_path, node->cmd, enva) == -1)
+		if (execve("./minishell", node->cmd, enva) == -1)
 		{
 			perror("execve");
 			clean_exit(1);
+		}
+	}
+	else
+	{
+		cmd_path = get_cmd_path(env_list, node->cmd[0]);
+		if (!cmd_path)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(node->cmd[0], 2);
+			ft_putendl_fd(": command not found", 2);
+			clean_exit(1);
+		}
+		else
+		{
+			if (execve(cmd_path, node->cmd, enva) == -1)
+			{
+				perror("execve");
+				clean_exit(1);
+			}
 		}
 	}
 }

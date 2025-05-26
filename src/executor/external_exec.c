@@ -6,15 +6,17 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 08:24:26 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 09:01:06 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static char	*get_cmd_path(t_env_list *env_list, char *cmd);
 static void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva);
+static void	exec_external_cmd(t_cmd_node *node,
+				t_env_list *env_list, char **enva);
+static void	exec_minishell(t_cmd_node *node, char **enva);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
 {
@@ -57,37 +59,42 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 static void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva)
 {
-	char	*cmd_path;
-
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-
-	if (ft_strcmp(node->cmd[0], "./minishell") == 0 ||
-		ft_strcmp(node->cmd[0], "minishell") == 0)
+	if (ft_strcmp(node->cmd[0], "./minishell") == 0
+		|| ft_strcmp(node->cmd[0], "minishell") == 0)
 	{
-		if (execve("./minishell", node->cmd, enva) == -1)
-		{
-			perror("execve");
-			clean_exit(1);
-		}
+		exec_minishell(node, enva);
 	}
 	else
+		exec_external_cmd(node, env_list, enva);
+}
+
+static void	exec_external_cmd(t_cmd_node *node,
+				t_env_list *env_list, char **enva)
+{
+	char	*cmd_path;
+
+	cmd_path = get_cmd_path(env_list, node->cmd[0]);
+	if (!cmd_path)
 	{
-		cmd_path = get_cmd_path(env_list, node->cmd[0]);
-		if (!cmd_path)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(node->cmd[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			clean_exit(1);
-		}
-		else
-		{
-			if (execve(cmd_path, node->cmd, enva) == -1)
-			{
-				perror("execve");
-				clean_exit(1);
-			}
-		}
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(node->cmd[0], 2);
+		ft_putendl_fd(": command not found", 2);
+		clean_exit(1);
+	}
+	if (execve(cmd_path, node->cmd, enva) == -1)
+	{
+		perror("execve");
+		clean_exit(1);
+	}
+}
+
+static void	exec_minishell(t_cmd_node *node, char **enva)
+{
+	if (execve("./minishell", node->cmd, enva) == -1)
+	{
+		perror("execve");
+		clean_exit(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/26 08:28:40 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 09:04:36 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int		pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
 static void		child_process(t_cmd_node *node, int prev_fd,
 					int *fd, t_env_list *env_list);
 static void		parent_process(int *prev_fd, int *fd, int next);
-static pid_t	safe_fork_command(t_cmd_node *node, int *fd);
 
 void	execute(t_env_list *env_list, t_cmd_node *node)
 {
@@ -47,14 +46,14 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 
 static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 {
-	t_cmd_node	*current;
-	int			fd[2];
-	int			prev_fd;
-	pid_t		pid;
-	int			i;
-	int			stdin;
-	int			stdout;
-	t_file_node	*file;
+	t_cmd_node			*current;
+	int					fd[2];
+	int					prev_fd;
+	pid_t				pid;
+	int					i;
+	int					stdin;
+	int					stdout;
+	t_file_node			*file;
 	struct sigaction	sa_old;
 	struct sigaction	sa_new;
 
@@ -126,32 +125,6 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	if (prev_fd != -1)
 		close(prev_fd);
 	return (i);
-}
-
-static pid_t	safe_fork_command(t_cmd_node *node, int *fd)
-{
-	pid_t	pid;
-
-	if (node->next)
-	{
-		if (pipe(fd) == -1)
-		{
-			perror("pipe");
-			clean_exit(1);
-		}
-	}
-	else
-	{
-		fd[0] = -1;
-		fd[1] = -1;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		clean_exit(1);
-	}
-	return (pid);
 }
 
 static	void	child_process(t_cmd_node *node, int prev_fd,

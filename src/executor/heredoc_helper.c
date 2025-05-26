@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:34:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/26 08:10:06 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 09:19:19 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	init_heredoc_pipe(int *heredoc_pipe)
  * @param delimiter Der Heredoc Delimiter
  * @return 1 wenn Heredoc beendet werden soll, 0 sonst
  */
-static int	should_end_heredoc(char *line, char *delimiter)
+int	should_end_heredoc(char *line, char *delimiter)
 {
 	if (!line)
 		return (1);
@@ -50,7 +50,7 @@ static int	should_end_heredoc(char *line, char *delimiter)
  * @param env_list Environment Variable Liste
  * @param pipe_fd Write-End der Pipe
  */
-static void	process_and_write_line(char *line, t_file_node *file,
+void	process_and_write_line(char *line, t_file_node *file,
 								t_env_list *env_list, int pipe_fd)
 {
 	char	*processed_line;
@@ -67,86 +67,19 @@ static void	process_and_write_line(char *line, t_file_node *file,
 	write(pipe_fd, "\n", 1);
 }
 
-/**
- * @brief Liest alle Heredoc-Zeilen und verarbeitet sie
- * @param file File-Node mit Delimiter und Einstellungen
- * @param env_list Environment Variable Liste
- * @param pipe_fd Write-End der Pipe
- */
-void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
-{
-	char	*line;
-
-	while (!g_heredoc)
-	{
-		line = readline("> ");
-
-		if (!line || g_heredoc)
-		{
-			if (line)
-				free(line);
-			break ;
-		}
-		if (should_end_heredoc(line, file->name))
-		{
-			free(line);
-			break;
-		}
-		process_and_write_line(line, file, env_list, pipe_fd);
-		free(line);
-	}
-	close(pipe_fd);
-}
-
-/**
- * @brief Schließt die Write-End der Pipe und setzt den Read-End
- * @param file File-Node zum Setzen des heredoc_fd
- * @param heredoc_pipe Pipe Array [read_fd, write_fd]
- */
 void	finalize_heredoc_pipe(t_file_node *file, int *heredoc_pipe)
 {
 	close(heredoc_pipe[1]);
 	file->heredoc_fd = heredoc_pipe[0];
 }
 
-void	setup_heredoc_no_signals(t_file_node *file, t_env_list *env_list)
+void	handle_heredoc_signals(void)
 {
-	int	heredoc_pipe[2];
+	struct sigaction	sa;
 
-	init_heredoc_pipe(heredoc_pipe);
-	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
-	if (g_heredoc)
-	{
-		close(heredoc_pipe[0]);
-		close(heredoc_pipe[1]);
-		file->heredoc_fd = -1;
-	}
-	else
-		finalize_heredoc_pipe(file, heredoc_pipe);
+	sa.sa_handler = heredoc_signal_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
-
-void	cleanup_heredocs(t_cmd_node *node)
-{
-	t_cmd_node	*current;
-	t_file_node	*file;
-
-	current = node;
-	while (current)
-	{
-		if (current->file)
-		{
-			file = current->file->head;
-			while (file)
-			{
-				if (file->redirection_type == REDIR_HEREDOC && file->heredoc_fd != -1)
-				{
-					close(file->heredoc_fd);
-					file->heredoc_fd = -1;
-				}
-				file = file->next;
-			}
-		}
-		current = current->next;
-	}
-}
-

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:11:42 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 08:43:55 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 09:23:58 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ void	heredoc_signal_handler(int sig)
 	(void)sig;
 	g_heredoc = 1;
 	close(STDIN_FILENO);
+}
+
+void	restore_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

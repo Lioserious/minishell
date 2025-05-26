@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/15 20:43:17 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/26 08:27:20 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void		ft_add_env_var(t_env_list *env_list, char *name,
 				char *value, int is_export);
 void		set_env_var(t_env_list *env_list, char *name, char *value);
 char		**convert_env_struct_array(t_env_list *env_list);
+void		update_shlvl(t_env_list	*env_list);
 #endif

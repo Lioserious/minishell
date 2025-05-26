@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/26 08:10:47 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 08:28:40 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ static pid_t	safe_fork_command(t_cmd_node *node, int *fd)
 static	void	child_process(t_cmd_node *node, int prev_fd,
 					int *fd, t_env_list *env_list)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (prev_fd != -1)
 	{
 		dup2(prev_fd, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 16:54:29 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 08:28:00 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **env)
 	// Umgebungsvariablen initialisieren
 	env_list = init_env_list();
 	init_env(env_list, env);
+	update_shlvl(env_list);
 	// Begrüßung anzeigen
 	// ft_putendl_fd("Welcome to Minishell Test!", STDOUT_FILENO);
 	// ft_putendl_fd("First, running automatic test cases...", STDOUT_FILENO);

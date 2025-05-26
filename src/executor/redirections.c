@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/23 15:15:38 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 07:35:08 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 	struct sigaction	sa_old;
 	struct sigaction	sa_new;
 	int					stdin_backup;
+	char				*processed;
 
 	stdin_backup = dup(STDIN_FILENO);
 	g_heredoc = 0;
@@ -98,7 +99,14 @@ void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 			free(line);
 			break ;
 		}
-		write(heredoc_pipe[1], line, ft_strlen(line));
+		if (file->expand_vars)
+		{
+			processed = expand_heredoc_line(line, env_list);
+			write(heredoc_pipe[1], processed, ft_strlen(processed));
+			//free(processed);
+		}
+		else
+			write(heredoc_pipe[1], line, ft_strlen(line));
 		write(heredoc_pipe[1], "\n", 1);
 		free(line);
 	}
@@ -118,9 +126,6 @@ void	setup_heredoc(t_file_node *file, t_env_list *env_list)
 	close(stdin_backup);
 	sigaction(SIGINT, &sa_old, NULL);
 	signal(SIGQUIT, SIG_DFL);
-  init_heredoc_pipe(heredoc_pipe);
-	read_heredoc_lines(file, env_list, heredoc_pipe[1]);
-	finalize_heredoc_pipe(file, heredoc_pipe);
 }
 
 int	heredoc_interupt(t_cmd_node *node)

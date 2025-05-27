@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 09:01:06 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/28 01:50:55 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	exec_minishell(t_cmd_node *node, char **enva);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
 {
-	char	**enva;
-	pid_t	pid;
-	int		status;
+	char			**enva;
+	pid_t			pid;
+	int				status;
 
 	enva = convert_env_struct_array(env_list);
 	pid = fork();

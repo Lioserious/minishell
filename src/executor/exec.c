@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/26 10:08:54 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/28 01:49:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 	if (prev_fd != -1)
 		close(prev_fd);
 	i = 0;
+	signal(SIGINT, SIG_IGN);
 	while (i < child_count)
 	{
 		waitpid(pids[i], NULL, 0);
 		i++;
 	}
+	signal(SIGINT, main_sigint_handler);
 }
 
 static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)

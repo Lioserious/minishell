@@ -6,15 +6,13 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:11:42 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 09:23:58 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/28 01:42:19 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 volatile sig_atomic_t	g_heredoc = 0;
-
-void	main_sigint_handler(int sig);
 
 void	signal_setup(void)
 {

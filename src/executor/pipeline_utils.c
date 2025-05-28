@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 09:56:02 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/28 02:33:21 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,25 @@ static void	fork_execute_node(t_cmd_node *current,
 
 static void	execute_builtin_node(t_cmd_node *node, t_env_list *env_list)
 {
+	int	stdin;
+	int	stdout;
+
+	stdin = dup(STDIN_FILENO);
+	stdout = dup(STDOUT_FILENO);
+	if (stdin == -1 || stdout == -1)
+	{
+		perror("dup");
+		clean_exit(1);
+	}
 	if (node->file)
 		execute_redirections(node->file);
 	execute_builtin(node, env_list);
-	restore_std_fds();
+	if (dup2(stdin, STDIN_FILENO) == -1
+		|| dup2(stdout, STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		clean_exit(1);
+	}
+	close(stdin);
+	close(stdout);
 }

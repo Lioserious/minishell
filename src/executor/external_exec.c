@@ -6,14 +6,12 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/28 01:50:55 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/29 14:29:05 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_child_process(t_cmd_node *node,
-				t_env_list *env_list, char **enva);
 static void	exec_external_cmd(t_cmd_node *node,
 				t_env_list *env_list, char **enva);
 static void	exec_minishell(t_cmd_node *node, char **enva);
@@ -56,7 +54,7 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	return (NULL);
 }
 
-static void	handle_child_process(t_cmd_node *node,
+void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva)
 {
 	signal(SIGINT, SIG_DFL);

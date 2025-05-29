@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:50:45 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 10:01:03 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/29 14:49:53 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,7 @@ int		execute_pipeline_loop(t_cmd_node *node, t_env_list *env_list, t_exec *conte
 void	child_process(t_cmd_node *node, int prev_fd,
 	int *fd, t_env_list *env_list);
 void	parent_process(int *prev_fd, int *fd, int next);
+void	handle_child_process(t_cmd_node *node,
+	t_env_list *env_list, char **enva);
+int		pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
 #endif

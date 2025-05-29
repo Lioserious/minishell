@@ -6,45 +6,15 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/28 01:49:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/29 14:56:37 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
 static int		setup_all_heredocs(t_env_list *env_list, t_cmd_node *node);
 
-void	execute(t_env_list *env_list, t_cmd_node *node)
-{
-	pid_t		*pids;
-	int			cmd_count;
-	int			prev_fd;
-	int			child_count;
-	int			i;
-
-	prev_fd = -1;
-	cmd_count = count_cmds(node);
-	pids = gc_malloc(sizeof(pid_t) * cmd_count);
-	child_count = pipeline(env_list, node, pids);
-	if (child_count == 0)
-	{
-		g_heredoc = 0;
-		return ;
-	}
-	if (prev_fd != -1)
-		close(prev_fd);
-	i = 0;
-	signal(SIGINT, SIG_IGN);
-	while (i < child_count)
-	{
-		waitpid(pids[i], NULL, 0);
-		i++;
-	}
-	signal(SIGINT, main_sigint_handler);
-}
-
-static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
+int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 {
 	int		i;
 	t_exec	context;
@@ -53,7 +23,6 @@ static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	if (setup_all_heredocs(env_list, node))
 	{
 		cleanup_heredocs(node);
-		restore_std_fds();
 		return (0);
 	}
 	context.prev_fd = -1;
@@ -93,6 +62,8 @@ static int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 void	child_process(t_cmd_node *node, int prev_fd,
 					int *fd, t_env_list *env_list)
 {
+	char	**enva;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (prev_fd != -1)
@@ -108,17 +79,26 @@ void	child_process(t_cmd_node *node, int prev_fd,
 	}
 	if (node->file)
 		execute_redirections(node->file);
-	execute_external(node, env_list);
-	exit(0);
+	if (is_builtin(node))
+	{
+		execute_builtin(node, env_list);
+		exit(0);
+	}
+	enva = convert_env_struct_array(env_list);
+	handle_child_process(node, env_list, enva);
 }
 
 void	parent_process(int *prev_fd, int *fd, int next)
 {
 	if (*prev_fd != -1)
 		close(*prev_fd);
-	if (next && fd[0] != -1 && fd[1] != -1)
-	{
+	if (fd[1] != -1)
 		close(fd[1]);
+	if (next && fd[0] != -1)
 		*prev_fd = fd[0];
+	else if (fd[0] != -1)
+	{
+		close(fd[0]);
+		*prev_fd = -1;
 	}
 }

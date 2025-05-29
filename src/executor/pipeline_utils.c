@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/28 02:33:21 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/29 14:55:46 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ int	execute_pipeline_loop(t_cmd_node *node,
 				t_env_list *env_list, t_exec *context)
 {
 	t_cmd_node	*current;
+	int			cmd_count;
 
 	current = node;
+	cmd_count = count_cmds(node);
+	if (cmd_count == 1 && is_builtin(current))
+	{
+		execute_builtin_node(current, env_list);
+		return (0);
+	}
 	while (current)
 	{
-		if (is_builtin(current))
-			execute_builtin_node(current, env_list);
-		else
-			fork_execute_node(current, env_list, context);
+		fork_execute_node(current, env_list, context);
 		current = current->next;
 	}
 	return (context->i);
@@ -39,6 +43,16 @@ static void	fork_execute_node(t_cmd_node *current,
 	pid_t	pid;
 	int		fd[2];
 
+	if (current->next)
+	{
+		if (pipe(fd) == -1)
+			clean_exit(1);
+	}
+	else
+	{
+		fd[0] = -1;
+		fd[1] = -1;
+	}
 	pid = fork();
 	if (pid == 0)
 	{

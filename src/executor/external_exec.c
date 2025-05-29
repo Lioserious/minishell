@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-static void	handle_child_process(t_cmd_node *node,
-				t_env_list *env_list, char **enva);
 static void	exec_external_cmd(t_cmd_node *node,
 				t_env_list *env_list, char **enva);
 static void	exec_minishell(t_cmd_node *node, char **enva);
@@ -62,7 +60,7 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	return (NULL);
 }
 
-static void	handle_child_process(t_cmd_node *node,
+void	handle_child_process(t_cmd_node *node,
 				t_env_list *env_list, char **enva)
 {
 	signal(SIGINT, SIG_DFL);

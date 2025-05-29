@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/29 14:29:05 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/29 12:51:40 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	char	*full_path;
 	int		i;
 
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (gc_strdup(cmd));
+		return (NULL);
+	}
 	path = gc_split(get_env_value(env_list, "PATH"), ':');
 	i = 0;
 	while (path[i])

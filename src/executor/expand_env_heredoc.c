@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_heredoc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:06:50 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 18:24:41 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/26 08:45:50 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static char	*validate_heredoc_input(char *line, t_env_list *env_list)
  * @param env_list Environment Variable Liste
  * @param result Pointer auf Ergebnis-String
  */
-static void	process_heredoc_variable(char *line, int *i, t_env_list *env_list, char **result)
+static void	process_heredoc_variable(char *line, int *i, t_env_list *env_list
+	, char **result)
 {
 	char	*part;
 

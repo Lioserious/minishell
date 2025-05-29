@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:34:04 by lihrig            #+#    #+#             */
 /*   Updated: 2025/05/24 16:03:00 by lihrig           ###   ########.fr       */
@@ -34,7 +34,7 @@ int	init_heredoc_pipe(int *heredoc_pipe)
  * @param delimiter Der Heredoc Delimiter
  * @return 1 wenn Heredoc beendet werden soll, 0 sonst
  */
-static int	should_end_heredoc(char *line, char *delimiter)
+int	should_end_heredoc(char *line, char *delimiter)
 {
 	if (!line)
 		return (1);
@@ -50,7 +50,7 @@ static int	should_end_heredoc(char *line, char *delimiter)
  * @param env_list Environment Variable Liste
  * @param pipe_fd Write-End der Pipe
  */
-static void	process_and_write_line(char *line, t_file_node *file, 
+void	process_and_write_line(char *line, t_file_node *file,
 								t_env_list *env_list, int pipe_fd)
 {
 	char	*processed_line;
@@ -67,38 +67,20 @@ static void	process_and_write_line(char *line, t_file_node *file,
 	write(pipe_fd, "\n", 1);
 }
 
-/**
- * @brief Liest alle Heredoc-Zeilen und verarbeitet sie
- * @param file File-Node mit Delimiter und Einstellungen
- * @param env_list Environment Variable Liste
- * @param pipe_fd Write-End der Pipe
- */
-void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		
-		if (should_end_heredoc(line, file->name))
-		{
-			free(line);
-			break;
-		}
-		
-		process_and_write_line(line, file, env_list, pipe_fd);
-		free(line);
-	}
-}
-
-/**
- * @brief Schließt die Write-End der Pipe und setzt den Read-End
- * @param file File-Node zum Setzen des heredoc_fd
- * @param heredoc_pipe Pipe Array [read_fd, write_fd]
- */
 void	finalize_heredoc_pipe(t_file_node *file, int *heredoc_pipe)
 {
 	close(heredoc_pipe[1]);
 	file->heredoc_fd = heredoc_pipe[0];
 }
+
+void	handle_heredoc_signals(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = heredoc_signal_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+

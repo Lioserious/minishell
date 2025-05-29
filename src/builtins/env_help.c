@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:50:46 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/22 16:14:35 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/26 08:27:02 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,19 @@ char	**convert_env_struct_array(t_env_list *env_list)
 	}
 	env_array[i] = NULL;
 	return (env_array);
+}
+
+void	update_shlvl(t_env_list	*env_list)
+{
+	char	*shlvl_str;
+	char	*new_shlvl;
+	int		shlvl;
+
+	shlvl_str = get_env_value(env_list, "SHLVL");
+	if (shlvl_str)
+		shlvl = ft_atoi(shlvl_str) + 1;
+	else
+		shlvl = 1;
+	new_shlvl = ft_itoa(shlvl);
+	set_env_var(env_list, "SHLVL", new_shlvl);
 }

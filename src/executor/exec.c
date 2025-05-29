@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 16:49:55 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/28 01:49:25 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int		pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
-static void		child_process(t_cmd_node *node, int prev_fd,
-					int *fd, t_env_list *env_list);
-static void		parent_process(int *prev_fd, int *fd, int next);
-static pid_t	safe_fork_command(t_cmd_node *node, int *fd);
+static int		setup_all_heredocs(t_env_list *env_list, t_cmd_node *node);
 
 void	execute(t_env_list *env_list, t_cmd_node *node)
 {
@@ -38,105 +35,66 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 	if (prev_fd != -1)
 		close(prev_fd);
 	i = 0;
+	signal(SIGINT, SIG_IGN);
 	while (i < child_count)
 	{
 		waitpid(pids[i], NULL, 0);
 		i++;
 	}
+	signal(SIGINT, main_sigint_handler);
 }
 
 static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 {
-	t_cmd_node	*current;
-	int			fd[2];
-	int			prev_fd;
-	pid_t		pid;
-	int			i;
-	int			stdin;
-	int			stdout;
-	t_file_node	*file;
+	int		i;
+	t_exec	context;
 
-	stdin = dup(STDIN_FILENO);
-	stdout = dup(STDOUT_FILENO);
-	current = node;
-	while (current)
+	backup_std_fds();
+	if (setup_all_heredocs(env_list, node))
 	{
-		if (current->file)
-		{
-			file = current->file->head;
-			while (file)
-			{
-				if (file->redirection_type == REDIR_HEREDOC)
-					setup_heredoc(file, env_list);
-				file = file->next;
-			}
-			current = current->next;
-		}
-	}
-	if (heredoc_interupt(node))
+		cleanup_heredocs(node);
+		restore_std_fds();
 		return (0);
-	current = node;
-	i = 0;
-	prev_fd = -1;
-	while (current)
-	{
-		if (is_builtin(current))
-		{
-			if (current->file)
-				execute_redirections(node->file);
-			execute_builtin(current, env_list);
-			dup2(stdin, STDIN_FILENO);
-			dup2(stdout, STDOUT_FILENO);
-			close(stdin);
-			close(stdout);
-		}
-		else
-		{
-			pid = safe_fork_command(current, fd);
-			if (pid == 0)
-				child_process(current, prev_fd, fd, env_list);
-			else
-			{
-				pids[i++] = pid;
-				parent_process(&prev_fd, fd, current->next != NULL);
-			}
-		}
-		current = current->next;
 	}
-	if (prev_fd != -1)
-		close(prev_fd);
+	context.prev_fd = -1;
+	context.i = 0;
+	context.pids = pids;
+	i = execute_pipeline_loop(node, env_list, &context);
+	restore_std_fds();
 	return (i);
 }
 
-static pid_t	safe_fork_command(t_cmd_node *node, int *fd)
+static int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 {
-	pid_t	pid;
+	t_cmd_node	*current;
+	t_file_node	*file;
 
-	if (node->next)
+	g_heredoc = 0;
+	handle_heredoc_signals();
+	current = node;
+	while (current && !g_heredoc)
 	{
-		if (pipe(fd) == -1)
+		if (current->file)
+			file = current->file->head;
+		else
+			file = NULL;
+		while (file && !g_heredoc)
 		{
-			perror("pipe");
-			clean_exit(1);
+			if (file->redirection_type == REDIR_HEREDOC)
+				setup_heredoc_no_signals(file, env_list);
+			file = file->next;
 		}
+		current = current->next;
 	}
-	else
-	{
-		fd[0] = -1;
-		fd[1] = -1;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		clean_exit(1);
-	}
-	return (pid);
+	restore_signals();
+	return (g_heredoc);
 }
 
-static	void	child_process(t_cmd_node *node, int prev_fd,
+void	child_process(t_cmd_node *node, int prev_fd,
 					int *fd, t_env_list *env_list)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (prev_fd != -1)
 	{
 		dup2(prev_fd, STDIN_FILENO);
@@ -154,7 +112,7 @@ static	void	child_process(t_cmd_node *node, int prev_fd,
 	exit(0);
 }
 
-static void	parent_process(int *prev_fd, int *fd, int next)
+void	parent_process(int *prev_fd, int *fd, int next)
 {
 	if (*prev_fd != -1)
 		close(*prev_fd);

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:34:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/26 09:19:19 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/24 16:03:00 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,3 +83,4 @@ void	handle_heredoc_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
+

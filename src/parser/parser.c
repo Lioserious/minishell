@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 17:18:16 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:19:03 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_cmd_list	*parser(t_token_list *token_list)
 	t_token		*current_token;
 
 	if (!token_list || !token_list->head)
+		return (NULL);
+	if (!validate_token_sequence(token_list))
 		return (NULL);
 	cmd_list = create_cmd_list();
 	current_token = token_list->head;

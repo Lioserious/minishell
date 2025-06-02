@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 14:07:56 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/02 14:25:50 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static t_cmd_list	*process_input_line(char *input, t_env_list *env_list)
 	cmd_list = parser(tokens);
 	if (!cmd_list)
 	{
-		ft_putendl_fd("ERROR: Parsing failed!", STDERR_FILENO);
 		return (NULL);
 	}
 	return (cmd_list);

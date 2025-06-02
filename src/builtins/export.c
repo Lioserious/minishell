@@ -6,13 +6,11 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:12:54 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/02 09:23:55 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/02 10:50:08 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	update_env_var(t_env_list *env_list, char *name, char *value, int is_export);
 
 int	print_export_list(t_env_list	*env_list)
 {
@@ -39,79 +37,86 @@ int	print_export_list(t_env_list	*env_list)
 	return (0);
 }
 
-static void	update_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+static int	is_valid(char *str)
 {
-	t_env_node	*current;
+	int	i;
 
-	current = env_list->head;
-	while (current)
+	i = 0;
+	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
+		return (0);
+	while (str[i])
 	{
-		if (ft_strcmp(current->name, name) == 0)
-		{
-			current->value = gc_strdup(value);
-			current->is_export = is_export;
-			return ;
-		}
-		current = current->next;
+		if(!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
 	}
-	ft_add_env_var(env_list, name, value, is_export);
+	return (1);
+}
+static char	*extract_name(char *arg)
+{
+	char	*equal;
+	char	*append;
+
+	equal = ft_strchr(arg, '=');
+	append = ft_strnstr(arg, "+=", ft_strlen(arg));
+	if (append)
+		return (gc_substr(arg, 0, append - arg));
+	else if (equal)
+		return (gc_substr(arg, 0, equal - arg));
+	else
+		return (gc_strdup(arg));
 }
 
-static void	append_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+static void	export_set_var(t_env_list *env_list, char *name, char *arg)
 {
-	t_env_node	*current;
-	char		*new_value;
+	char	*value;
+	char	*equal;
+	char	*append;
 
-	current = env_list->head;
-	while (current)
+	equal = ft_strchr(arg, '=');
+	append = ft_strnstr(arg, "+=", ft_strlen(arg));
+	if (append)
 	{
-		if (ft_strcmp(current->name, name) == 0)
-		{
-			if (current->value)
-				new_value = gc_strjoin(current->value, value);
-			else
-				new_value = gc_strdup(value);
-			current->value = new_value;
-			current->is_export = is_export;
-			return ;
-		}
-		current = current->next;
+		value = gc_strdup(append + 2);
+		append_env_var(env_list, name, value, 1);
 	}
-	new_value = gc_strdup(value);
-	ft_add_env_var(env_list, name, new_value, is_export);
+	else if ((equal = ft_strchr(arg, '=')))
+	{
+		value = gc_strdup(equal + 1);
+		update_env_var(env_list, name, value, 1);
+	}
+	else
+		update_env_var(env_list, name, NULL, 1);
+}
+static void	process_export(t_env_list *env_list, char *arg)
+{
+	char *name;
+	char *equal;
+	char *append;
+
+	name = extract_name(arg);
+	equal = ft_strchr(arg, '=');
+	append = ft_strnstr(arg, "+=", ft_strlen(arg));
+	if (!is_valid(name))
+	{
+		ft_putstr_fd("minishell: export: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		return;
+	}
+	export_set_var(env_list, name, arg);
 }
 
 int	ft_export(t_env_list *env_list, t_cmd_node *node)
 {
 	int		i;
-	char	*equal;
-	char	*name;
-	char	*value;
-	char	*append;
 
+	i = 1;
 	if (!node->cmd[1])
 		return (print_export_list(env_list));
-	i = 1;
 	while (node->cmd[i])
 	{
-		append = ft_strnstr(node->cmd[i], "+=", ft_strlen(node->cmd[i]));
-		equal = ft_strchr(node->cmd[i], '=');
-		if (append)
-		{
-			name = gc_substr(node->cmd[i], 0, append - node->cmd[i]);
-			value = gc_strdup(append + 2);
-			append_env_var(env_list, name, value, 1);
-		}
-		else if ((equal = ft_strchr(node->cmd[i], '=')))
-		{
-			name = gc_substr(node->cmd[i], 0, equal - node->cmd[i]);
-			value = gc_strdup(equal + 1);
-			update_env_var(env_list, name, value, 1);
-		}
-		else
-		{
-			update_env_var(env_list, node->cmd[i], "", 1);
-		}
+		process_export(env_list, node->cmd[i]);
 		i++;
 	}
 	return (0);

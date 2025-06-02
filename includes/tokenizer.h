@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/23 16:24:32 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:02:53 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,20 @@ typedef struct s_quote_parser
 }					t_quote_parser;
 
 //
-char	*collect_quoted_delimiter(char *input, int *i, char quote_char);
-char	*collect_unquoted_delimiter(char *input, int *i);
-void	handle_heredoc_delimiter(char *input, int *i,
-	t_token_list *token_list);
-void	handle_heredoc(char *input, int *i, t_token_list *token_list);
-void	handle_simple_input_redir(char *input, int *i,
-	t_token_list *token_list);
+char				*collect_quoted_delimiter(char *input, int *i,
+						char quote_char);
+char				*collect_unquoted_delimiter(char *input, int *i);
+void				handle_heredoc_delimiter(char *input, int *i,
+						t_token_list *token_list);
+void				handle_heredoc(char *input, int *i,
+						t_token_list *token_list);
+void				handle_simple_input_redir(char *input, int *i,
+						t_token_list *token_list);
 t_token_list		*create_token_list(void);
 t_token				*create_token(t_token_type type, char *value);
 void				add_token_to_list(t_token_list *list, t_token *token);
-int	handle_input_redirection(char *input, int *i, t_token_list *token_list);
+int					handle_input_redirection(char *input, int *i,
+						t_token_list *token_list);
 void				add_eof_token(t_token_list *token_list);
 
 t_token_list		*tokenizer(char *input, t_env_list *env_list);

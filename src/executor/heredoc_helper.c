@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:34:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/24 16:03:00 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:55:06 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	should_end_heredoc(char *line, char *delimiter)
  * @param pipe_fd Write-End der Pipe
  */
 void	process_and_write_line(char *line, t_file_node *file,
-								t_env_list *env_list, int pipe_fd)
+		t_env_list *env_list, int pipe_fd)
 {
 	char	*processed_line;
 
@@ -83,4 +83,3 @@ void	handle_heredoc_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
-

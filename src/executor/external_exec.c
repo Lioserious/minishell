@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   external_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/29 14:29:05 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/05/29 15:30:05 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_external_cmd(t_cmd_node *node,
-				t_env_list *env_list, char **enva);
+static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
+				char **enva);
 static void	exec_minishell(t_cmd_node *node, char **enva);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
 {
-	char			**enva;
-	pid_t			pid;
-	int				status;
+	char	**enva;
+	pid_t	pid;
+	int		status;
 
 	enva = convert_env_struct_array(env_list);
 	pid = fork();
@@ -41,6 +41,12 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	char	*full_path;
 	int		i;
 
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (gc_strdup(cmd));
+		return (NULL);
+	}
 	path = gc_split(get_env_value(env_list, "PATH"), ':');
 	i = 0;
 	while (path[i])
@@ -54,13 +60,13 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	return (NULL);
 }
 
-void	handle_child_process(t_cmd_node *node,
-				t_env_list *env_list, char **enva)
+void	handle_child_process(t_cmd_node *node, t_env_list *env_list,
+		char **enva)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (ft_strcmp(node->cmd[0], "./minishell") == 0
-		|| ft_strcmp(node->cmd[0], "minishell") == 0)
+	if (ft_strcmp(node->cmd[0], "./minishell") == 0 || ft_strcmp(node->cmd[0],
+			"minishell") == 0)
 	{
 		exec_minishell(node, enva);
 	}
@@ -68,8 +74,8 @@ void	handle_child_process(t_cmd_node *node,
 		exec_external_cmd(node, env_list, enva);
 }
 
-static void	exec_external_cmd(t_cmd_node *node,
-				t_env_list *env_list, char **enva)
+static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
+		char **enva)
 {
 	char	*cmd_path;
 

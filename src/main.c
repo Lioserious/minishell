@@ -97,6 +97,7 @@ static void	shell_main_loop(t_env_list *env_list)
 	while (1)
 	{
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
 		if (!handle_user_input(env_list))
 			break ;
 	}

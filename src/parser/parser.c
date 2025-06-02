@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 14:19:03 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:19:33 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ t_cmd_list	*parser(t_token_list *token_list)
 		current_token = parse_simple_command(current_token, cmd_list);
 		if (!current_token)
 			return (cmd_list);
-		if (current_token)
-			current_token = current_token->next;
 	}
 	if (cmd_list->size == 0)
 		return (error_handler("PARSER: NO VALID COMMAND", 0), cmd_list);

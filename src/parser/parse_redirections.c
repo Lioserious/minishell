@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:35 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 19:30:29 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:18:56 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,19 @@ static t_token	*process_single_redirection(t_token *token, t_cmd_node *cmd)
 		file_name = process_heredoc_token(token, &expand_vars);
 		if (!file_name)
 			return (error_handler("PARSER: Expected delimiter after <<", 0));
+		token = token->next->next;
 	}
 	else
 	{
 		token = token->next;
 		if (!token || token->type != TOKEN_WORD)
-			return (error_handler("PARSER: Expected filename after redirection",
-					0));
+			return (error_handler("Expected filename after redirection", 0));
 		file_name = gc_strdup(token->value);
+		token = token->next;
 	}
 	file = create_file_node(file_name, redir_type);
 	file->expand_vars = expand_vars;
-	add_files_list(cmd->file, file);
-	return (token->next);
+	return (add_files_list(cmd->file, file), token);
 }
 
 /**

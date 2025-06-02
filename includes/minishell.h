@@ -6,13 +6,14 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:27:21 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 16:35:19 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/02 13:46:19 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <errno.h>
 # include <signal.h>
 # include <termios.h>
 # include <sys/types.h>

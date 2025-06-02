@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:23:02 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/29 16:01:40 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 13:23:30 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ void				main_sigint_handler(int sig);
 void				terminal_setup(t_term *term);
 void				heredoc_signal_handler(int sig);
 void				restore_signals(void);
+void				setup_heredoc_signal_handling(void);
+void				restore_main_signals(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/29 14:56:37 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/02 13:36:51 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	if (setup_all_heredocs(env_list, node))
 	{
 		cleanup_heredocs(node);
+		restore_std_fds();
 		return (0);
 	}
 	context.prev_fd = -1;
@@ -38,16 +39,15 @@ static int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 	t_cmd_node	*current;
 	t_file_node	*file;
 
-	g_heredoc = 0;
-	handle_heredoc_signals();
+	setup_heredoc_signal_handling();
 	current = node;
-	while (current && !g_heredoc)
+	while (current)
 	{
 		if (current->file)
 			file = current->file->head;
 		else
 			file = NULL;
-		while (file && !g_heredoc)
+		while (file)
 		{
 			if (file->redirection_type == REDIR_HEREDOC)
 				setup_heredoc_no_signals(file, env_list);
@@ -55,8 +55,8 @@ static int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 		}
 		current = current->next;
 	}
-	restore_signals();
-	return (g_heredoc);
+	restore_main_signals();
+	return (0);
 }
 
 void	child_process(t_cmd_node *node, int prev_fd,

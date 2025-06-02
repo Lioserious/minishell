@@ -6,28 +6,11 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:49:46 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 13:51:20 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:51:41 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Checks if token sequence starts with a pipe
- * @param token_list Token list to check
- * @return 1 if valid start, 0 if invalid
- */
-static int	validate_start_token(t_token_list *token_list)
-{
-	if (!token_list || !token_list->head)
-		return (1);
-	if (token_list->head->type == TOKEN_PIPE)
-	{
-		error_handler("syntax error near unexpected token '|'", 0);
-		return (0);
-	}
-	return (1);
-}
 
 /**
  * @brief Checks if token sequence ends with a pipe
@@ -36,13 +19,15 @@ static int	validate_start_token(t_token_list *token_list)
  */
 static int	validate_end_token(t_token_list *token_list)
 {
-	if (!token_list || !token_list->tail)
+	t_token	*current;
+
+	if (!token_list || !token_list->head)
 		return (1);
-	if (token_list->tail->type == TOKEN_PIPE)
-	{
-		error_handler("syntax error near unexpected token '|'", 0);
-		return (0);
-	}
+	current = token_list->head;
+	while (current && current->next && current->next->type != TOKEN_EOF)
+		current = current->next;
+	if (current && current->type == TOKEN_PIPE)
+		return (pipe_syntax_error());
 	return (1);
 }
 
@@ -54,17 +39,30 @@ static int	validate_end_token(t_token_list *token_list)
  */
 static int	validate_token_pair(t_token *current, t_token *next)
 {
+	if (is_empty_token(current) || is_empty_token(next))
+		return (1);
 	if (current->type == TOKEN_PIPE && next->type == TOKEN_PIPE)
-	{
-		error_handler("syntax error near unexpected token '|'", 0);
-		return (0);
-	}
+		return (pipe_syntax_error());
 	if (is_redirection_token(current->type) && next->type == TOKEN_PIPE)
-	{
-		error_handler("syntax error near unexpected token '|'", 0);
-		return (0);
-	}
+		return (pipe_syntax_error());
 	return (1);
+}
+
+/**
+ * @brief Gets next non-empty token
+ * @param token Starting token
+ * @return Next non-empty token or NULL
+ */
+static t_token	*get_next_valid_token(t_token *token)
+{
+	t_token	*next;
+
+	if (!token)
+		return (NULL);
+	next = token->next;
+	while (next && is_empty_token(next))
+		next = next->next;
+	return (next);
 }
 
 /**
@@ -80,12 +78,14 @@ static int	validate_token_pairs(t_token_list *token_list)
 	if (!token_list || !token_list->head)
 		return (1);
 	current = token_list->head;
-	while (current && current->next)
+	while (current)
 	{
-		next = current->next;
+		next = get_next_valid_token(current);
+		if (!next)
+			break ;
 		if (!validate_token_pair(current, next))
 			return (0);
-		current = next;
+		current = current->next;
 	}
 	return (1);
 }

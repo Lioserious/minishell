@@ -21,6 +21,7 @@ LIBFT_DIR = libft
 SRC_FILES = main.c
 # Parser source files (in src/parser/)
 SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parse_redirections.c \
+			validate_token.c validate_token_helper.c
 # Executor source files (in src/executor/)
 SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c expand_env_heredoc.c heredoc_helper.c \
 			   heredoc.c std_fds.c pipeline_utils.c

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:12:54 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/02 10:50:08 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/02 14:14:39 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,8 @@ static void	export_set_var(t_env_list *env_list, char *name, char *arg)
 static void	process_export(t_env_list *env_list, char *arg)
 {
 	char *name;
-	char *equal;
-	char *append;
 
 	name = extract_name(arg);
-	equal = ft_strchr(arg, '=');
-	append = ft_strnstr(arg, "+=", ft_strlen(arg));
 	if (!is_valid(name))
 	{
 		ft_putstr_fd("minishell: export: '", 2);

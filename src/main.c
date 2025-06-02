@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/29 15:49:48 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 11:28:29 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static void	shell_main_loop(t_env_list *env_list)
 {
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
 		if (!handle_user_input(env_list))
 			break ;
 	}

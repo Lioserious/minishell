@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:50:46 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/30 14:31:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/02 10:48:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_add_env_var(t_env_list *env_list, char *name,
 	if (value)
 		new_node->value = gc_strdup(value);
 	else
-		new_node->value = gc_strdup("");
+		new_node->value = NULL;
 	new_node->is_export = is_export;
 	new_node->next = NULL;
 	if (!env_list->head)
@@ -58,23 +58,6 @@ char	*get_env_value(t_env_list *env_list, char *name)
 	return (gc_strdup(""));
 }
 
-void	set_env_var(t_env_list *env_list, char *name, char *value)
-{
-	t_env_node	*current;
-
-	current = env_list->head;
-	while (current)
-	{
-		if (ft_strncmp(current->name, name, ft_strlen(name + 1)) == 0)
-		{
-			current->value = gc_strdup(value);
-			return ;
-		}
-		current = current->next;
-	}
-	return ;
-}
-
 char	**convert_env_struct_array(t_env_list *env_list)
 {
 	t_env_node	*current;
@@ -102,17 +85,50 @@ char	**convert_env_struct_array(t_env_list *env_list)
 	return (env_array);
 }
 
-void	update_shlvl(t_env_list	*env_list)
+void	update_env_var(t_env_list *env_list, char *name, char *value, int is_export)
 {
-	char	*shlvl_str;
-	char	*new_shlvl;
-	int		shlvl;
+	t_env_node	*current;
 
-	shlvl_str = get_env_value(env_list, "SHLVL");
-	if (shlvl_str)
-		shlvl = ft_atoi(shlvl_str) + 1;
+	current = env_list->head;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0)
+		{
+			if (value)
+				current->value = gc_strdup(value);
+			current->is_export = is_export;
+			return ;
+		}
+		current = current->next;
+	}
+	if (value)
+		ft_add_env_var(env_list, name, value, is_export);
 	else
-		shlvl = 1;
-	new_shlvl = gc_itoa(shlvl);
-	set_env_var(env_list, "SHLVL", new_shlvl);
+		ft_add_env_var(env_list, name, NULL, is_export);
 }
+
+void	append_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+{
+	t_env_node	*current;
+	char		*new_value;
+
+	current = env_list->head;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0)
+		{
+			if (current->value)
+				new_value = gc_strjoin(current->value, value);
+			else
+				new_value = gc_strdup(value);
+			current->value = new_value;
+			current->is_export = is_export;
+			return ;
+		}
+		current = current->next;
+	}
+	new_value = gc_strdup(value);
+	ft_add_env_var(env_list, name, new_value, is_export);
+}
+
+

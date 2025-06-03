@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 16:19:33 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:57:38 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,36 @@ t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
 	return (token);
 }
 
-t_cmd_list	*parser(t_token_list *token_list)
+t_cmd_list *parser(t_token_list *token_list)
 {
-	t_cmd_list	*cmd_list;
-	t_token		*current_token;
+   t_cmd_list *cmd_list;
+   t_token *current_token;
 
-	if (!token_list || !token_list->head)
-		return (NULL);
-	if (!validate_token_sequence(token_list))
-		return (NULL);
-	cmd_list = create_cmd_list();
-	current_token = token_list->head;
-	while (current_token && current_token->type != TOKEN_EOF)
-	{
-		if (!current_token->value || current_token->value[0] == '\0')
-		{
-			current_token = current_token->next;
-			continue ;
-		}
-		current_token = parse_simple_command(current_token, cmd_list);
-		if (!current_token)
-			return (cmd_list);
-	}
-	if (cmd_list->size == 0)
-		return (error_handler("PARSER: NO VALID COMMAND", 0), cmd_list);
-	return (cmd_list);
+   if (!token_list || !token_list->head)
+   	return (NULL);
+   if (!validate_token_sequence(token_list))
+   	return (NULL);
+   cmd_list = create_cmd_list();
+   current_token = token_list->head;
+   while (current_token && current_token->type != TOKEN_EOF)
+   {
+   	if (!current_token->value || current_token->value[0] == '\0')
+   	{
+   		current_token = current_token->next;
+   		continue;
+   	}
+   	current_token = parse_simple_command(current_token, cmd_list);
+   	if (!current_token)
+   		return (cmd_list);
+   	if (current_token->type == TOKEN_PIPE)
+   	{
+   		current_token = current_token->next;
+   		if (!current_token || current_token->type == TOKEN_EOF)
+   			break;
+   	}
+   }
+   if (cmd_list->size == 0)
+   	return (error_handler("PARSER: NO VALID COMMAND", 0), cmd_list);
+   return (cmd_list);
 }
+

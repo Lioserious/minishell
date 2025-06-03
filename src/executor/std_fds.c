@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:49:52 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/29 14:49:01 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:38:06 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 		waitpid(pids[i], NULL, 0);
 		i++;
 	}
+	cleanup_heredocs(node);
 	signal(SIGINT, main_sigint_handler);
 	if (g_stdin_backup != -1 && g_stdout_backup != -1)
 		restore_std_fds();

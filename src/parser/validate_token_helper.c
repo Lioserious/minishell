@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:45:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 14:51:37 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/03 20:28:25 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	validate_start_token(t_token_list *token_list)
 {
 	if (!token_list || !token_list->head)
 		return (1);
+	if (is_redirection_token(token_list->head->type))
+	{
+		error_handler("syntax error near unexpected token", 0);
+		return (0);
+	}
 	if (token_list->head->type == TOKEN_PIPE)
 		return (pipe_syntax_error());
 	return (1);

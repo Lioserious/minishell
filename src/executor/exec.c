@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/03 14:30:56 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/03 20:10:30 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,58 +34,81 @@ int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	return (i);
 }
 
-static int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
+static int setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 {
-	t_cmd_node	*current;
-	t_file_node	*file;
+    t_cmd_node *current;
+    t_file_node *file;
+    t_file_node *last_heredoc = NULL;
+    int heredoc_count = 0;
 
-	setup_heredoc_signal_handling();
-	current = node;
-	while (current)
-	{
-		if (current->file)
-			file = current->file->head;
-		else
-			file = NULL;
-		while (file)
-		{
-			if (file->redirection_type == REDIR_HEREDOC)
-				setup_heredoc_no_signals(file, env_list);
-			file = file->next;
-		}
-		current = current->next;
-	}
-	restore_main_signals();
-	return (0);
+    setup_heredoc_signal_handling();
+    current = node;
+    
+    while (current)
+    {
+        if (current->file)
+        {
+            file = current->file->head;
+            while (file)
+            {
+                if (file->redirection_type == REDIR_HEREDOC)
+                {
+                    heredoc_count++;
+                    if (last_heredoc && last_heredoc->heredoc_fd != -1)
+                    {
+                        close(last_heredoc->heredoc_fd);
+                        last_heredoc->heredoc_fd = -1;
+                    }
+                    setup_heredoc_no_signals(file, env_list);
+                    last_heredoc = file;
+                }
+                file = file->next;
+            }
+        }
+        current = current->next;
+    }
+    restore_main_signals();
+    return (0);
 }
 
-void	child_process(t_cmd_node *node, int prev_fd,
-					int *fd, t_env_list *env_list)
-{
-	char	**enva;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	if (prev_fd != -1)
-	{
-		dup2(prev_fd, STDIN_FILENO);
-		close(prev_fd);
-	}
-	if (fd[1] != -1)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	}
-	if (node->file)
-		execute_redirections(node->file);
-	if (is_builtin(node))
-	{
-		execute_builtin(node, env_list);
-		exit(0);
-	}
-	enva = convert_env_struct_array(env_list);
-	handle_child_process(node, env_list, enva);
+void child_process(t_cmd_node *node, int prev_fd, int *fd, t_env_list *env_list)
+{
+    char **enva;
+	
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+    if (prev_fd != -1)
+    {
+        if (dup2(prev_fd, STDIN_FILENO) == -1)
+        {
+            perror("dup2 stdin");
+            exit(1);
+        }
+        close(prev_fd);
+    }
+    if (fd[1] != -1)
+    {
+        close(fd[0]);
+        if (dup2(fd[1], STDOUT_FILENO) == -1)
+        {
+            perror("dup2 stdout");
+            exit(1);
+        }
+        close(fd[1]);
+    }
+    if (node->file)
+        execute_redirections(node->file);
+    if (is_builtin(node))
+    {
+        execute_builtin(node, env_list);
+        exit(0);
+    }
+    else
+    {
+        enva = convert_env_struct_array(env_list);
+        handle_child_process(node, env_list, enva);
+    }
 }
 
 void	parent_process(int *prev_fd, int *fd, int next)

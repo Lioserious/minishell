@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 14:25:50 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/03 20:11:12 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,50 +42,47 @@ static t_env_list	*init_shell_environment(char **env)
  * @param env_list Environment variables list
  * @return Command list ready for execution, or NULL on error
  */
-static t_cmd_list	*process_input_line(char *input, t_env_list *env_list)
+static t_cmd_list *process_input_line(char *input, t_env_list *env_list)
 {
-	t_token_list	*tokens;
-	t_cmd_list		*cmd_list;
+   t_token_list *tokens;
+   t_cmd_list *cmd_list;
 
-	if (!input || input[0] == '\0')
-		return (NULL);
-	add_history(input);
-	tokens = tokenizer(input, env_list);
-	if (!tokens)
-	{
-		ft_putendl_fd("ERROR: Tokenization failed!", STDERR_FILENO);
-		return (NULL);
-	}
-	cmd_list = parser(tokens);
-	if (!cmd_list)
-	{
-		return (NULL);
-	}
-	return (cmd_list);
+   if (!input || input[0] == '\0')
+   	return (NULL);
+   add_history(input);
+   tokens = tokenizer(input, env_list);
+   if (!tokens)
+   {
+   	ft_putendl_fd("ERROR: Tokenization failed!", STDERR_FILENO);
+   	return (NULL);
+   }
+   cmd_list = parser(tokens);
+   if (!cmd_list)
+   	return (NULL);
+   return (cmd_list);
 }
-
 /**
  * @brief Handles user input and command execution in the main loop
  * @param env_list Environment variables list
  * @return 1 to continue loop, 0 to exit
  */
-static int	handle_user_input(t_env_list *env_list)
+static int handle_user_input(t_env_list *env_list)
 {
-	char		*input;
-	t_cmd_list	*cmd_list;
+   char *input;
+   t_cmd_list *cmd_list;
 
-	input = gc_readline(PROMPT);
-	if (!input)
-	{
-		ft_putendl_fd("exit", STDOUT_FILENO);
-		return (0);
-	}
-	if (input[0] == '\0')
-		return (1);
-	cmd_list = process_input_line(input, env_list);
-	if (cmd_list && cmd_list->head)
-		execute(env_list, cmd_list->head);
-	return (1);
+   input = gc_readline(PROMPT);
+   if (!input)
+   {
+   	ft_putendl_fd("exit", STDOUT_FILENO);
+   	return (0);
+   }
+   if (input[0] == '\0')
+   	return (1);
+   cmd_list = process_input_line(input, env_list);
+   if (cmd_list && cmd_list->head)
+   	execute(env_list, cmd_list->head);
+   return (1);
 }
 
 /**

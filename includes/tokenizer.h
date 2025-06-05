@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/29 16:02:53 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:18:12 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void				add_to_word(char **word, char *part);
 void				add_word_token(t_token_list *token_list, char *word);
 
 // Funktionen für Umgebungsvariablen
-char				*get_exit_status_as_string(void);
+char				*get_exit_status_as_string(t_env_list *env_list);
 char				*process_env_var(char *input, int *i, t_env_list *env_list);
 
 // Funktionen für Anführungszeichen

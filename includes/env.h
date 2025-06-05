@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/02 10:29:29 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/05 14:25:35 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_env_list
 {
 	t_env_node	*head;
 	int			count;
+	int			last_exit_code;
 }	t_env_list;
 
 // ========== Functions ==========

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/05 15:18:12 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 16:21:23 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char				*get_exit_status_as_string(t_env_list *env_list);
 char				*process_env_var(char *input, int *i, t_env_list *env_list);
 
 // Funktionen für Anführungszeichen
-char				*process_single_quote(char *input, int *i);
+char				*process_single_quote(char *input, int *i, t_env_list *env_list);
 char				*process_double_quote(char *input, int *i,
 						t_env_list *env_list);
 

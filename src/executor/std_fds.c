@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:49:52 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:36:03 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 12:14:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ void execute(t_env_list *env_list, t_cmd_node *node)
    while (i < child_count)
    {
    	waitpid(pids[i], &status, 0);
-	if (WIFEXITED(status))
-		env_list->last_exitcode = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		env_list->last_exitcode = 128 + WTERMSIG(status);
+	if (i == child_count - 1)
+		update_exit_status(env_list, status);
    	i++;
    }
    cleanup_heredocs(node);

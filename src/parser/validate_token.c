@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:49:46 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 14:51:41 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 16:19:46 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param token_list Token list to check
  * @return 1 if valid end, 0 if invalid
  */
-static int	validate_end_token(t_token_list *token_list)
+static int	validate_end_token(t_token_list *token_list, t_env_list *env_list)
 {
 	t_token	*current;
 
@@ -27,7 +27,7 @@ static int	validate_end_token(t_token_list *token_list)
 	while (current && current->next && current->next->type != TOKEN_EOF)
 		current = current->next;
 	if (current && current->type == TOKEN_PIPE)
-		return (pipe_syntax_error());
+		return (pipe_syntax_error(env_list));
 	return (1);
 }
 
@@ -37,14 +37,14 @@ static int	validate_end_token(t_token_list *token_list)
  * @param next Next token
  * @return 1 if valid pair, 0 if invalid
  */
-static int	validate_token_pair(t_token *current, t_token *next)
+static int	validate_token_pair(t_token *current, t_token *next, t_env_list *env_list)
 {
 	if (is_empty_token(current) || is_empty_token(next))
 		return (1);
 	if (current->type == TOKEN_PIPE && next->type == TOKEN_PIPE)
-		return (pipe_syntax_error());
+		return (pipe_syntax_error(env_list));
 	if (is_redirection_token(current->type) && next->type == TOKEN_PIPE)
-		return (pipe_syntax_error());
+		return (pipe_syntax_error(env_list));
 	return (1);
 }
 
@@ -70,7 +70,7 @@ static t_token	*get_next_valid_token(t_token *token)
  * @param token_list Token list to validate
  * @return 1 if valid sequence, 0 if invalid
  */
-static int	validate_token_pairs(t_token_list *token_list)
+static int	validate_token_pairs(t_token_list *token_list, t_env_list *env_list)
 {
 	t_token	*current;
 	t_token	*next;
@@ -83,7 +83,7 @@ static int	validate_token_pairs(t_token_list *token_list)
 		next = get_next_valid_token(current);
 		if (!next)
 			break ;
-		if (!validate_token_pair(current, next))
+		if (!validate_token_pair(current, next, env_list))
 			return (0);
 		current = current->next;
 	}
@@ -95,13 +95,13 @@ static int	validate_token_pairs(t_token_list *token_list)
  * @param token_list Token list to validate
  * @return 1 if valid, 0 if invalid
  */
-int	validate_token_sequence(t_token_list *token_list)
+int	validate_token_sequence(t_token_list *token_list, t_env_list *env_list)
 {
-	if (!validate_start_token(token_list))
+	if (!validate_start_token(token_list, env_list))
 		return (0);
-	if (!validate_token_pairs(token_list))
+	if (!validate_token_pairs(token_list, env_list))
 		return (0);
-	if (!validate_end_token(token_list))
+	if (!validate_end_token(token_list, env_list))
 		return (0);
 	return (1);
 }

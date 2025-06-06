@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/05 15:58:18 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/05 15:58:06 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_cmd_list *process_input_line(char *input, t_env_list *env_list)
    	ft_putendl_fd("ERROR: Tokenization failed!", STDERR_FILENO);
    	return (NULL);
    }
-   cmd_list = parser(tokens);
+   cmd_list = parser(tokens, env_list);
    if (!cmd_list)
    	return (NULL);
    return (cmd_list);

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:44:02 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/26 08:45:07 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/05 15:42:33 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_builtin(t_cmd_node *node)
 		|| ft_strcmp(cmd, "pwd") == 0);
 }
 
-pid_t	safe_fork_command(t_cmd_node *node, int *fd)
+pid_t	safe_fork_command(t_cmd_node *node, int *fd, t_env_list *env_list)
 {
 	pid_t	pid;
 
@@ -50,7 +50,8 @@ pid_t	safe_fork_command(t_cmd_node *node, int *fd)
 		if (pipe(fd) == -1)
 		{
 			perror("pipe");
-			clean_exit(1);
+			env_list->last_exitcode = 1;
+			clean_exit(env_list);
 		}
 	}
 	else
@@ -62,7 +63,8 @@ pid_t	safe_fork_command(t_cmd_node *node, int *fd)
 	if (pid == -1)
 	{
 		perror("fork");
-		clean_exit(1);
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
 	}
 	return (pid);
 }

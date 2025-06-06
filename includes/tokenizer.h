@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
 /*   Updated: 2025/06/05 16:21:23 by lihrig           ###   ########.fr       */
@@ -79,8 +79,6 @@ void				add_eof_token(t_token_list *token_list);
 
 t_token_list		*tokenizer(char *input, t_env_list *env_list);
 
-void				run_tokenizer_tests(void);
-void				print_tokenizer_results(t_token_list *tokens);
 int					is_heredoc_delimiter_quoted(char *delimiter);
 int					is_quote(char c);
 int					is_env_var(char c);

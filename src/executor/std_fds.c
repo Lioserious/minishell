@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   std_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:49:52 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/03 19:56:54 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:36:03 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void execute(t_env_list *env_list, t_cmd_node *node)
    int prev_fd;
    int child_count;
    int i;
+   int	status;
 
    prev_fd = -1;
    cmd_count = count_cmds(node);
@@ -38,16 +39,20 @@ void execute(t_env_list *env_list, t_cmd_node *node)
    signal(SIGINT, SIG_IGN);
    while (i < child_count)
    {
-   	waitpid(pids[i], NULL, 0);
+   	waitpid(pids[i], &status, 0);
+	if (WIFEXITED(status))
+		env_list->last_exitcode = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		env_list->last_exitcode = 128 + WTERMSIG(status);
    	i++;
    }
    cleanup_heredocs(node);
    signal(SIGINT, main_sigint_handler);
    if (g_stdin_backup != -1 && g_stdout_backup != -1)
-   	restore_std_fds();
+   	restore_std_fds(env_list);
 }
 
-void	restore_std_fds(void)
+void	restore_std_fds(t_env_list *env_list)
 {
 	if (g_stdin_backup == -1 || g_stdout_backup == -1)
 		return ;
@@ -55,7 +60,8 @@ void	restore_std_fds(void)
 		|| dup2(g_stdout_backup, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
-		clean_exit(1);
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
 	}
 	close(g_stdin_backup);
 	close(g_stdout_backup);
@@ -63,13 +69,14 @@ void	restore_std_fds(void)
 	g_stdout_backup = -1;
 }
 
-void	backup_std_fds(void)
+void	backup_std_fds(t_env_list *env_list)
 {
 	g_stdin_backup = dup(STDIN_FILENO);
 	g_stdout_backup = dup(STDOUT_FILENO);
 	if (g_stdin_backup == -1 || g_stdout_backup == -1)
 	{
 		perror("dup");
-		clean_exit(1);
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
 	}
 }

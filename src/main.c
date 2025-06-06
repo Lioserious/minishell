@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/05 15:58:06 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/06 13:49:24 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static t_env_list	*init_shell_environment(char **env)
 
 	env_list = init_env_list();
 	if (!env_list)
-		error_handler("Failed to initialize environment list", env_list);
+		error_handler_env("Failed to initialize environment list", env_list);
 	init_env(env_list, env);
 	update_shlvl(env_list);
 	terminal = gc_malloc(sizeof(t_term));
 	if (!terminal)
-		error_handler("Failed to allocate terminal structure", env_list);
+		error_handler_env("Failed to allocate terminal structure", env_list);
 	terminal_setup(terminal);
 	rl_catch_signals = 0;
 	signal_setup();

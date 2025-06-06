@@ -6,18 +6,18 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/02 14:17:17 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:01:51 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(t_env_list *env_list)
+void	ft_env(t_env_list *env_list)
 {
 	t_env_node	*current;
 
 	if (!env_list)
-		return (1);
+		env_list->last_exitcode = 1;
 	current = env_list->head;
 	while (current)
 	{
@@ -29,7 +29,7 @@ int	ft_env(t_env_list *env_list)
 		}
 		current = current->next;
 	}
-	return (0);
+	env_list->last_exitcode = 0;
 }
 
 t_env_list	*init_env_list(void)

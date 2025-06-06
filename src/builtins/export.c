@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:12:54 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/02 14:14:39 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:05:55 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,17 @@ static void	process_export(t_env_list *env_list, char *arg)
 	export_set_var(env_list, name, arg);
 }
 
-int	ft_export(t_env_list *env_list, t_cmd_node *node)
+void	ft_export(t_env_list *env_list, t_cmd_node *node)
 {
 	int		i;
 
 	i = 1;
 	if (!node->cmd[1])
-		return (print_export_list(env_list));
+		env_list->last_exitcode = print_export_list(env_list);
 	while (node->cmd[i])
 	{
 		process_export(env_list, node->cmd[i]);
 		i++;
 	}
-	return (0);
+	env_list->last_exitcode = 0;
 }

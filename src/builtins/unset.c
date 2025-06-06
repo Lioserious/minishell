@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:18:21 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/08 17:41:37 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:03:14 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	remove_env_var(t_env_list *env_list, char *name)
 	}
 }
 
-int	ft_unset(t_env_list *env_list, t_cmd_node *node)
+void	ft_unset(t_env_list *env_list, t_cmd_node *node)
 {
 	int			i;
 
@@ -47,5 +47,5 @@ int	ft_unset(t_env_list *env_list, t_cmd_node *node)
 		remove_env_var(env_list, node->cmd[i]);
 		i++;
 	}
-	return (0);
+	env_list->last_exitcode = 0;
 }

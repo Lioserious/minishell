@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:50:45 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/29 16:00:20 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:24:14 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ typedef struct s_exec
 void		execute(t_env_list *env_list, t_cmd_node *node);
 void		execute_builtin(t_cmd_node *node, t_env_list *env_list);
 void		execute_external(t_cmd_node *node, t_env_list *env_list);
-void		execute_redirections(t_file_list *file_list);
+void		execute_redirections(t_file_list *file_list, t_env_list *env_list);
 int			count_cmds(t_cmd_node *node);
 int			is_builtin(t_cmd_node *node);
-pid_t		safe_fork_command(t_cmd_node *node, int *fd);
+pid_t		safe_fork_command(t_cmd_node *node, int *fd, t_env_list *env_list);
 int			heredoc_interupt(t_cmd_node *node);
-int			init_heredoc_pipe(int *heredoc_pipe);
+int			init_heredoc_pipe(int *heredoc_pipe, t_env_list *env_list);
 void		read_heredoc_lines(t_file_node *file, t_env_list *env_list,
 				int pipe_fd);
 void		finalize_heredoc_pipe(t_file_node *file, int *heredoc_pipe);
@@ -43,8 +43,8 @@ void		process_and_write_line(char *line, t_file_node *file,
 				t_env_list *env_list, int pipe_fd);
 int			should_end_heredoc(char *line, char *delimiter);
 void		handle_heredoc_signals(void);
-void		restore_std_fds(void);
-void		backup_std_fds(void);
+void		restore_std_fds(t_env_list *env_list);
+void		backup_std_fds(t_env_list *env_list);
 int			execute_pipeline_loop(t_cmd_node *node, t_env_list *env_list,
 				t_exec *context);
 void		child_process(t_cmd_node *node, int prev_fd, int *fd,

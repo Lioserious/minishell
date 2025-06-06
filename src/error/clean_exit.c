@@ -12,10 +12,10 @@
 
 #include "minishell.h"
 
-void	clean_exit(int status)
+void	clean_exit(t_env_list *env_list)
 {
-	restore_std_fds();
+	restore_std_fds(env_list);
 	garbage_collector_empty();
 	rl_clear_history();
-	exit(status);
+	exit(env_list->last_exitcode);
 }

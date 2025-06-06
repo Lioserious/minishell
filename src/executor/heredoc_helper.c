@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:34:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/29 15:55:06 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:37:59 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
  * @param heredoc_pipe Array für die Pipe File Descriptors
  * @return 0 bei Erfolg, -1 bei Fehler
  */
-int	init_heredoc_pipe(int *heredoc_pipe)
+int	init_heredoc_pipe(int *heredoc_pipe, t_env_list *env_list)
 {
 	if (pipe(heredoc_pipe) == -1)
 	{
 		perror("pipe");
-		clean_exit(1);
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
 		return (-1);
 	}
 	return (0);

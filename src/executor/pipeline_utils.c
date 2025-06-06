@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/03 14:33:24 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/05 15:37:36 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	fork_execute_node(t_cmd_node *current,
 	if (current->next)
 	{
 		if (pipe(fd) == -1)
-			clean_exit(1);
+			clean_exit(env_list);
 	}
 	else
 	{
@@ -76,22 +76,24 @@ static void	execute_builtin_node(t_cmd_node *node, t_env_list *env_list)
 	if (stdin == -1 || stdout == -1)
 	{
 		perror("dup");
-		clean_exit(1);
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
 	}
 	if (node->file)
-		execute_redirections(node->file);
+		execute_redirections(node->file, env_list);
 	if (ft_strcmp(node->cmd[0], "exit") == 0)
 	{
 		close(stdin);
 		close(stdout);
-		ft_exit(node);
+		ft_exit(node, env_list);
 	}
 	execute_builtin(node, env_list);
 	if (dup2(stdin, STDIN_FILENO) == -1
 		|| dup2(stdout, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
-		clean_exit(1);
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
 	}
 	close(stdin);
 	close(stdout);

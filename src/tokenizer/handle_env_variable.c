@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 14:42:04 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/23 15:35:57 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 14:42:18 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ int	is_heredoc_delimiter_quoted(char *delimiter)
  * @brief Returns the last exit status as a string
  * @return String representation of the exit status
  */
-char	*get_exit_status_as_string(void)
+char	*get_exit_status_as_string(t_env_list *env_list)
 {
-	int	exit_status;
-
-	exit_status = 0;
-	return (gc_strdup(ft_itoa(exit_status)));
+	if (!env_list)
+		return (gc_strdup("0"));
+	return (gc_itoa(env_list->last_exitcode));
 }
 
 /**
@@ -108,7 +107,7 @@ char	*process_env_var(char *input, int *i, t_env_list *env_list)
 	if (!input[*i])
 		return (gc_strdup("$"));
 	if (input[*i] == '?')
-		return ((*i)++, get_exit_status_as_string());
+		return ((*i)++, get_exit_status_as_string(env_list));
 	name_start = *i;
 	while (input[*i] && (ft_isalnum(input[*i]) || input[*i] == '_'))
 		(*i)++;

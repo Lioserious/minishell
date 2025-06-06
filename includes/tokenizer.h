@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:26:17 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/29 16:02:53 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 14:58:34 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ void				add_eof_token(t_token_list *token_list);
 
 t_token_list		*tokenizer(char *input, t_env_list *env_list);
 
-void				run_tokenizer_tests(void);
-void				print_tokenizer_results(t_token_list *tokens);
 int					is_heredoc_delimiter_quoted(char *delimiter);
 int					is_quote(char c);
 int					is_env_var(char c);
@@ -94,7 +92,7 @@ void				add_to_word(char **word, char *part);
 void				add_word_token(t_token_list *token_list, char *word);
 
 // Funktionen für Umgebungsvariablen
-char				*get_exit_status_as_string(void);
+char				*get_exit_status_as_string(t_env_list *env_list);
 char				*process_env_var(char *input, int *i, t_env_list *env_list);
 
 // Funktionen für Anführungszeichen

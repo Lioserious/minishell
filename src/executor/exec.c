@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/03 20:10:30 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:40:14 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 	int		i;
 	t_exec	context;
 
-	backup_std_fds();
+	backup_std_fds(env_list);
 	if (setup_all_heredocs(env_list, node))
 	{
 		cleanup_heredocs(node);
-		restore_std_fds();
+		restore_std_fds(env_list);
 		return (0);
 	}
 	context.prev_fd = -1;
 	context.i = 0;
 	context.pids = pids;
 	i = execute_pipeline_loop(node, env_list, &context);
-	restore_std_fds();
+	restore_std_fds(env_list);
 	return (i);
 }
 
@@ -43,7 +43,7 @@ static int setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 
     setup_heredoc_signal_handling();
     current = node;
-    
+
     while (current)
     {
         if (current->file)
@@ -75,7 +75,7 @@ static int setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 void child_process(t_cmd_node *node, int prev_fd, int *fd, t_env_list *env_list)
 {
     char **enva;
-	
+
     signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
     if (prev_fd != -1)
@@ -98,7 +98,7 @@ void child_process(t_cmd_node *node, int prev_fd, int *fd, t_env_list *env_list)
         close(fd[1]);
     }
     if (node->file)
-        execute_redirections(node->file);
+        execute_redirections(node->file, env_list);
     if (is_builtin(node))
     {
         execute_builtin(node, env_list);

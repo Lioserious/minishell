@@ -6,14 +6,15 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:30:29 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:37:26 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:12:07 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	handle_redirection(t_file_node *file, t_env_list *env_list);
-static void	redirect_fd(char *filename, int flags, int std, t_env_list *env_list);
+static void	redirect_fd(char *filename, int flags,
+				int std, t_env_list *env_list);
 
 void	execute_redirections(t_file_list *file_list, t_env_list *env_list)
 {
@@ -51,7 +52,8 @@ static void	handle_redirection(t_file_node *file, t_env_list *env_list)
 	}
 }
 
-static void	redirect_fd(char *filename, int flags, int std, t_env_list *env_list)
+static void	redirect_fd(char *filename, int flags,
+						int std, t_env_list *env_list)
 {
 	int	fd;
 

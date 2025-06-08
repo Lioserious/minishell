@@ -24,7 +24,7 @@ SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parse_redirectio
 			validate_token.c validate_token_helper.c
 # Executor source files (in src/executor/)
 SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c expand_env_heredoc.c heredoc_helper.c \
-			   heredoc.c std_fds.c pipeline_utils.c
+			   heredoc.c std_fds.c pipeline_utils.c pipeline.c
 # Builtins source files (in src/builtins)
 SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c \
 			   print_export.c

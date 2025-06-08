@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 17:37:57 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/06 14:04:44 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:20:17 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	ft_pwd(t_env_list *env_list)
 		ft_putendl_fd(cwd, 1);
 		env_list->last_exitcode = 0;
 	}
-	perror("pwd");
-	env_list->last_exitcode = 1;
+	else
+	{
+		perror("pwd");
+		env_list->last_exitcode = 1;
+	}
 }

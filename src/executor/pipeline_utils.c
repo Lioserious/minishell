@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:37:36 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:50:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	fork_execute_node(t_cmd_node *current,
 				t_env_list *env_list, t_exec *context);
 static void	execute_builtin_node(t_cmd_node *node, t_env_list *env_list);
+static void	backup_std_fds_exit(int *stdin_fd, int *stdout_fd,
+				t_env_list *env_list);
 
 int	execute_pipeline_loop(t_cmd_node *node,
 				t_env_list *env_list, t_exec *context)
@@ -66,19 +68,25 @@ static void	fork_execute_node(t_cmd_node *current,
 	}
 }
 
-static void	execute_builtin_node(t_cmd_node *node, t_env_list *env_list)
+static void	backup_std_fds_exit(int *stdin_fd, int *stdout_fd,
+								t_env_list *env_list)
 {
-	int	stdin;
-	int	stdout;
-
-	stdin = dup(STDIN_FILENO);
-	stdout = dup(STDOUT_FILENO);
-	if (stdin == -1 || stdout == -1)
+	*stdin_fd = dup(STDIN_FILENO);
+	*stdout_fd = dup(STDOUT_FILENO);
+	if (*stdin_fd == -1 || *stdout_fd == -1)
 	{
 		perror("dup");
 		env_list->last_exitcode = 1;
 		clean_exit(env_list);
 	}
+}
+
+static void	execute_builtin_node(t_cmd_node *node, t_env_list *env_list)
+{
+	int	stdin;
+	int	stdout;
+
+	backup_std_fds_exit(&stdin, &stdout, env_list);
 	if (node->file)
 		execute_redirections(node->file, env_list);
 	if (ft_strcmp(node->cmd[0], "exit") == 0)

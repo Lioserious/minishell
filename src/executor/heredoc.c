@@ -6,13 +6,11 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:36:19 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:23:02 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:11:11 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//static int	redirect_stdout_to_tty(void);
 
 void	setup_heredoc_no_signals(t_file_node *file, t_env_list *env_list)
 {
@@ -34,8 +32,8 @@ void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
 		if (!line)
 		{
 			if (errno == EINTR)
-				continue;
-			break;
+				continue ;
+			break ;
 		}
 		if (should_end_heredoc(line, file->name))
 		{
@@ -47,35 +45,6 @@ void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
 	}
 	close(pipe_fd);
 }
-
-// static int	redirect_stdout_to_tty(void)
-// {
-// 	int		tty_fd;
-// 	int		backup_stdout;
-
-// 	backup_stdout = dup(STDOUT_FILENO);
-// 	if (backup_stdout == -1)
-// 	{
-// 		perror("dup");
-// 		clean_exit(1);
-// 	}
-// 	tty_fd = open("/dev/tty", O_RDWR);
-// 	if (tty_fd == -1)
-// 	{
-// 		perror("open /dev/tty");
-// 		close(backup_stdout);
-// 		return (-1);
-// 	}
-// 	if (dup2(tty_fd, STDOUT_FILENO) == -1)
-// 	{
-// 		perror("dup2");
-// 		close(backup_stdout);
-// 		close(tty_fd);
-// 		return (-1);
-// 	}
-// 	close(tty_fd);
-// 	return (backup_stdout);
-// }
 
 void	cleanup_heredocs(t_cmd_node *node)
 {

@@ -24,9 +24,10 @@ SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parse_redirectio
 			validate_token.c validate_token_helper.c
 # Executor source files (in src/executor/)
 SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c expand_env_heredoc.c heredoc_helper.c \
-			   heredoc.c std_fds.c pipeline_utils.c
+			   heredoc.c std_fds.c pipeline_utils.c pipeline.c
 # Builtins source files (in src/builtins)
-SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c
+SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c \
+			   print_export.c
 # Error handler source files (in src/error/)
 SRC_ERROR = error_handler.c clean_exit.c
 # Garbage collector source files (in src/garbage_collector/)
@@ -38,7 +39,7 @@ SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.
          handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c  \
 		 nudel.c handle_input_redirections.c \
 # Signals source files (in src/signals)
-SRC_SIGNALS = signals.c terminal.c
+SRC_SIGNALS = signals.c terminal.c signal_help.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \

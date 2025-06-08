@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_help.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:50:46 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/15 20:35:22 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/02 10:48:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_add_env_var(t_env_list *env_list, char *name,
 	if (value)
 		new_node->value = gc_strdup(value);
 	else
-		new_node->value = gc_strdup("");
+		new_node->value = NULL;
 	new_node->is_export = is_export;
 	new_node->next = NULL;
 	if (!env_list->head)
@@ -42,38 +42,20 @@ void	ft_add_env_var(t_env_list *env_list, char *name,
 	env_list->count++;
 }
 
-char *get_env_value(t_env_list *env_list, char *name)
-{
-    t_env_node *current;
-    
-    if (!env_list || !name)
-        return (gc_strdup(""));
-    
-    current = env_list->head;
-    while (current)
-    {
-        if (ft_strcmp(current->name, name) == 0)
-            return (gc_strdup(current->value));
-        current = current->next;
-    }
-    return (gc_strdup(""));
-}
-
-void	set_env_var(t_env_list *env_list, char *name, char *value)
+char	*get_env_value(t_env_list *env_list, char *name)
 {
 	t_env_node	*current;
 
+	if (!env_list || !name)
+		return (gc_strdup(""));
 	current = env_list->head;
 	while (current)
 	{
-		if (ft_strncmp(current->name, name, ft_strlen(name + 1)) == 0)
-		{
-			current->value = gc_strdup(value);
-			return ;
-		}
+		if (ft_strcmp(current->name, name) == 0)
+			return (gc_strdup(current->value));
 		current = current->next;
 	}
-	return ;
+	return (gc_strdup(""));
 }
 
 char	**convert_env_struct_array(t_env_list *env_list)
@@ -102,3 +84,51 @@ char	**convert_env_struct_array(t_env_list *env_list)
 	env_array[i] = NULL;
 	return (env_array);
 }
+
+void	update_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+{
+	t_env_node	*current;
+
+	current = env_list->head;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0)
+		{
+			if (value)
+				current->value = gc_strdup(value);
+			current->is_export = is_export;
+			return ;
+		}
+		current = current->next;
+	}
+	if (value)
+		ft_add_env_var(env_list, name, value, is_export);
+	else
+		ft_add_env_var(env_list, name, NULL, is_export);
+}
+
+void	append_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+{
+	t_env_node	*current;
+	char		*new_value;
+
+	current = env_list->head;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0)
+		{
+			if (current->value)
+				new_value = gc_strjoin(current->value, value);
+			else
+				new_value = gc_strdup(value);
+			current->value = new_value;
+			current->is_export = is_export;
+			return ;
+		}
+		current = current->next;
+	}
+	new_value = gc_strdup(value);
+	ft_add_env_var(env_list, name, new_value, is_export);
+}
+
+

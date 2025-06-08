@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:59 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 18:02:59 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 16:21:40 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static int	process_special_part(char *input, int *i, char **current_word,
 		t_env_list *env_list)
 {
 	char	*part;
+
 	part = NULL;
 	if (input[*i] == '~')
 	{
@@ -57,7 +58,7 @@ static int	process_special_part(char *input, int *i, char **current_word,
 		}
 	}
 	if (input[*i] == '\'')
-		part = process_single_quote(input, i);
+		part = process_single_quote(input, i, env_list);
 	else if (input[*i] == '"')
 		part = process_double_quote(input, i, env_list);
 	else if (input[*i] == '$')

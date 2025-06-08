@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:01:43 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 15:48:04 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/30 14:31:20 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ char	*gc_strdup(const char *s);
 char	*gc_substr(char const *s, unsigned int start, size_t len);
 char	*gc_strjoin(char const *s1, char const *s2);
 char	**gc_split(const char *s, char c);
+char	*gc_itoa(int n);
 
 #endif

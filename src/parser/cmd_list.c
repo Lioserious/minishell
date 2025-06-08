@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/12 16:12:19 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:24:58 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmd_list	*create_cmd_list(void)
 
 	new_list = (t_cmd_list *)gc_malloc(sizeof(t_cmd_list));
 	if (!new_list)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_CMD_LIST", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_CMD_LIST", 0));
 	new_list->head = NULL;
 	new_list->tail = NULL;
 	new_list->size = 0;
@@ -34,7 +34,7 @@ t_cmd_node	*create_cmd_node(char **cmd, int cmd_type)
 
 	new_node = (t_cmd_node *)gc_malloc(sizeof(t_cmd_node));
 	if (!new_node)
-		error_handler("MEMORY ALLOCATION FAILED: CREATE_CMD_NODE", 1);
+		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_CMD_NODE", 0));
 	new_node->cmd = cmd;
 	new_node->cmd_type = cmd_type;
 	new_node->file = create_file_list();

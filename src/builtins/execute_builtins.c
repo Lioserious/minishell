@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:43:20 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/16 15:11:39 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/06 13:59:37 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	execute_builtin(t_cmd_node *node, t_env_list *env_list)
 {
-	if (ft_strncmp(node->cmd[0], "pwd", 4) == 0)
-		ft_pwd();
-	else if (ft_strncmp(node->cmd[0], "echo", 5) == 0)
-		ft_echo(node);
-	else if (ft_strncmp(node->cmd[0], "cd", 3) == 0)
+	if (ft_strcmp(node->cmd[0], "pwd") == 0)
+		ft_pwd(env_list);
+	else if (ft_strcmp(node->cmd[0], "echo") == 0)
+		ft_echo(node, env_list);
+	else if (ft_strcmp(node->cmd[0], "cd") == 0)
 		ft_cd(node, env_list);
-	else if (ft_strncmp(node->cmd[0], "env", 4) == 0)
+	else if (ft_strcmp(node->cmd[0], "env") == 0)
 		ft_env(env_list);
-	else if (ft_strncmp(node->cmd[0], "export", 7) == 0)
+	else if (ft_strcmp(node->cmd[0], "export") == 0)
 		ft_export(env_list, node);
-	else if (ft_strncmp(node->cmd[0], "unset", 6) == 0)
+	else if (ft_strcmp(node->cmd[0], "unset") == 0)
 		ft_unset(env_list, node);
-	else if (ft_strncmp(node->cmd[0], "exit", 5) == 0)
-		ft_exit(node);
+	else if (ft_strcmp(node->cmd[0], "exit") == 0)
+		ft_exit(node, env_list);
 }

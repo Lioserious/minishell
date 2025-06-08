@@ -6,124 +6,122 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/16 16:08:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:08:38 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
-static void		child_process(t_cmd_node *node, int prev_fd,
-					int *fd, t_env_list *env_list);
-static void		parent_process(int *prev_fd, int *fd, int next);
-static pid_t	safe_fork_command(t_cmd_node *node, int *fd);
+static int		setup_all_heredocs(t_env_list *env_list, t_cmd_node *node);
 
-void	execute(t_env_list *env_list, t_cmd_node *node)
+int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
 {
-	pid_t		*pids;
-	int			cmd_count;
-	int			prev_fd;
-	int			child_count;
-	int			i;
+	int		i;
+	t_exec	context;
 
-	prev_fd = -1;
-	cmd_count = count_cmds(node);
-	pids = gc_malloc(sizeof(pid_t) * cmd_count);
-	child_count = pipeline(env_list, node, pids);
-	if (prev_fd != -1)
-		close(prev_fd);
-	i = 0;
-	while (i < child_count)
+	backup_std_fds(env_list);
+	if (setup_all_heredocs(env_list, node))
 	{
-		waitpid(pids[i], NULL, 0);
-		i++;
+		cleanup_heredocs(node);
+		restore_std_fds(env_list);
+		return (0);
 	}
-}
-
-static int	pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids)
-{
-	t_cmd_node	*current;
-	int			fd[2];
-	int			prev_fd;
-	pid_t		pid;
-	int			i;
-
-	current = node;
-	i = 0;
-	prev_fd = -1;
-	while (current)
-	{
-		pid = safe_fork_command(current, fd);
-		if (pid == 0)
-			child_process(current, prev_fd, fd, env_list);
-		else
-		{
-			pids[i++] = pid;
-			parent_process(&prev_fd, fd, current->next != NULL);
-		}
-		current = current->next;
-	}
-	if (prev_fd != -1)
-		close(prev_fd);
+	context.prev_fd = -1;
+	context.i = 0;
+	context.pids = pids;
+	i = execute_pipeline_loop(node, env_list, &context);
+	restore_std_fds(env_list);
 	return (i);
 }
 
-static pid_t	safe_fork_command(t_cmd_node *node, int *fd)
+static int setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 {
-	pid_t	pid;
+    t_cmd_node *current;
+    t_file_node *file;
+    t_file_node *last_heredoc = NULL;
+    int heredoc_count = 0;
 
-	if (node->next)
-	{
-		if (pipe(fd) == -1)
-		{
-			perror("pipe");
-			clean_exit(1);
-		}
-	}
-	else
-	{
-		fd[0] = -1;
-		fd[1] = -1;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		clean_exit(1);
-	}
-	return (pid);
+    setup_heredoc_signal_handling();
+    current = node;
+
+    while (current)
+    {
+        if (current->file)
+        {
+            file = current->file->head;
+            while (file)
+            {
+                if (file->redirection_type == REDIR_HEREDOC)
+                {
+                    heredoc_count++;
+                    if (last_heredoc && last_heredoc->heredoc_fd != -1)
+                    {
+                        close(last_heredoc->heredoc_fd);
+                        last_heredoc->heredoc_fd = -1;
+                    }
+                    setup_heredoc_no_signals(file, env_list);
+                    last_heredoc = file;
+                }
+                file = file->next;
+            }
+        }
+        current = current->next;
+    }
+    restore_main_signals();
+    return (0);
 }
 
-static	void	child_process(t_cmd_node *node, int prev_fd,
-					int *fd, t_env_list *env_list)
+
+void child_process(t_cmd_node *node, int prev_fd, int *fd, t_env_list *env_list)
 {
-	if (prev_fd != -1)
-	{
-		dup2(prev_fd, STDIN_FILENO);
-		close(prev_fd);
-	}
-	if (fd[1] != -1)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	}
-	if (node->file)
-		execute_redirections(node->file);
-	if (node->cmd_type == CMD_BUILTIN)
-		execute_builtin(node, env_list);
-	else
-		execute_external(node, env_list);
-	exit(1);
+    char **enva;
+
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+    if (prev_fd != -1)
+    {
+        if (dup2(prev_fd, STDIN_FILENO) == -1)
+        {
+            perror("dup2 stdin");
+            exit(1);
+        }
+        close(prev_fd);
+    }
+    if (fd[1] != -1)
+    {
+        close(fd[0]);
+        if (dup2(fd[1], STDOUT_FILENO) == -1)
+        {
+            perror("dup2 stdout");
+            exit(1);
+        }
+        close(fd[1]);
+    }
+    if (node->file)
+        execute_redirections(node->file, env_list);
+    if (is_builtin(node))
+    {
+        execute_builtin(node, env_list);
+        clean_exit(env_list);
+    }
+    else
+    {
+        enva = convert_env_struct_array(env_list);
+        handle_child_process(node, env_list, enva);
+    }
 }
 
-static void	parent_process(int *prev_fd, int *fd, int next)
+void	parent_process(int *prev_fd, int *fd, int next)
 {
 	if (*prev_fd != -1)
 		close(*prev_fd);
-	if (next && fd[0] != -1 && fd[1] != -1)
-	{
+	if (fd[1] != -1)
 		close(fd[1]);
+	if (next && fd[0] != -1)
 		*prev_fd = fd[0];
+	else if (fd[0] != -1)
+	{
+		close(fd[0]);
+		*prev_fd = -1;
 	}
 }

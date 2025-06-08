@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   external_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/15 20:31:14 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/06 14:35:22 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static char	*get_cmd_path(t_env_list *env_list, char *cmd);
-static void	handle_child_process(t_cmd_node *node,
-				t_env_list *env_list, char **enva);
+static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
+				char **enva);
+static void	exec_minishell(t_cmd_node *node, char **enva, t_env_list *env_list);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
 {
@@ -31,7 +31,11 @@ void	execute_external(t_cmd_node *node, t_env_list *env_list)
 	else if (pid > 0)
 		waitpid(pid, &status, 0);
 	else
+	{
 		perror("fork");
+		env_list->last_exitcode = 1;
+		clean_exit(env_list);
+	}
 }
 
 static char	*get_cmd_path(t_env_list *env_list, char *cmd)
@@ -41,6 +45,12 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	char	*full_path;
 	int		i;
 
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (gc_strdup(cmd));
+		return (NULL);
+	}
 	path = gc_split(get_env_value(env_list, "PATH"), ':');
 	i = 0;
 	while (path[i])
@@ -53,10 +63,26 @@ static char	*get_cmd_path(t_env_list *env_list, char *cmd)
 	}
 	return (NULL);
 }
-static void	handle_child_process(t_cmd_node *node,
-				t_env_list *env_list, char **enva)
+
+void	handle_child_process(t_cmd_node *node, t_env_list *env_list,
+		char **enva)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	if (ft_strcmp(node->cmd[0], "./minishell") == 0 || ft_strcmp(node->cmd[0],
+			"minishell") == 0)
+	{
+		exec_minishell(node, enva, env_list);
+	}
+	else
+		exec_external_cmd(node, env_list, enva);
+}
+
+static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
+		char **enva)
 {
 	char	*cmd_path;
+	struct stat	fileinfo;
 
 	cmd_path = get_cmd_path(env_list, node->cmd[0]);
 	if (!cmd_path)
@@ -64,15 +90,39 @@ static void	handle_child_process(t_cmd_node *node,
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(node->cmd[0], 2);
 		ft_putendl_fd(": command not found", 2);
-		clean_exit(1);
+		exit(127);
 	}
-	else
+	if (stat(cmd_path, &fileinfo) == -1)
 	{
-		if (execve(cmd_path, node->cmd, enva) == -1)
-		{
-			perror("execve");
-			clean_exit(1);
-		}
+		perror(cmd_path);
+		exit(127);
+	}
+	if (!S_ISREG(fileinfo.st_mode))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(node->cmd[0], 2);
+		ft_putendl_fd(": is a directory", 2);
+		exit(126);
+	}
+	if (access(cmd_path, X_OK) != 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(node->cmd[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
+		exit(126);
+	}
+	if (execve(cmd_path, node->cmd, enva) == -1)
+	{
+		perror("execve");
+		exit(126);
 	}
 }
 
+static void	exec_minishell(t_cmd_node *node, char **enva, t_env_list *env_list)
+{
+	if (execve("./minishell", node->cmd, enva) == -1)
+	{
+		perror("execve");
+		exit(1);
+	}
+}

@@ -20,20 +20,23 @@ LIBFT_DIR = libft
 # Main source files
 SRC_FILES = main.c
 # Parser source files (in src/parser/)
-SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parser_test.c
+SRC_PARSER = cmd_list.c file_to_list.c parser_helper.c parser.c parse_redirections.c \
+			validate_token.c validate_token_helper.c
 # Executor source files (in src/executor/)
-SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c
+SRC_EXECUTOR = exec.c external_exec.c redirections.c exec_help.c expand_env_heredoc.c heredoc_helper.c \
+			   heredoc.c std_fds.c pipeline_utils.c
 # Builtins source files (in src/builtins)
 SRC_BUILTINS = execute_builtins.c pwd.c echo.c cd.c env.c env_help.c export.c unset.c exit.c
 # Error handler source files (in src/error/)
 SRC_ERROR = error_handler.c clean_exit.c
 # Garbage collector source files (in src/garbage_collector/)
 SRC_GC = garbage_collector_add.c garbage_collector_empty.c garbage_collector_print.c \
-         gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c gc_split.c gc_strjoin.c
+         gc_holder.c gc_malloc.c gc_readline.c gc_strdub.c gc_substr.c gc_split.c gc_strjoin.c \
+		 gc_itoa.c
 # Tokenizer source files (in src/tokenizer)
 SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.c \
-         handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c tokenizer_test.c \
-		 nudel.c
+         handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c  \
+		 nudel.c handle_input_redirections.c \
 # Signals source files (in src/signals)
 SRC_SIGNALS = signals.c terminal.c
 # All source files
@@ -75,7 +78,6 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/garbage_collector
 	@mkdir -p $(OBJ_DIR)/builtins
 	@mkdir -p $(OBJ_DIR)/tokenizer
-
 # Compile libft
 libft:
 	@echo "\033[0;34mCompiling libft...\033[0m"

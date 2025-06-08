@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:02:08 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:02:19 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/05/22 16:59:25 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_file_node
 {
 	char					*name;
 	int						redirection_type;
+	int						heredoc_fd;
+	int						expand_vars;
 	t_file_node				*next;
 }							t_file_node;
 

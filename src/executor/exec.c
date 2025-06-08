@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/05 15:40:14 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:08:38 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void child_process(t_cmd_node *node, int prev_fd, int *fd, t_env_list *env_list)
     if (is_builtin(node))
     {
         execute_builtin(node, env_list);
-        exit(0);
+        clean_exit(env_list);
     }
     else
     {

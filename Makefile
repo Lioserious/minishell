@@ -39,7 +39,7 @@ SRC_TOK = tokenizer.c handle_env_variable.c handle_quotes.c handle_special_char.
          handle_word.c tokenizer__utils.c tokenizer_utils.c handle_eof.c  \
 		 nudel.c handle_input_redirections.c \
 # Signals source files (in src/signals)
-SRC_SIGNALS = signals.c terminal.c
+SRC_SIGNALS = signals.c terminal.c signal_help.c
 # All source files
 SRC = $(SRC_FILES) \
       $(addprefix parser/, $(SRC_PARSER)) \

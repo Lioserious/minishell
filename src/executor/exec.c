@@ -6,13 +6,12 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/08 14:39:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:50:11 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		setup_all_heredocs(t_env_list *env_list, t_cmd_node *node);
 static void		setup_child_io_and_redirs(t_cmd_node *node, int prev_fd,
 					int *fd, t_env_list *env_list);
 static void		process_heredoc_in_node(t_cmd_node *current,
@@ -45,10 +44,9 @@ static void	process_heredoc_in_node(t_cmd_node *current,
 	}
 }
 
-static int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
+int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 {
 	t_cmd_node	*current;
-	t_file_node	*file;
 	t_file_node	*last_heredoc;
 	int			heredoc_count;
 

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/08 14:19:41 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:50:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	backup_std_fds_exit(int *stdin_fd, int *stdout_fd,
 {
 	*stdin_fd = dup(STDIN_FILENO);
 	*stdout_fd = dup(STDOUT_FILENO);
-	if (stdin_fd == -1 || stdout_fd == -1)
+	if (*stdin_fd == -1 || *stdout_fd == -1)
 	{
 		perror("dup");
 		env_list->last_exitcode = 1;

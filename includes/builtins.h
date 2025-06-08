@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:57:06 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:28:26 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:51:36 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ int		ft_env(t_env_list *env_list);
 int		ft_export(t_env_list *env_list, t_cmd_node *node);
 void	ft_exit(t_cmd_node *node, t_env_list *env_list);
 int		ft_unset(t_env_list *env_list, t_cmd_node *node);
+int		print_export_list(t_env_list	*env_list);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:16:33 by mimalek           #+#    #+#             */
-/*   Updated: 2025/05/19 16:02:23 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/06 14:01:17 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	is_n_flag(char *arg)
  * @param node Command-Node mit Argumenten
  * @return Immer 0 für erfolgreiche Ausführung
  */
-int	ft_echo(t_cmd_node *node)
+void	ft_echo(t_cmd_node *node, t_env_list *env_list)
 {
 	int	i;
 	int	newline;
@@ -57,5 +57,5 @@ int	ft_echo(t_cmd_node *node)
 	}
 	if (newline)
 		write(1, "\n", 1);
-	return (0);
+	env_list->last_exitcode = 0;
 }

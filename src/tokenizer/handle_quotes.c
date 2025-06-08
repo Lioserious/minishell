@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:48:11 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/23 15:36:04 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/05 16:17:21 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param i Current position pointer
  * @return Extracted content or NULL
  */
-char	*process_single_quote(char *input, int *i)
+char	*process_single_quote(char *input, int *i, t_env_list *env_list)
 {
 	int		start;
 	char	*result;
@@ -30,7 +30,7 @@ char	*process_single_quote(char *input, int *i)
 	while (input[*i] && input[*i] != '\'')
 		(*i)++;
 	if (!input[*i])
-		return (error_handler("UNCLOSED SINGLE QUOTE", 0));
+		return (error_handler_exit_code("UNCLOSED SINGLE QUOTE", 2, env_list));
 	result = gc_substr(input, start, *i - start);
 	(*i)++;
 	return (result);
@@ -134,7 +134,7 @@ char	*process_double_quote(char *input, int *i, t_env_list *env_list)
 	}
 	process_remaining_text(input, i, start, &result);
 	if (!input[*i])
-		return (error_handler("UNCLOSED DOUBLE QUOTE", 0));
+		return (error_handler_exit_code("UNCLOSED DOUBLE QUOTE", 2, env_list));
 	(*i)++;
 	if (result == NULL)
 		result = gc_strdup("");

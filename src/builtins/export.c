@@ -80,17 +80,17 @@ static	void	process_export(t_env_list *env_list, char *arg)
 	export_set_var(env_list, name, arg);
 }
 
-int	ft_export(t_env_list *env_list, t_cmd_node *node)
+void	ft_export(t_env_list *env_list, t_cmd_node *node)
 {
 	int		i;
 
 	i = 1;
 	if (!node->cmd[1])
-		return (print_export_list(env_list));
+		env_list->last_exitcode = print_export_list(env_list);
 	while (node->cmd[i])
 	{
 		process_export(env_list, node->cmd[i]);
 		i++;
 	}
-	return (0);
+	env_list->last_exitcode = 0;
 }

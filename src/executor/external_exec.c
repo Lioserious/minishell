@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/08 13:55:59 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 15:03:47 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	handle_child_process(t_cmd_node *node, t_env_list *env_list,
 static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 		char **enva)
 {
-	char	*cmd_path;
+	char		*cmd_path;
 	struct stat	fileinfo;
 
 	cmd_path = get_cmd_path(env_list, node->cmd[0]);

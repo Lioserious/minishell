@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/09 13:04:43 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/09 13:17:13 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 				char **enva);
-static void	exec_minishell(t_cmd_node *node, char **enva);
 static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
@@ -108,7 +107,6 @@ static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 		char **enva)
 {
 	char		*cmd_path;
-	struct stat	fileinfo;
 
 	cmd_path = get_cmd_path(env_list, node->cmd[0]);
 	if (!cmd_path)

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:44:02 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:33 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/09 12:51:06 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,13 @@ pid_t	safe_fork_command(t_cmd_node *node, int *fd, t_env_list *env_list)
 		clean_exit(env_list);
 	}
 	return (pid);
+}
+
+void	exec_minishell(t_cmd_node *node, char **enva)
+{
+	if (execve("./minishell", node->cmd, enva) == -1)
+	{
+		perror("execve");
+		exit(1);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/06 13:49:24 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 13:18:42 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_cmd_list *process_input_line(char *input, t_env_list *env_list)
    tokens = tokenizer(input, env_list);
    if (!tokens)
    {
-   	ft_putendl_fd("ERROR: Tokenization failed!", STDERR_FILENO);
+   	//ft_putendl_fd("ERROR: Tokenization failed!", STDERR_FILENO);
    	return (NULL);
    }
    cmd_list = parser(tokens, env_list);
@@ -70,11 +70,18 @@ static int handle_user_input(t_env_list *env_list)
 {
    char *input;
    t_cmd_list *cmd_list;
-
-   input = gc_readline(PROMPT);
+   char *line;
+	if (isatty(fileno(stdin)))
+		input = gc_readline(PROMPT);
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		input = ft_strtrim(line, "\n");
+		free(line);
+	}
    if (!input)
    {
-   	ft_putendl_fd("exit", STDOUT_FILENO);
+   	//ft_putendl_fd("exit", STDOUT_FILENO);
    	return (0);
    }
    if (input[0] == '\0')

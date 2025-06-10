@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:35 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/02 16:18:56 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:15:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_redirection_type(t_token_type token_type)
 		return (REDIR_APPEND);
 	else if (token_type == TOKEN_REDIR_HEREDOC)
 		return (REDIR_HEREDOC);
-	ft_putstr_fd("PARSER: Unexpected token type in get_redirection_type: ", 2);
+	//ft_putstr_fd("PARSER: Unexpected token type in get_redirection_type: ", 2);
 	return (-1);
 }
 

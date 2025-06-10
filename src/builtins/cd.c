@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:16:09 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/06 14:05:42 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 13:13:52 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ static int	cd_to_oldpath(t_env_list *env_list)
 	oldpwd = get_env_value(env_list, "OLDPWD");
 	if (oldpwd == NULL || chdir(oldpwd) != 0)
 	{
-		ft_putstr_fd("cd: OLDPWD not set or invalid\n", 2);
+		//ft_putstr_fd("cd: OLDPWD not set or invalid\n", 2);
 		return (1);
 	}
 	if (getcwd(currentpwd, sizeof(currentpwd)) == NULL)
 		return (1);
 	set_env_var(env_list, "OLDPWD", gc_strdup(oldpwd));
-	ft_putstr_fd(oldpwd, 1);
-	ft_putendl_fd("", 1);
+	//ft_putstr_fd(oldpwd, 1);
+	//ft_putendl_fd("", 1);
 	if (getcwd(newpwd, sizeof(newpwd)) == NULL)
 		set_env_var(env_list, "PWD", gc_strdup(newpwd));
 	return (0);
@@ -80,9 +80,9 @@ static int	cd_to_path(char *path, t_env_list	*env_list)
 		return (1);
 	if (chdir(path) != 0)
 	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": ", 2);
+		//ft_putstr_fd("cd: ", 2);
+		//ft_putstr_fd(path, 2);
+		//ft_putstr_fd(": ", 2);
 		perror("");
 		return (1);
 	}

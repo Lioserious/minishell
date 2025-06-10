@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector_print.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:30:02 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/02 12:31:52 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:12:58 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	garbage_collector_print(void)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("Pointer %zu: %p, %s\n", i, temp->content,
-			(char *)temp->content);
+		// printf("Pointer %zu: %p, %s\n", i, temp->content,
+		// 	(char *)temp->content);
 		temp = temp->next;
 		i++;
 	}

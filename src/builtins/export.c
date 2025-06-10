@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:12:54 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/08 14:07:58 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 13:14:46 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ static	void	process_export(t_env_list *env_list, char *arg)
 	name = extract_name(arg);
 	if (!is_valid(name))
 	{
-		ft_putstr_fd("minishell: export: '", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
+		//ft_putstr_fd("minishell: export: '", 2);
+		//ft_putstr_fd(arg, 2);
+		//ft_putendl_fd("': not a valid identifier", 2);
 		return ;
 	}
 	export_set_var(env_list, name, arg);

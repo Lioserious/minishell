@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:08:25 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:28:01 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:29:51 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static t_token	*create_and_configure_command(char **cmd_array, int arg_count,
 	if (arg_count > 0)
 		cmd_type = is_builtin_command(cmd_array[0]);
 	else
-		cmd_type = CMD_SIMPLE; // Leere Commands sind keine Builtins
+		cmd_type = CMD_SIMPLE;
 	cmd = create_cmd_node(cmd_array, cmd_type);
 	if (!cmd)
 		return (NULL);
 	token = parse_redirections(token, cmd);
 	if (!token && has_pending_redirections(token))
-		return (NULL); // Fehler beim Parsen der Redirections
+		return (NULL);
 	add_cmd_to_list(cmd_list, cmd);
 	return (token);
 }
@@ -92,11 +92,8 @@ t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
 	int		arg_count;
 	int		has_redirections;
 
-	// Schritt 1: Sammle alle Command-Argumente
 	token = collect_command_arguments(token, &cmd_array, &arg_count);
-	// Schritt 2: Prüfe ob Redirections folgen
 	has_redirections = has_pending_redirections(token);
-	// Schritt 3: Erstelle Command-Node wenn Argumente ODER Redirections vorhanden
 	if (arg_count > 0 || has_redirections)
 	{
 		token = create_and_configure_command(cmd_array, arg_count, token,

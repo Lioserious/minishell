@@ -6,41 +6,11 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 12:23:47 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:11:41 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Diese Funktion wird später implementiert
-// Hier nur ein Platzhalter, um Kompilierungsfehler zu vermeiden
-t_token	*parse_simple_command(t_token *token, t_cmd_list *cmd_list)
-{
-	t_cmd_node	*cmd;
-	char		**cmd_array;
-	int			arg_count;
-	int			cmd_type;
-
-	cmd_array = NULL;
-	arg_count = 0;
-	while (token && (token->type == TOKEN_WORD || token->type == TOKEN_ENV_VAR)
-		&& !is_redirection_token(token->type) && token->type != TOKEN_PIPE
-		&& token->type != TOKEN_EOF)
-	{
-		cmd_array = realloc_cmd_args(cmd_array, arg_count + 1);
-		cmd_array[arg_count] = gc_strdup(token->value);
-		arg_count++;
-		token = token->next;
-	}
-	if (arg_count > 0)
-	{
-		cmd_type = is_builtin_command(cmd_array[0]);
-		cmd = create_cmd_node(cmd_array, cmd_type);
-		token = parse_redirections(token, cmd);
-		add_cmd_to_list(cmd_list, cmd);
-	}
-	return (token);
-}
 
 /**
  * @brief Validates token list and handles edge cases

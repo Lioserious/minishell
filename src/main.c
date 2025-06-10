@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:18:42 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 13:50:34 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static t_env_list	*init_shell_environment(char **env)
  * @param env_list Environment variables list
  * @return Command list ready for execution, or NULL on error
  */
-static t_cmd_list *process_input_line(char *input, t_env_list *env_list)
+static t_cmd_list	*process_input_line(char *input, t_env_list *env_list)
 {
-   t_token_list *tokens;
-   t_cmd_list *cmd_list;
+	t_token_list	*tokens;
+	t_cmd_list		*cmd_list;
 
    if (!input || input[0] == '\0')
    	return (NULL);
@@ -61,12 +61,13 @@ static t_cmd_list *process_input_line(char *input, t_env_list *env_list)
    	return (NULL);
    return (cmd_list);
 }
+
 /**
  * @brief Handles user input and command execution in the main loop
  * @param env_list Environment variables list
  * @return 1 to continue loop, 0 to exit
  */
-static int handle_user_input(t_env_list *env_list)
+static int	handle_user_input(t_env_list *env_list)
 {
    char *input;
    t_cmd_list *cmd_list;

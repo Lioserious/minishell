@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:19:25 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 13:49:37 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*error_handler_env(char *message, t_env_list *env_list)
 	return (NULL);
 }
 
-void    *error_handler(char *message, int status)
+void	*error_handler(char *message, int status)
 {
 	(void)message;
    // ft_putstr_fd("minishell: ", STDERR_FILENO);

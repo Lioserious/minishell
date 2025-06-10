@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 11:16:33 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 13:44:22 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 13:58:14 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_echo(t_cmd_node *node, t_env_list *env_list)
 	}
 	while (node->cmd[i])
 	{
-		//ft_putstr_fd(node->cmd[i], 1);
+		ft_putstr_fd(node->cmd[i], 1);
 		if (node->cmd[i + 1])
 			write(1, " ", 1);
 		i++;

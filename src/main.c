@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:50:34 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 14:01:32 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,8 @@ static int	handle_user_input(t_env_list *env_list)
 {
    char *input;
    t_cmd_list *cmd_list;
-   char *line;
-	if (isatty(fileno(stdin)))
-		input = gc_readline(PROMPT);
-	else
-	{
-		line = get_next_line(fileno(stdin));
-		input = ft_strtrim(line, "\n");
-		free(line);
-	}
+
+   input = gc_readline(PROMPT);
    if (!input)
    {
    	//ft_putendl_fd("exit", STDOUT_FILENO);

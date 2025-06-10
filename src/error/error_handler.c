@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:40 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/06 13:56:41 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 12:26:13 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	*error_handler_env(char *message, t_env_list *env_list)
 	return (NULL);
 }
 
-void    *error_handler(char *message, int status)
+void	*error_handler(char *message, int status)
 {
-    ft_putstr_fd("minishell: ", STDERR_FILENO);
-    ft_putstr_fd(message, STDERR_FILENO);
-    ft_putstr_fd("\n", STDERR_FILENO);
-    if (status > 0)
-        clean_exit_old(status);
-    return (NULL);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	if (status > 0)
+		clean_exit_old(status);
+	return (NULL);
 }
 
 void	*error_handler_exit_code(char *message, int exit_code,

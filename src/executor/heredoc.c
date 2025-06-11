@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:36:19 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/11 15:56:54 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:45:53 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,56 @@ void	setup_heredoc_no_signals(t_file_node *file, t_env_list *env_list)
 	finalize_heredoc_pipe(file, heredoc_pipe);
 }
 
-void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
+static int	read_heredoc_loop(t_file_node *file,
+				t_env_list *env_list, int write_fd)
 {
 	char	*line;
-	
-	while (1)
+
+	while (!g_heredoc)
 	{
 		line = readline("> ");
-		if (!line)
+		if (g_heredoc)
 		{
-			if (errno == EINTR)
-				continue ;
+			if (line)
+				free(line);
 			break ;
 		}
+		if (!line)
+			break ;
 		if (should_end_heredoc(line, file->name))
 		{
 			free(line);
 			break ;
 		}
-		process_and_write_line(line, file, env_list, pipe_fd);
+		process_and_write_line(line, file, env_list, write_fd);
 		free(line);
 	}
+	if (g_heredoc)
+		return (1);
+	return (0);
+}
+
+void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
+{
+	int		original_stdin_fd;
+
+	original_stdin_fd = dup(STDIN_FILENO);
+	if (original_stdin_fd == -1)
+	{
+		perror("dup original_stdin_fd");
+		close(pipe_fd);
+		return ;
+	}
+	g_heredoc = 0;
+	if (read_heredoc_loop(file, env_list, pipe_fd))
+		file->heredoc_fd = -1;
 	close(pipe_fd);
+	if (dup2(original_stdin_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 original_stdin-fd after heredoc");
+		clean_exit(env_list);
+	}
+	close(original_stdin_fd);
 }
 
 void	cleanup_heredocs(t_cmd_node *node)

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:11:42 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/11 15:57:05 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:47:08 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	heredoc_signal_handler(int sig)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
+	close(STDIN_FILENO);
+	rl_done = 1;
+	g_heredoc = 1;
 }
 
 void	setup_heredoc_signal_handling(void)

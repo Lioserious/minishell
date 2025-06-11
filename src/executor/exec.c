@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/08 14:50:11 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:33:27 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 	{
 		process_heredoc_in_node(current, env_list,
 			&last_heredoc, &heredoc_count);
+		if (g_heredoc)
+		{
+			restore_main_signals();
+			env_list->last_exitcode = 130;
+			cleanup_heredocs(node);
+			return (1);
+		}
 		current = current->next;
 	}
 	restore_main_signals();

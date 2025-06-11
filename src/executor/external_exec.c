@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 17:34:12 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:45:24 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 				char **enva);
-static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node, t_env_list *env_list);
+static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node,
+				t_env_list *env_list);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
 {
@@ -78,7 +79,8 @@ void	handle_child_process(t_cmd_node *node, t_env_list *env_list,
 		exec_external_cmd(node, env_list, enva);
 }
 
-static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node, t_env_list *env_list)
+static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node,
+				t_env_list *env_list)
 {
 	struct stat	fileinfo;
 

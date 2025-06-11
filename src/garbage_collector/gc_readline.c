@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:38:41 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:32:12 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:15:38 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 char	*gc_readline(const char *prompt)
 {
 	char	*input;
+	(void)prompt;
 	if (isatty(fileno(stdin)))
-		input = readline(PROMPT);
+		input = readline(prompt);
 	else
 	{
 		char *line;
@@ -26,7 +27,7 @@ char	*gc_readline(const char *prompt)
 		input = ft_strtrim(line, "\n");
 		free(line);
 	}
-	input = readline(prompt);
+	//input = readline(prompt);
 	if (input)
 		garbage_collector_add(input);
 	return (input);

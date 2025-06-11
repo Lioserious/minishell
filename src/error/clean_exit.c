@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:35:26 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 12:26:10 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/11 16:00:21 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	clean_exit_old(int status)
 
 void	clean_exit(t_env_list *env_list)
 {
+	g_heredoc = env_list->last_exitcode;
 	restore_std_fds(env_list);
 	garbage_collector_empty();
 	rl_clear_history();
-	exit(env_list->last_exitcode);
+	exit(g_heredoc);
 }
 
 void	update_exit_status(t_env_list *env_list, int status)

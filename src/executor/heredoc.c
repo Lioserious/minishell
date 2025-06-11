@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:36:19 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/08 14:11:11 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:56:54 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	setup_heredoc_no_signals(t_file_node *file, t_env_list *env_list)
 void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
 {
 	char	*line;
-
+	
 	while (1)
 	{
 		line = readline("> ");

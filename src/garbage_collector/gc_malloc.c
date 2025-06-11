@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:30:54 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:15:40 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 16:42:47 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	*gc_malloc(size_t size)
 	ptr = malloc(size);
 	if (!ptr)
 	{
-		//ft_putstr_fd("minishell: ", STDERR_FILENO);
-		//ft_putstr_fd("Allocation Failed", STDERR_FILENO);
-		//ft_putstr_fd("\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("Allocation Failed", STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		exit(1);
 	}
 	garbage_collector_add(ptr);

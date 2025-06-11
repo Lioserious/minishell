@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 13:18:58 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/10 14:11:44 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_env(t_env_list *env_list)
 	{
 		if (current->value)
 		{
-			//ft_putstr_fd(current->name, 1);
-			//ft_putchar_fd('=', 1);
-			//ft_putendl_fd(current->value, 1);
+			ft_putstr_fd(current->name, 1);
+			ft_putchar_fd('=', 1);
+			ft_putendl_fd(current->value, 1);
 		}
 		current = current->next;
 	}

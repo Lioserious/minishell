@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:04:55 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/10 13:11:41 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/16 16:56:31 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	is_empty_command(t_token_list *token_list)
  * @return Final token position or NULL
  */
 static t_token	*process_command_sequence(t_cmd_list *cmd_list,
-		t_token *current_token)
+		t_token *current_token, t_env_list *env_list)
 {
 	while (current_token && current_token->type != TOKEN_EOF)
 	{
@@ -54,7 +54,7 @@ static t_token	*process_command_sequence(t_cmd_list *cmd_list,
 			current_token = current_token->next;
 			continue ;
 		}
-		current_token = parse_simple_command(current_token, cmd_list);
+		current_token = parse_simple_command(current_token, cmd_list, env_list);
 		if (!current_token)
 			return (NULL);
 		if (current_token->type == TOKEN_PIPE)
@@ -84,6 +84,7 @@ t_cmd_list	*parser(t_token_list *token_list, t_env_list *env_list)
 		return (create_cmd_list());
 	cmd_list = create_cmd_list();
 	current_token = token_list->head;
-	process_command_sequence(cmd_list, current_token);
+	if (!process_command_sequence(cmd_list, current_token, env_list))
+		return (NULL);
 	return (cmd_list);
 }

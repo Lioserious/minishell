@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:49:52 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/08 14:47:13 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:39:23 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	wait_children_set_exitcode(pid_t *pids, int child_count,
 				t_env_list *env_list);
-
-static int	g_stdin_backup = -1;
-static int	g_stdout_backup = -1;
 
 void	execute(t_env_list *env_list, t_cmd_node *node)
 {
@@ -40,7 +37,7 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 	wait_children_set_exitcode(pids, child_count, env_list);
 	cleanup_heredocs(node);
 	signal(SIGINT, main_sigint_handler);
-	if (g_stdin_backup != -1 && g_stdout_backup != -1)
+	if (env_list->stdin_backup != -1 && env_list->stdout_backup != -1)
 		restore_std_fds(env_list);
 }
 
@@ -64,26 +61,26 @@ static void	wait_children_set_exitcode(pid_t *pids, int child_count,
 
 void	restore_std_fds(t_env_list *env_list)
 {
-	if (g_stdin_backup == -1 || g_stdout_backup == -1)
+	if (env_list->stdin_backup == -1 || env_list->stdout_backup == -1)
 		return ;
-	if (dup2(g_stdin_backup, STDIN_FILENO) == -1
-		|| dup2(g_stdout_backup, STDOUT_FILENO) == -1)
+	if (dup2(env_list->stdin_backup, STDIN_FILENO) == -1
+		|| dup2(env_list->stdout_backup, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
 		env_list->last_exitcode = 1;
 		clean_exit(env_list);
 	}
-	close(g_stdin_backup);
-	close(g_stdout_backup);
-	g_stdin_backup = -1;
-	g_stdout_backup = -1;
+	close(env_list->stdin_backup);
+	close(env_list->stdout_backup);
+	env_list->stdin_backup = -1;
+	env_list->stdout_backup = -1;
 }
 
 void	backup_std_fds(t_env_list *env_list)
 {
-	g_stdin_backup = dup(STDIN_FILENO);
-	g_stdout_backup = dup(STDOUT_FILENO);
-	if (g_stdin_backup == -1 || g_stdout_backup == -1)
+	env_list->stdin_backup = dup(STDIN_FILENO);
+	env_list->stdout_backup = dup(STDOUT_FILENO);
+	if (env_list->stdin_backup == -1 || env_list->stdout_backup == -1)
 	{
 		perror("dup");
 		env_list->last_exitcode = 1;

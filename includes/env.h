@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 12:44:49 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/25 12:35:47 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_env_list
 	t_env_node			*head;
 	int					count;
 	int					last_exitcode;
+	int					stdin_backup;
+	int					stdout_backup;
 }						t_env_list;
 
 // ========== Functions ==========

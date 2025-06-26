@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:08 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/22 18:50:46 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:47:32 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,20 @@ void	add_files_list(t_file_list *list, t_file_node *node)
 		list->tail = node;
 	}
 	list->size++;
+}
+
+/**
+ * @brief Validiert einen quoted Heredoc-Delimiter
+ * @param delimiter Der quoted Delimiter
+ * @param len Die Länge des Delimiters
+ * @return 1 wenn gültig, 0 wenn ungültig
+ */
+int	validate_quoted_delimiter(char *delimiter, int len)
+{
+	char	*cleaned;
+
+	if (len < 3)
+		return (0);
+	cleaned = clean_quoted_delimiter(delimiter);
+	return (cleaned && cleaned[0] != '\0');
 }

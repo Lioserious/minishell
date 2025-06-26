@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:58:35 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/26 12:48:27 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:51:00 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,6 @@ char			*get_heredoc_delimiter(t_token *token, t_env_list *env_list);
 char			*process_heredoc_token(t_token *token, int *expand_vars,
 					t_env_list *env_list);
 int				validate_quoted_delimiter(char *delimiter, int len);
+void			init_parse_cmd_data(t_parse_cmd *parse_data, char **cmd_array,
+					int arg_count);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:01 by lihrig            #+#    #+#             */
-/*   Updated: 2025/05/19 13:24:58 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 17:12:33 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,15 @@ t_cmd_node	*create_cmd_node(char **cmd, int cmd_type)
 	new_node = (t_cmd_node *)gc_malloc(sizeof(t_cmd_node));
 	if (!new_node)
 		return (error_handler("MEMORY ALLOCATION FAILED: CREATE_CMD_NODE", 0));
-	new_node->cmd = cmd;
+	if (!cmd)
+	{
+		new_node->cmd = (char **)gc_malloc(sizeof(char *) * 1);
+		new_node->cmd[0] = NULL;
+	}
+	else
+	{
+		new_node->cmd = cmd;
+	}
 	new_node->cmd_type = cmd_type;
 	new_node->file = create_file_list();
 	new_node->next = NULL;

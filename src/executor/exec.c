@@ -3,26 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:29:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/11 18:33:27 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:09:33 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		setup_child_io_and_redirs(t_cmd_node *node, int prev_fd,
-					int *fd, t_env_list *env_list);
-static void		process_heredoc_in_node(t_cmd_node *current,
-					t_env_list *env_list,
-					t_file_node **last_heredoc,
-					int *heredoc_count);
+static void	setup_child_io_and_redirs(t_cmd_node *node, int prev_fd, int *fd,
+				t_env_list *env_list);
+static void	process_heredoc_in_node(t_cmd_node *current, t_env_list *env_list,
+				t_file_node **last_heredoc, int *heredoc_count);
 
-static void	process_heredoc_in_node(t_cmd_node *current,
-									t_env_list *env_list,
-									t_file_node **last_heredoc,
-									int *heredoc_count)
+static void	process_heredoc_in_node(t_cmd_node *current, t_env_list *env_list,
+		t_file_node **last_heredoc, int *heredoc_count)
 {
 	t_file_node	*file;
 
@@ -56,8 +52,8 @@ int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 	current = node;
 	while (current)
 	{
-		process_heredoc_in_node(current, env_list,
-			&last_heredoc, &heredoc_count);
+		process_heredoc_in_node(current, env_list, &last_heredoc,
+			&heredoc_count);
 		if (g_heredoc)
 		{
 			restore_main_signals();
@@ -71,8 +67,8 @@ int	setup_all_heredocs(t_env_list *env_list, t_cmd_node *node)
 	return (0);
 }
 
-static void	setup_child_io_and_redirs(t_cmd_node *node, int prev_fd,
-										int *fd, t_env_list *env_list)
+static void	setup_child_io_and_redirs(t_cmd_node *node, int prev_fd, int *fd,
+		t_env_list *env_list)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -99,8 +95,8 @@ static void	setup_child_io_and_redirs(t_cmd_node *node, int prev_fd,
 		execute_redirections(node->file, env_list);
 }
 
-void	child_process(t_cmd_node *node, int prev_fd,
-						int *fd, t_env_list *env_list)
+void	child_process(t_cmd_node *node, int prev_fd, int *fd,
+		t_env_list *env_list)
 {
 	char	**enva;
 

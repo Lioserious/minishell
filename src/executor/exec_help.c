@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_help.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:44:02 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/26 16:49:51 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:09:51 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_cmds(t_cmd_node *node)
 	while (current)
 	{
 		count++;
-		current = current -> next;
+		current = current->next;
 	}
 	return (count);
 }
@@ -31,13 +31,12 @@ int	is_builtin(t_cmd_node *node)
 {
 	char	*cmd;
 
+	if (!node || !node->cmd || !node->cmd[0])
+		return (0);
 	cmd = node->cmd[0];
-	return (ft_strcmp(cmd, "exit") == 0
-		|| ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "echo") == 0
-		|| ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "unset") == 0
-		|| ft_strcmp(cmd, "env") == 0
+	return (ft_strcmp(cmd, "exit") == 0 || ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
 		|| ft_strcmp(cmd, "pwd") == 0);
 }
 

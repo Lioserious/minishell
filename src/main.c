@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/26 13:30:16 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:09:26 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ static int	handle_user_input(t_env_list *env_list)
 	if (input[0] == '\0')
 		return (1);
 	cmd_list = process_input_line(input, env_list);
-	if (cmd_list && cmd_list->head)
-		execute(env_list, cmd_list->head);
+	if (cmd_list)
+	{
+		if (cmd_list->head)
+			execute(env_list, cmd_list->head);
+	}
 	return (1);
 }
 

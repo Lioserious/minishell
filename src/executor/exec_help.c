@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:44:02 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/09 12:51:06 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:49:51 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,18 @@ void	exec_minishell(t_cmd_node *node, char **enva)
 		perror("execve");
 		exit(1);
 	}
+}
+
+int	has_heredoc(t_cmd_node *node)
+{
+	t_file_node	*file;
+
+	file = node->file->head;
+	while (file)
+	{
+		if (file->redirection_type == REDIR_HEREDOC)
+			return (1);
+		file = file->next;
+	}
+	return (0);
 }

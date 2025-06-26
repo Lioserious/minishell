@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/26 15:43:18 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:49:19 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,16 @@ int	execute_pipeline_loop(t_cmd_node *node,
 	cmd_count = count_cmds(node);
 	if (cmd_count == 1 && is_builtin(current))
 	{
-		execute_builtin_node(current, env_list);
-		return (0);
+		if (has_heredoc(current))
+		{
+			fork_execute_node(current, env_list, context);
+			return (1);
+		}
+		else
+		{
+			execute_builtin_node(current, env_list);
+			return (0);
+		}
 	}
 	while (current)
 	{

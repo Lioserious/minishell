@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:51:22 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 16:36:16 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:43:18 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ static void	execute_builtin_node(t_cmd_node *node, t_env_list *env_list)
 		execute_redirections(node->file, env_list);
 	if (ft_strcmp(node->cmd[0], "exit") == 0)
 	{
-		close(stdin);
-		close(stdout);
-		ft_exit(node, env_list);
+		ft_exit(node, env_list, stdin, stdout);
 	}
 	execute_builtin(node, env_list);
 	if (dup2(stdin, STDIN_FILENO) == -1

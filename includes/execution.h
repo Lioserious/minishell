@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:50:45 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/09 12:51:21 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:48:28 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ void		handle_child_process(t_cmd_node *node, t_env_list *env_list,
 int			pipeline(t_env_list *env_list, t_cmd_node *node, pid_t *pids);
 int			setup_all_heredocs(t_env_list *env_list, t_cmd_node *node);
 void		exec_minishell(t_cmd_node *node, char **enva);
+int			has_heredoc(t_cmd_node *node);
 #endif

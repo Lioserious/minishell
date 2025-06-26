@@ -76,3 +76,17 @@ void	exec_minishell(t_cmd_node *node, char **enva)
 		exit(1);
 	}
 }
+
+int	has_heredoc(t_cmd_node *node)
+{
+	t_file_node	*file;
+
+	file = node->file->head;
+	while (file)
+	{
+		if (file->redirection_type == REDIR_HEREDOC)
+			return (1);
+		file = file->next;
+	}
+	return (0);
+}

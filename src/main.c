@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:24 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/26 13:14:21 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 13:30:16 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,16 @@ static t_cmd_list	*process_input_line(char *input, t_env_list *env_list)
 	t_token_list	*tokens;
 	t_cmd_list		*cmd_list;
 
-   if (!input || input[0] == '\0')
-   	return (NULL);
-   add_history(input);
-   tokens = tokenizer(input, env_list);
-   if (!tokens)
-   {
-   	return (NULL);
-   }
-   cmd_list = parser(tokens, env_list);
-   if (!cmd_list)
-   	return (NULL);
-   return (cmd_list);
+	if (!input || input[0] == '\0')
+		return (NULL);
+	add_history(input);
+	tokens = tokenizer(input, env_list);
+	if (!tokens)
+		return (NULL);
+	cmd_list = parser(tokens, env_list);
+	if (!cmd_list)
+		return (NULL);
+	return (cmd_list);
 }
 
 /**
@@ -63,21 +61,21 @@ static t_cmd_list	*process_input_line(char *input, t_env_list *env_list)
  */
 static int	handle_user_input(t_env_list *env_list)
 {
-   char *input;
-   t_cmd_list *cmd_list;
+	char		*input;
+	t_cmd_list	*cmd_list;
 
-   input = gc_readline(PROMPT);
-   if (!input)
-   {
-   	ft_putendl_fd("exit", STDOUT_FILENO);
-   	return (0);
-   }
-   if (input[0] == '\0')
-   	return (1);
-   cmd_list = process_input_line(input, env_list);
-   if (cmd_list && cmd_list->head)
-   	execute(env_list, cmd_list->head);
-   return (1);
+	input = gc_readline(PROMPT);
+	if (!input)
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		return (0);
+	}
+	if (input[0] == '\0')
+		return (1);
+	cmd_list = process_input_line(input, env_list);
+	if (cmd_list && cmd_list->head)
+		execute(env_list, cmd_list->head);
+	return (1);
 }
 
 /**

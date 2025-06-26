@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   std_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 09:49:52 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/25 12:39:23 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:09:45 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	execute(t_env_list *env_list, t_cmd_node *node)
 }
 
 static void	wait_children_set_exitcode(pid_t *pids, int child_count,
-										t_env_list *env_list)
+		t_env_list *env_list)
 {
 	int	i;
 	int	status;

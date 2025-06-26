@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:45:48 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/05 16:20:27 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 17:10:07 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	pipe_syntax_error(t_env_list *env_list)
 int	validate_start_token(t_token_list *token_list, t_env_list *env_list)
 {
 	if (!token_list || !token_list->head)
+		return (1);
+	if (token_list->head->type == TOKEN_REDIR_HEREDOC)
 		return (1);
 	if (is_redirection_token(token_list->head->type))
 	{

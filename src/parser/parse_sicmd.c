@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:08:25 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/26 12:50:26 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:30:45 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static t_token	*create_and_configure_command(t_token *token,
 	t_cmd_node	*cmd;
 	int			cmd_type;
 
-	if (parse_data->arg_count > 0)
-		cmd_type = is_builtin_command(parse_data->cmd_array[0]);
-	else
+	if (parse_data->arg_count == 0)
 		cmd_type = CMD_SIMPLE;
+	else
+		cmd_type = is_builtin_command(parse_data->cmd_array[0]);
 	cmd = create_cmd_node(parse_data->cmd_array, cmd_type);
 	if (!cmd)
 		return (NULL);

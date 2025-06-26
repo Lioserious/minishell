@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:00:17 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/26 16:18:24 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:44:12 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_numeric(const char *str);
 void	ft_exit(t_cmd_node *node, t_env_list *env_list,
 			int stdin_b, int stdout_b)
 {
-	if (node->cmd[2])
+	if (node->cmd[1] != NULL && node->cmd[2] != NULL)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		env_list->last_exitcode = 1;

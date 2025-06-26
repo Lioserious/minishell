@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:43:20 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/26 15:35:01 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:10:19 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	execute_builtin(t_cmd_node *node, t_env_list *env_list)
 {
+	if (!node->cmd || !node->cmd[0])
+	{
+		env_list->last_exitcode = 0;
+		return ;
+	}
 	if (ft_strcmp(node->cmd[0], "pwd") == 0)
 		ft_pwd(env_list);
 	else if (ft_strcmp(node->cmd[0], "echo") == 0)

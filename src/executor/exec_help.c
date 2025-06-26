@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_help.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:44:02 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:33 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:09:51 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_cmds(t_cmd_node *node)
 	while (current)
 	{
 		count++;
-		current = current -> next;
+		current = current->next;
 	}
 	return (count);
 }
@@ -31,13 +31,12 @@ int	is_builtin(t_cmd_node *node)
 {
 	char	*cmd;
 
+	if (!node || !node->cmd || !node->cmd[0])
+		return (0);
 	cmd = node->cmd[0];
-	return (ft_strcmp(cmd, "exit") == 0
-		|| ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "echo") == 0
-		|| ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "unset") == 0
-		|| ft_strcmp(cmd, "env") == 0
+	return (ft_strcmp(cmd, "exit") == 0 || ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
 		|| ft_strcmp(cmd, "pwd") == 0);
 }
 
@@ -67,4 +66,27 @@ pid_t	safe_fork_command(t_cmd_node *node, int *fd, t_env_list *env_list)
 		clean_exit(env_list);
 	}
 	return (pid);
+}
+
+void	exec_minishell(t_cmd_node *node, char **enva)
+{
+	if (execve("./minishell", node->cmd, enva) == -1)
+	{
+		perror("execve");
+		exit(1);
+	}
+}
+
+int	has_heredoc(t_cmd_node *node)
+{
+	t_file_node	*file;
+
+	file = node->file->head;
+	while (file)
+	{
+		if (file->redirection_type == REDIR_HEREDOC)
+			return (1);
+		file = file->next;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:53:12 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/06 14:15:43 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:36:31 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_env_list	*init_env_list(void)
 	env_list->head = NULL;
 	env_list->count = 0;
 	env_list->last_exitcode = 0;
+	env_list->stdin_backup = -1;
+	env_list->stdout_backup = -1;
 	return (env_list);
 }
 

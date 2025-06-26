@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:50:46 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/02 10:48:44 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/08 14:04:05 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ char	**convert_env_struct_array(t_env_list *env_list)
 	return (env_array);
 }
 
-void	update_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+void	update_env_var(t_env_list *env_list, char *name,
+						char *value, int is_export)
 {
 	t_env_node	*current;
 
@@ -107,7 +108,8 @@ void	update_env_var(t_env_list *env_list, char *name, char *value, int is_export
 		ft_add_env_var(env_list, name, NULL, is_export);
 }
 
-void	append_env_var(t_env_list *env_list, char *name, char *value, int is_export)
+void	append_env_var(t_env_list *env_list, char *name,
+						char *value, int is_export)
 {
 	t_env_node	*current;
 	char		*new_value;
@@ -130,5 +132,3 @@ void	append_env_var(t_env_list *env_list, char *name, char *value, int is_export
 	new_value = gc_strdup(value);
 	ft_add_env_var(env_list, name, new_value, is_export);
 }
-
-

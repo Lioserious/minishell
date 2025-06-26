@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:11:31 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/06 14:35:22 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:45:24 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 				char **enva);
-static void	exec_minishell(t_cmd_node *node, char **enva, t_env_list *env_list);
+static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node,
+				t_env_list *env_list);
 
 void	execute_external(t_cmd_node *node, t_env_list *env_list)
 {
@@ -72,17 +73,46 @@ void	handle_child_process(t_cmd_node *node, t_env_list *env_list,
 	if (ft_strcmp(node->cmd[0], "./minishell") == 0 || ft_strcmp(node->cmd[0],
 			"minishell") == 0)
 	{
-		exec_minishell(node, enva, env_list);
+		exec_minishell(node, enva);
 	}
 	else
 		exec_external_cmd(node, env_list, enva);
 }
 
+static void	validate_exec_cmd(char *cmd_path, t_cmd_node *node,
+				t_env_list *env_list)
+{
+	struct stat	fileinfo;
+
+	(void)node;
+	if (stat(cmd_path, &fileinfo) == -1)
+	{
+		perror(cmd_path);
+		env_list->last_exitcode = 127;
+		exit(127);
+	}
+	if (!S_ISREG(fileinfo.st_mode))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(node->cmd[0], 2);
+		ft_putendl_fd(": is a directory", 2);
+		env_list->last_exitcode = 126;
+		exit(126);
+	}
+	if (access(cmd_path, X_OK) != 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(node->cmd[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
+		env_list->last_exitcode = 126;
+		exit(126);
+	}
+}
+
 static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 		char **enva)
 {
-	char	*cmd_path;
-	struct stat	fileinfo;
+	char		*cmd_path;
 
 	cmd_path = get_cmd_path(env_list, node->cmd[0]);
 	if (!cmd_path)
@@ -92,37 +122,11 @@ static void	exec_external_cmd(t_cmd_node *node, t_env_list *env_list,
 		ft_putendl_fd(": command not found", 2);
 		exit(127);
 	}
-	if (stat(cmd_path, &fileinfo) == -1)
-	{
-		perror(cmd_path);
-		exit(127);
-	}
-	if (!S_ISREG(fileinfo.st_mode))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(node->cmd[0], 2);
-		ft_putendl_fd(": is a directory", 2);
-		exit(126);
-	}
-	if (access(cmd_path, X_OK) != 0)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(node->cmd[0], 2);
-		ft_putendl_fd(": Permission denied", 2);
-		exit(126);
-	}
+	validate_exec_cmd(cmd_path, node, env_list);
 	if (execve(cmd_path, node->cmd, enva) == -1)
 	{
 		perror("execve");
+		env_list->last_exitcode = 126;
 		exit(126);
-	}
-}
-
-static void	exec_minishell(t_cmd_node *node, char **enva, t_env_list *env_list)
-{
-	if (execve("./minishell", node->cmd, enva) == -1)
-	{
-		perror("execve");
-		exit(1);
 	}
 }

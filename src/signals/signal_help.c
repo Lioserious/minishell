@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signal_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/04 17:37:57 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/10 17:33:27 by mimalek          ###   ########.fr       */
+/*   Created: 2025/06/08 14:54:24 by mimalek           #+#    #+#             */
+/*   Updated: 2025/06/08 14:54:55 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(t_env_list *env_list)
+void	restore_signals(void)
 {
-	char	cwd[PATH_MAX];
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
-	if (getcwd(cwd, PATH_MAX) != NULL)
-	{
-		ft_putendl_fd(cwd, 1);
-		env_list->last_exitcode = 0;
-	}
-	else
-	{
-		perror("pwd");
-		env_list->last_exitcode = 1;
-	}
+void	restore_main_signals(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = main_sigint_handler;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }

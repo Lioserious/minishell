@@ -6,13 +6,11 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:36:19 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 15:23:02 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:45:53 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//static int	redirect_stdout_to_tty(void);
 
 void	setup_heredoc_no_signals(t_file_node *file, t_env_list *env_list)
 {
@@ -24,58 +22,57 @@ void	setup_heredoc_no_signals(t_file_node *file, t_env_list *env_list)
 	finalize_heredoc_pipe(file, heredoc_pipe);
 }
 
-void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
+static int	read_heredoc_loop(t_file_node *file,
+				t_env_list *env_list, int write_fd)
 {
 	char	*line;
 
-	while (1)
+	while (!g_heredoc)
 	{
 		line = readline("> ");
-		if (!line)
+		if (g_heredoc)
 		{
-			if (errno == EINTR)
-				continue;
-			break;
+			if (line)
+				free(line);
+			break ;
 		}
+		if (!line)
+			break ;
 		if (should_end_heredoc(line, file->name))
 		{
 			free(line);
 			break ;
 		}
-		process_and_write_line(line, file, env_list, pipe_fd);
+		process_and_write_line(line, file, env_list, write_fd);
 		free(line);
 	}
-	close(pipe_fd);
+	if (g_heredoc)
+		return (1);
+	return (0);
 }
 
-// static int	redirect_stdout_to_tty(void)
-// {
-// 	int		tty_fd;
-// 	int		backup_stdout;
+void	read_heredoc_lines(t_file_node *file, t_env_list *env_list, int pipe_fd)
+{
+	int		original_stdin_fd;
 
-// 	backup_stdout = dup(STDOUT_FILENO);
-// 	if (backup_stdout == -1)
-// 	{
-// 		perror("dup");
-// 		clean_exit(1);
-// 	}
-// 	tty_fd = open("/dev/tty", O_RDWR);
-// 	if (tty_fd == -1)
-// 	{
-// 		perror("open /dev/tty");
-// 		close(backup_stdout);
-// 		return (-1);
-// 	}
-// 	if (dup2(tty_fd, STDOUT_FILENO) == -1)
-// 	{
-// 		perror("dup2");
-// 		close(backup_stdout);
-// 		close(tty_fd);
-// 		return (-1);
-// 	}
-// 	close(tty_fd);
-// 	return (backup_stdout);
-// }
+	original_stdin_fd = dup(STDIN_FILENO);
+	if (original_stdin_fd == -1)
+	{
+		perror("dup original_stdin_fd");
+		close(pipe_fd);
+		return ;
+	}
+	g_heredoc = 0;
+	if (read_heredoc_loop(file, env_list, pipe_fd))
+		file->heredoc_fd = -1;
+	close(pipe_fd);
+	if (dup2(original_stdin_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2 original_stdin-fd after heredoc");
+		clean_exit(env_list);
+	}
+	close(original_stdin_fd);
+}
 
 void	cleanup_heredocs(t_cmd_node *node)
 {

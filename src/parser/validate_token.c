@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:49:46 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/05 16:19:46 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:28:28 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	validate_end_token(t_token_list *token_list, t_env_list *env_list)
  * @param next Next token
  * @return 1 if valid pair, 0 if invalid
  */
-static int	validate_token_pair(t_token *current, t_token *next, t_env_list *env_list)
+static int	validate_token_pair(t_token *current, t_token *next,
+		t_env_list *env_list)
 {
 	if (is_empty_token(current) || is_empty_token(next))
 		return (1);

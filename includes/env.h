@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:00:36 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/05 14:25:35 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:35:47 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,30 @@ typedef struct s_env_node
 	char				*value;
 	bool				is_export;
 	struct s_env_node	*next;
-}	t_env_node;
+}						t_env_node;
 
 typedef struct s_env_list
 {
-	t_env_node	*head;
-	int			count;
-	int			last_exitcode;
-}	t_env_list;
+	t_env_node			*head;
+	int					count;
+	int					last_exitcode;
+	int					stdin_backup;
+	int					stdout_backup;
+}						t_env_list;
 
 // ========== Functions ==========
-t_env_list	*init_env_list(void);
-void		init_env(t_env_list *env_list, char **env);
+t_env_list				*init_env_list(void);
+void					init_env(t_env_list *env_list, char **env);
 // ========== Helper Functions ==========
-char		*get_env_value(t_env_list *env_list, char *name);
-void		ft_add_env_var(t_env_list *env_list, char *name,
-				char *value, int is_export);
-void		set_env_var(t_env_list *env_list, char *name, char *value);
-char		**convert_env_struct_array(t_env_list *env_list);
-void		update_shlvl(t_env_list	*env_list);
-void		update_env_var(t_env_list *env_list, char *name, char *value, int is_export);
-void		append_env_var(t_env_list *env_list, char *name, char *value, int is_export);
+char					*get_env_value(t_env_list *env_list, char *name);
+void					ft_add_env_var(t_env_list *env_list, char *name,
+							char *value, int is_export);
+void					set_env_var(t_env_list *env_list, char *name,
+							char *value);
+char					**convert_env_struct_array(t_env_list *env_list);
+void					update_shlvl(t_env_list *env_list);
+void					update_env_var(t_env_list *env_list, char *name,
+							char *value, int is_export);
+void					append_env_var(t_env_list *env_list, char *name,
+							char *value, int is_export);
 #endif

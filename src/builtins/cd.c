@@ -6,7 +6,7 @@
 /*   By: mimalek <mimalek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:16:09 by mimalek           #+#    #+#             */
-/*   Updated: 2025/06/06 14:05:42 by mimalek          ###   ########.fr       */
+/*   Updated: 2025/06/11 18:46:23 by mimalek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ void	ft_cd(t_cmd_node *node, t_env_list *env_list)
 	{
 		env_list->last_exitcode = cd_to_home(env_list);
 	}
-	if (node->cmd[1][0] == '-')
+	else if (ft_strcmp(node->cmd[1], "-") == 0)
 	{
-		env_list->last_exitcode =cd_to_oldpath(env_list);
+		env_list->last_exitcode = cd_to_oldpath(env_list);
 	}
-	env_list->last_exitcode = cd_to_path(node->cmd[1], env_list);
+	else
+	{
+		env_list->last_exitcode = cd_to_path(node->cmd[1], env_list);
+	}
 }
 
 static int	cd_to_home(t_env_list *env_list)
@@ -58,7 +61,7 @@ static int	cd_to_oldpath(t_env_list *env_list)
 	oldpwd = get_env_value(env_list, "OLDPWD");
 	if (oldpwd == NULL || chdir(oldpwd) != 0)
 	{
-		ft_putstr_fd("cd: OLDPWD not set or invalid\n", 2);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		return (1);
 	}
 	if (getcwd(currentpwd, sizeof(currentpwd)) == NULL)

@@ -6,7 +6,7 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 12:31:08 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/26 12:47:32 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:50:48 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ int	validate_quoted_delimiter(char *delimiter, int len)
 		return (0);
 	cleaned = clean_quoted_delimiter(delimiter);
 	return (cleaned && cleaned[0] != '\0');
+}
+
+/**
+ * @brief Initialisiert die Command-Daten der Parse-Struktur
+ * @param parse_data Zu initialisierende Struktur
+ * @param cmd_array Command Array
+ * @param arg_count Argument count
+ */
+void	init_parse_cmd_data(t_parse_cmd *parse_data, char **cmd_array,
+		int arg_count)
+{
+	parse_data->cmd_array = cmd_array;
+	parse_data->arg_count = arg_count;
 }

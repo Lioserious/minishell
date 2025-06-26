@@ -6,24 +6,11 @@
 /*   By: lihrig <lihrig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 13:08:25 by lihrig            #+#    #+#             */
-/*   Updated: 2025/06/16 16:55:53 by lihrig           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:50:26 by lihrig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Initialisiert die Command-Daten der Parse-Struktur
- * @param parse_data Zu initialisierende Struktur
- * @param cmd_array Command Array
- * @param arg_count Argument count
- */
-static void	init_parse_cmd_data(t_parse_cmd *parse_data, char **cmd_array,
-		int arg_count)
-{
-	parse_data->cmd_array = cmd_array;
-	parse_data->arg_count = arg_count;
-}
 
 /**
  * @brief Initialisiert die Environment-Daten der Parse-Struktur
